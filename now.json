@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "name": "usehooks",
+  "alias": "usehooks.com",
+  "env": {
+    "mailchimp_api_key": "@usehooks-mailchimp-api-key",
+    "mailchimp_list_id": "@usehooks-mailchimp-list-id"
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "public" }
+    },
+    {
+      "src": "mailchimp/index.js",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/subscribe",
+      "dest": "/mailchimp/index.js"
+    }
+  ]
+}

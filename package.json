@@ -1,0 +1,34 @@
+{
+  "name": "usehooks",
+  "version": "1.0.0",
+  "author": "Gabe Ragland",
+  "dependencies": {
+    "babel-plugin-styled-components": "^1.10.0",
+    "gatsby": "^2.0.85",
+    "gatsby-plugin-feed": "^2.0.11",
+    "gatsby-plugin-react-helmet": "^3.0.5",
+    "gatsby-plugin-styled-components": "^3.0.4",
+    "gatsby-remark-external-links": "0.0.4",
+    "gatsby-source-filesystem": "^2.0.12",
+    "gatsby-transformer-remark": "^2.1.19",
+    "react": "^16.7.0-alpha.0",
+    "react-dom": "^16.7.0-alpha.0",
+    "react-helmet": "^5.2.0",
+    "react-syntax-highlighter": "^10.1.2",
+    "serve": "^10.1.1",
+    "styled-components": "^4.1.3",
+    "unfetch": "^4.0.1"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "serve public/",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "now-build": "npm run build"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1",
+    "prettier": "^1.14.2"
+  }
+}

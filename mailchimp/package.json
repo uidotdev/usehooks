@@ -1,0 +1,11 @@
+{
+  "main": "index.js",
+  "scripts": {
+    "start": "micro"
+  },
+  "dependencies": {
+    "mailchimp-api-v3": "^1.12.1",
+    "micro": "^9.3.3",
+    "now-env": "^3.1.0"
+  }
+}
