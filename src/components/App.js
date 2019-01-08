@@ -17,7 +17,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <>
-        <Helmet title="useHooks - One new React Hook code recipe every day">
+        <Helmet title="useHooks - Easy to understand React Hook recipes">
           <html lang="en" />
           <link
             rel="stylesheet"
@@ -26,7 +26,7 @@ const Layout = ({ children }) => (
 
           <meta
             name="description"
-            content="We bring you one new React hook code recipe per day so you can learn how React hooks work and feel more comfortable writing your own."
+            content="We bring you easy to understand React Hook code recipes so you can learn how React hooks work and feel more comfortable writing your own."
           />
 
           <meta
@@ -42,7 +42,7 @@ const Layout = ({ children }) => (
           <meta property="og:title" content="useHooks" />
           <meta
             property="og:description"
-            content="One new React Hook recipe every day"
+            content="Easy to understand React Hook recipes"
           />
           <meta name="twitter:card" content="summary_large_image" />
 
