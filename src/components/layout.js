@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "gatsby";
 import styled from "styled-components";
-import App from "../components/App"; // Soon to be "App"
-import EmailSignup from "../components/EmailSignup";
+import App from "./App"; // Soon to be "App"
+import EmailSignup from "./EmailSignup";
 
 export const Layout = ({ children }) => {
   return (
@@ -78,6 +78,14 @@ export const Layout = ({ children }) => {
               <span>/</span>
             </div>
             <div className="level-item">
+              <a target="_blank" href="https://github.com/gragland/usehooks">
+                Github
+              </a>
+            </div>
+            <div className="level-item is-hidden-mobile">
+              <span>/</span>
+            </div>
+            <div className="level-item">
               <a target="_blank" href="/rss.xml">
                 RSS
               </a>
@@ -110,7 +118,7 @@ const FooterLevel = styled("div").attrs({ className: "level" })`
   margin: 20px auto 0 auto;
   max-width: 150px;
   span {
-    padding: 0 0.5rem;
+    padding: 0 0.8rem;
     opacity: 0.6;
   }
   a:hover {
