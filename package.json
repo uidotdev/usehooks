@@ -22,7 +22,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "dev": "gatsby develop",
     "start": "serve public/",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "now-build": "npm run build"
