@@ -7,6 +7,7 @@ import EmailSignup from "./EmailSignup";
 export const Layout = ({ children }) => {
   return (
     <App>
+      <GitHubLink />
       <div className="hero is-bold is-primary has-text-centered">
         <div className="hero-body">
           <h1 className="title is-size-2-mobile is-1 is-spaced has-text-weight-bold">
@@ -98,6 +99,27 @@ export const Layout = ({ children }) => {
 };
 
 export default Layout;
+
+const GitHubLink = () => {
+  return (
+    <a
+      className="is-hidden-mobile"
+      target="blank"
+      href="https://github.com/gragland/usehooks"
+    >
+      <i
+        class="fab fa-github"
+        style={{
+          position: "absolute",
+          fontSize: "1.5rem",
+          top: "1rem",
+          right: "1rem",
+          color: "white"
+        }}
+      />
+    </a>
+  );
+};
 
 const Logo = styled(Link)`
   text-decoration: none;
