@@ -30,7 +30,6 @@ exports.createPages = ({ actions, graphql }) => {
 
     posts.forEach(edge => {
       const id = edge.node.id;
-      console.log("SLUG", edge.node.fields.slug);
       createPage({
         path: edge.node.fields.slug,
         component: path.resolve(
