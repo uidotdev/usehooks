@@ -25,27 +25,26 @@ export const PostTemplate = ({ content, frontmatter, slug, ...props }) => {
         {frontmatter.code}
       </SyntaxHighlighter>
 
-      {frontmatter.links &&
-        frontmatter.links.length && (
-          <Links>
-            <div className="links-title">Also check out:</div>
-            <ul>
-              {frontmatter.links.map((link, i) => (
-                <LinksLi>
-                  <a target={link.target || "_blank"} href={link.url}>
-                    {link.name}
-                  </a>{" "}
-                  -{" "}
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: link.description
-                    }}
-                  />
-                </LinksLi>
-              ))}
-            </ul>
-          </Links>
-        )}
+      {frontmatter.links && frontmatter.links.length && (
+        <Links>
+          <div className="links-title">📚 Also check out:</div>
+          <ul>
+            {frontmatter.links.map((link, i) => (
+              <LinksLi>
+                <a target={link.target || "_blank"} href={link.url}>
+                  {link.name}
+                </a>{" "}
+                -{" "}
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: link.description
+                  }}
+                />
+              </LinksLi>
+            ))}
+          </ul>
+        </Links>
+      )}
 
       <Info>
         <div className="level-item">{frontmatter.date}</div>
@@ -173,10 +172,10 @@ const LinksLi = styled("li")`
 
 const Info = styled("div").attrs({ className: "level" })`
   margin: 20px auto 0 auto;
-  max-width: 600px;
+  max-width: 560px;
   span {
     padding: 0 0.5rem;
-    opacity: 0.3;
+    opacity: 0.2;
   }
 `;
 
