@@ -13,6 +13,4 @@ code: "import { useState, useEffect } from 'react';\r\n\r\nfunction App() {\r\n 
 
 This hook makes it super easy to utilize media queries in your component logic. In our example below we render a different number of columns depending on which media query matches the current screen width, and then distribute images amongst the columns in a way that limits column height difference (we don't want one column way longer than the rest).
 <br/><br/>
-You could create a hook that directly measures screen width instead of using media queries, but this method is nice because it makes it easy to share media queries between JS and your stylesheet.
-<br/><br/>
-See it in action in the [CodeSandbox Demo](https://codesandbox.io/s/6jlmpjq9vw). And thanks to [Paul Henschel](https://twitter.com/0xca0a) who wrote the hook code for his [Masonry Grid Demo](https://codesandbox.io/s/26mjowzpr?from-embed).
+You could create a hook that directly measures screen width instead of using media queries, but this method is nice because it makes it easy to share media queries between JS and your stylesheet. See it in action in the [CodeSandbox Demo](https://codesandbox.io/s/6jlmpjq9vw). And thanks to [Paul Henschel](https://twitter.com/0xca0a) who wrote the original hook code for his [Masonry Grid Demo](https://codesandbox.io/s/26mjowzpr?from-embed).
