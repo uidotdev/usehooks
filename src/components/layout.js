@@ -40,16 +40,20 @@ export const Layout = ({ children }) => {
             <div className="column is-6">
               <div className="title is-5">What all this about?</div>
               <p>
-                Hooks are an upcoming feature that lets you use state and other
-                React features without writing a class. This websites provides
-                easy to understand code examples to help you understand how
-                hooks work and hopefully inspire you to take advantage of them
-                in your next project. Be sure to check out the{" "}
+                <i>Hooks</i> are a new addition in React 16.8 that lets you use
+                state and other React features without writing a class. This
+                websites provides easy to understand code examples to help you
+                learn how hooks work and hopefully inspire you to take advantage
+                of them in your next project. Be sure to check out the{" "}
                 <a
                   target="_blank"
                   href="https://reactjs.org/docs/hooks-intro.html"
                 >
                   official docs
+                </a>
+                . You can also submit post ideas in our{` `}
+                <a target="_blank" href="https://github.com/gragland/usehooks">
+                  Github repo
                 </a>
                 .
               </p>
