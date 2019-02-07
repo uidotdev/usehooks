@@ -15,4 +15,4 @@ This hook makes it easy to add a "dark mode" toggle to your website. Essentially
 <br/><br/>
 I've kept this example as simple as possible, but if you're looking for something more configurable check out this [use-dark-mode hook](https://github.com/donavon/use-dark-mode) on Github (which inspired this post). If you look at their [hook code](https://github.com/donavon/use-dark-mode/blob/develop/src/index.js) you can see how they've moved the useEffect logic out into its the parent hook's scope so that values can be read from a configuration object.
 <br/><br/>
-<b>Update:</b> As Dan Abramov [mentioned on Twitter](https://twitter.com/dan_abramov/status/1093272256007098368), it would make much more sense for this hook to utilize the prefers-color-scheme media query and to persist to localstorage. I'll be posting an updated version of this hook tomorrow!
+<b>Update:</b> As Dan Abramov [mentioned on Twitter](https://twitter.com/dan_abramov/status/1093272256007098368), it would make much more sense for this hook to utilize the prefers-color-scheme media query and to persist to localstorage. I'll be posting an updated version of this hook soon.
