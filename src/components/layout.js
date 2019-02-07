@@ -42,7 +42,7 @@ export const Layout = ({ children }) => {
               <p>
                 <i>Hooks</i> are a new addition in React 16.8 that lets you use
                 state and other React features without writing a class. This
-                websites provides easy to understand code examples to help you
+                website provides easy to understand code examples to help you
                 learn how hooks work and hopefully inspire you to take advantage
                 of them in your next project. Be sure to check out the{" "}
                 <a
