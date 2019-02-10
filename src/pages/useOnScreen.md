@@ -4,6 +4,10 @@ title: useOnScreen
 date: "2018-11-08"
 gist: https://gist.github.com/gragland/d1175eb983772b077cb17ae0841c5329
 sandbox: https://codesandbox.io/s/y7kr0vll4v
+links:
+  - url: https://github.com/thebuilder/react-intersection-observer
+    name: react-intersection-observer
+    description: A more robust and configurable implemenation of this hook.
 code:
   "import { useState, useEffect, useRef } from 'react';\r\n\r\n// Usage\r\nfunction
   App() {\r\n  // Ref for the element that we want to detect whether on screen\r\n
