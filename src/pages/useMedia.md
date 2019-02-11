@@ -5,7 +5,7 @@ date: "2019-01-24"
 gist: https://gist.github.com/gragland/ed8cac563f5df71d78f4a1fefa8c5633
 sandbox: https://codesandbox.io/s/6jlmpjq9vw
 links:
-  - url: https://gist.github.com/gragland/ed8cac563f5df71d78f4a1fefa8c5633
+  - url: https://gist.github.com/gragland/ed8cac563f5df71d78f4a1fefa8c5633/c769cdc6a658b3925e9e2e204d228400d132965f
     name: useMedia v1
     description: Original version of this recipe that uses a single event listener on browser resize. Works well, but only for screen width media queries.
   - url: https://codesandbox.io/s/26mjowzpr?from-embed
