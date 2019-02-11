@@ -11,7 +11,6 @@ export const PostTemplate = ({ content, frontmatter, slug, ...props }) => {
     <Hook id={frontmatter.title}>
       <Name>
         <i class="fas fa-link link-icon" />
-
         <Link to={slug}>{frontmatter.title}</Link>
       </Name>
 
@@ -20,7 +19,7 @@ export const PostTemplate = ({ content, frontmatter, slug, ...props }) => {
           Composes:{` `}
           {frontmatter.composes.map((title, i) => (
             <>
-              <a href={`/${title}`}>{title}</a>
+              <Link to={`/${title}`}>{title}</Link>
               {i < frontmatter.composes.length - 1 ? "," : ""}
               {` `}
             </>
