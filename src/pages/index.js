@@ -56,6 +56,7 @@ export const pageQuery = graphql`
             templateKey
             title
             date(formatString: "MMMM DD, YYYY")
+            composes
             gist
             sandbox
             links {

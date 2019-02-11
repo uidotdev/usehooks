@@ -15,6 +15,19 @@ export const PostTemplate = ({ content, frontmatter, slug, ...props }) => {
         <Link to={slug}>{frontmatter.title}</Link>
       </Name>
 
+      {frontmatter.composes && (
+        <Composes>
+          Composes:{` `}
+          {frontmatter.composes.map((title, i) => (
+            <>
+              <a href={`/${title}`}>{title}</a>
+              {i < frontmatter.composes.length - 1 ? "," : ""}
+              {` `}
+            </>
+          ))}
+        </Composes>
+      )}
+
       <Content dangerouslySetInnerHTML={{ __html: content }} />
 
       <SyntaxHighlighter
@@ -106,6 +119,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
+        composes
         gist
         sandbox
         links {
@@ -121,6 +135,13 @@ export const pageQuery = graphql`
 
 const Hook = styled("div")`
   margin-bottom: 4rem;
+`;
+
+const Composes = styled("div").attrs({
+  className: "subtitle"
+})`
+  padding-top: 3px;
+  font-size: 0.9rem !important;
 `;
 
 const Name = styled("h2").attrs({
