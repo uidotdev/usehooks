@@ -73,7 +73,7 @@ class EmailSignup extends React.Component {
                   </div>
                 </div>
               </form>
-              <Extra>Join 2,016 subscribers. No spam ever.</Extra>
+              <Extra>Join 2,348 subscribers. No spam ever.</Extra>
             </Fragment>
           )}
         </div>
