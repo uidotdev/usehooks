@@ -7,7 +7,7 @@ sandbox: https://codesandbox.io/s/y7kr0vll4v
 links:
   - url: https://github.com/thebuilder/react-intersection-observer
     name: react-intersection-observer
-    description: A more robust and configurable implemenation of this hook.
+    description: A more robust and configurable implementation of this hook.
 code:
   "import { useState, useEffect, useRef } from 'react';\r\n\r\n// Usage\r\nfunction
   App() {\r\n  // Ref for the element that we want to detect whether on screen\r\n
