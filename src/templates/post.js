@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow as codeStyle } from "react-syntax-highlighter/dist/styles/prism";
 
-export const PostTemplate = ({ content, frontmatter, slug, ...props }) => {
+export const PostTemplate = ({ content, frontmatter, slug }) => {
   return (
     <Hook id={frontmatter.title}>
       <Name>
@@ -81,8 +81,13 @@ export const PostTemplate = ({ content, frontmatter, slug, ...props }) => {
   );
 };
 
-const Post = ({ data }) => {
+const Post = ({ data, pageContext }) => {
   const { markdownRemark: post } = data;
+
+  console.log("pageContext", pageContext);
+
+  const { next } = pageContext;
+
   return (
     <Layout>
       <Helmet title={`${post.frontmatter.title} | useHooks`}>
@@ -95,10 +100,11 @@ const Post = ({ data }) => {
         frontmatter={post.frontmatter}
         slug={post.fields.slug}
       />
+
       <More>
-        <Link to="/">
-          <i class="fas fa-home" />
-          See more hook recipes
+        Next recipe:
+        <Link to={next.fields.slug} rel="next" className="next">
+          {next.frontmatter.title}
         </Link>
       </More>
     </Layout>
@@ -201,7 +207,12 @@ const Info = styled("div").attrs({ className: "level" })`
 
 const More = styled("div")`
   text-align: center;
-  font-weight: bold;
+  font-size: 1.1rem;
+
+  .next {
+    margin-left: 10px;
+    font-weight: bold;
+  }
 
   i {
     opacity: 0.3;

@@ -75,6 +75,12 @@ export const Layout = ({ children }) => {
         <div className="hero-body">
           <FooterLevel>
             <div className="level-item">
+              <Link to="/">Home</Link>
+            </div>
+            <div className="level-item is-hidden-mobile">
+              <span>/</span>
+            </div>
+            <div className="level-item">
               <a target="_blank" href="https://twitter.com/gabe_ragland">
                 Twitter
               </a>
@@ -142,7 +148,7 @@ const Container = styled("div").attrs({ className: "container" })`
 
 const FooterLevel = styled("div").attrs({ className: "level" })`
   margin: 20px auto 0 auto;
-  max-width: 150px;
+  max-width: 300px;
   span {
     padding: 0 0.8rem;
     opacity: 0.6;
