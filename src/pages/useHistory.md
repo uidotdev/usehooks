@@ -50,7 +50,7 @@ code:
   dispatch] = useReducer(reducer, {\r\n    ...initialState,\r\n    present: initialPresent\r\n
   \ });\r\n\r\n  const canUndo = state.past.length !== 0;\r\n  const canRedo = state.future.length
   !== 0;\r\n\r\n  // Setup our callback functions\r\n  // We memoize with useCallback
-  to prevent unecessary re-renders\r\n\r\n  const undo = useCallback(\r\n    () =>
+  to prevent unnecessary re-renders\r\n\r\n  const undo = useCallback(\r\n    () =>
   {\r\n      if (canUndo) {\r\n        dispatch({ type: 'UNDO' });\r\n      }\r\n
   \   },\r\n    [canUndo, dispatch]\r\n  );\r\n\r\n  const redo = useCallback(\r\n
   \   () => {\r\n      if (canRedo) {\r\n        dispatch({ type: 'REDO' });\r\n      }\r\n
