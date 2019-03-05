@@ -7,7 +7,7 @@ sandbox: https://codesandbox.io/s/6jlvz1j5q3
 links:
   - url: http://react-spring.surge.sh
     name: react-spring
-    description: Offical docs with lots of fun animation examples. See section about the <a target="_blank"  href="http://react-spring.surge.sh/manual">useSpring hook here</a>.
+    description: Official docs with lots of fun animation examples. See section about the <a target="_blank"  href="http://react-spring.surge.sh/manual">useSpring hook here</a>.
   - url: https://codesandbox.io/s/j1zol1nrq3
     name: Card Demo
     description: Original useSpring demo that my code is based on by <a target="_blank"  href="https://twitter.com/0xca0a">0xca0a</a>.
