@@ -12,8 +12,8 @@ export default ({ value, onChange }) => {
           value={value}
           onChange={({ target: { value } }) => onChange(value)}
         />
-        <span class="icon is-small is-left">
-          <i class="fas fa-search" />
+        <span className="icon is-small is-left">
+          <i className="fas fa-search" />
         </span>
       </div>
     </div>

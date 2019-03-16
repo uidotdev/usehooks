@@ -2,18 +2,29 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "gatsby";
 import Layout from "../components/Layout";
+import PaginationContainer from "../components/PaginationContainer";
 import Search from "../components/Search";
 import { PostTemplate } from "../templates/post.js";
+
+const NavLink = props => {
+  if (!props.test) {
+    return <Link to={`/${props.url}`}>{props.text}</Link>
+  } else {
+    return <span>{props.text}</span>
+  }
+};
 
 class IndexPage extends React.Component {
   state = { search: "" };
 
   render() {
-    const { data } = this.props;
+    const { pageContext } = this.props;
+    const { group, index, first, last, pageCount } = pageContext;
+    const previousUrl = index - 1 == 1 ? '' : (index - 1).toString();
+    const nextUrl = (index + 1).toString()
     const { search } = this.state;
-    const { edges: posts } = data.allMarkdownRemark;
 
-    const filteredPosts = search ? searchPosts(posts, search) : posts;
+    // const filteredPosts = search ? searchPosts(posts, search) : posts;
 
     return (
       <Layout>
@@ -24,53 +35,25 @@ class IndexPage extends React.Component {
         />
         */}
 
-        {filteredPosts.map(post => (
+        {group.map(({ node }) => (
           <PostTemplate
-            content={post.node.html}
-            frontmatter={post.node.frontmatter}
-            slug={post.node.fields.slug}
+            key={node.id}
+            content={node.excerpt}
+            frontmatter={node.frontmatter}
+            slug={node.fields.slug}
           />
         ))}
+        <PaginationContainer>
+          <NavLink test={first} url={previousUrl} text="<<< Previous" />
+          <span>{` Page ${index} of ${pageCount}`}</span>
+          <NavLink test={last} url={nextUrl} text="Next >>>" />  
+        </PaginationContainer>
       </Layout>
     );
   }
 }
 
 export default IndexPage;
-
-export const pageQuery = graphql`
-  query IndexQuery {
-    allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      filter: { frontmatter: { templateKey: { eq: "post" } } }
-    ) {
-      edges {
-        node {
-          excerpt(pruneLength: 400)
-          id
-          html
-          fields {
-            slug
-          }
-          frontmatter {
-            templateKey
-            title
-            date(formatString: "MMMM DD, YYYY")
-            composes
-            gist
-            sandbox
-            links {
-              url
-              name
-              description
-            }
-            code
-          }
-        }
-      }
-    }
-  }
-`;
 
 // Quicky and hacky search
 function searchPosts(posts, search) {
