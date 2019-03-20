@@ -10,7 +10,7 @@ export const PostTemplate = ({ content, frontmatter, slug }) => {
   return (
     <Hook id={frontmatter.title}>
       <Name>
-        <i class="fas fa-link link-icon" />
+        <i className="fas fa-link link-icon" />
         <Link to={slug}>{frontmatter.title}</Link>
       </Name>
 
@@ -42,7 +42,7 @@ export const PostTemplate = ({ content, frontmatter, slug }) => {
           <div className="links-title">📚 Also check out:</div>
           <ul>
             {frontmatter.links.map((link, i) => (
-              <LinksLi>
+              <LinksLi key={i}>
                 <a target={link.target || "_blank"} href={link.url}>
                   {link.name}
                 </a>{" "}
