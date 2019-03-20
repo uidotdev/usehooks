@@ -1,6 +1,6 @@
 const path = require("path");
 const { createFilePath } = require("gatsby-source-filesystem");
-const createPaginatedPages = require('gatsby-paginate');
+const createPaginatedPages = require("gatsby-paginate");
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
@@ -48,10 +48,12 @@ exports.createPages = ({ actions, graphql }) => {
     createPaginatedPages({
       edges: posts,
       createPage: createPage,
-      pageTemplate: 'src/templates/index.js',
-      pageLength: 5, // This is optional and defaults to 10 if not used
-      pathPrefix: '', // This is optional and defaults to an empty string if not used
-      context: {}, // This is optional and defaults to an empty object if not used
+      pageTemplate: "src/templates/index.js",
+      pageLength: 10, // This is optional and defaults to 10 if not used
+      pathPrefix: "page", // This is optional and defaults to an empty string if not used
+      buildPath: (index, pathPrefix) =>
+        index > 1 ? `${pathPrefix}/${index}` : `/`, // This is optional and this is the default
+      context: {} // This is optional and defaults to an empty object if not used
     });
 
     posts.forEach((edge, index) => {
