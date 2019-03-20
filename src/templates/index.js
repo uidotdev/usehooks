@@ -8,9 +8,9 @@ import { PostTemplate } from "../templates/post.js";
 
 const NavLink = props => {
   if (!props.test) {
-    return <Link to={`/${props.url}`}>{props.text}</Link>
+    return <Link to={`/${props.url}`}>{props.text}</Link>;
   } else {
-    return <span>{props.text}</span>
+    return <span>{props.text}</span>;
   }
 };
 
@@ -20,8 +20,8 @@ class IndexPage extends React.Component {
   render() {
     const { pageContext } = this.props;
     const { group, index, first, last, pageCount } = pageContext;
-    const previousUrl = index - 1 == 1 ? '' : (index - 1).toString();
-    const nextUrl = (index + 1).toString()
+    const previousUrl = index - 1 == 1 ? "" : "/page/" + (index - 1).toString();
+    const nextUrl = "/page/" + (index + 1).toString();
     const { search } = this.state;
 
     // const filteredPosts = search ? searchPosts(posts, search) : posts;
@@ -46,7 +46,7 @@ class IndexPage extends React.Component {
         <PaginationContainer>
           <NavLink test={first} url={previousUrl} text="<<< Previous" />
           <span>{` Page ${index} of ${pageCount}`}</span>
-          <NavLink test={last} url={nextUrl} text="Next >>>" />  
+          <NavLink test={last} url={nextUrl} text="Next >>>" />
         </PaginationContainer>
       </Layout>
     );
