@@ -118,7 +118,7 @@ const GitHubLink = () => {
       href="https://github.com/gragland/usehooks"
     >
       <i
-        class="fab fa-github"
+        className="fab fa-github"
         style={{
           position: "absolute",
           fontSize: "1.5rem",
