@@ -2,17 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "gatsby";
 import Layout from "../components/Layout";
-import PaginationContainer from "../components/PaginationContainer";
 import Search from "../components/Search";
 import { PostTemplate } from "../templates/post.js";
-
-const NavLink = props => {
-  if (!props.test) {
-    return <Link to={`/${props.url}`}>{props.text}</Link>;
-  } else {
-    return <span>{props.text}</span>;
-  }
-};
 
 class IndexPage extends React.Component {
   state = { search: "" };
@@ -43,11 +34,62 @@ class IndexPage extends React.Component {
             slug={node.fields.slug}
           />
         ))}
-        <PaginationContainer>
-          <NavLink test={first} url={previousUrl} text="<<< Previous" />
-          <span>{` Page ${index} of ${pageCount}`}</span>
-          <NavLink test={last} url={nextUrl} text="Next >>>" />
-        </PaginationContainer>
+
+        <nav
+          className="pagination is-centered"
+          role="navigation"
+          aria-label="pagination"
+          style={{
+            maxWidth: "600px",
+            margin: "0 auto"
+          }}
+        >
+          <Link
+            className="pagination-previous"
+            to={previousUrl}
+            disabled={first}
+            style={{
+              // Temp hack to prevent clicking
+              // TODO: Render a link without a href instead
+              "pointer-events": first ? "none" : "auto"
+            }}
+          >
+            Previous
+          </Link>
+          <Link
+            className="pagination-next"
+            to={nextUrl}
+            disabled={last}
+            style={{
+              "pointer-events": last ? "none" : "auto"
+            }}
+          >
+            Next Page
+          </Link>
+          <ul className="pagination-list">
+            {Array(pageCount)
+              .fill(null)
+              .map((value, i) => {
+                const pageNum = i + 1;
+                const isCurrent = index === pageNum;
+                const url = pageNum === 1 ? "" : `/page/${pageNum}`;
+
+                return (
+                  <li>
+                    <Link
+                      className={
+                        "pagination-link" + (isCurrent ? " is-current" : "")
+                      }
+                      to={url}
+                    >
+                      {pageNum}
+                    </Link>
+                  </li>
+                );
+              })}
+          </ul>
+          {/*<span>{` Page ${index} of ${pageCount}`}</span>*/}
+        </nav>
       </Layout>
     );
   }
