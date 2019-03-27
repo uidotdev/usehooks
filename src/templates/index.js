@@ -29,7 +29,7 @@ class IndexPage extends React.Component {
         {group.map(({ node }) => (
           <PostTemplate
             key={node.id}
-            content={node.excerpt}
+            content={node.html}
             frontmatter={node.frontmatter}
             slug={node.fields.slug}
           />
