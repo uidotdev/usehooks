@@ -1,7 +1,7 @@
 ---
 templateKey: post
 title: useEventListener
-date: "2019-03-05"
+date: "2019-03-27"
 gist: https://gist.github.com/gragland/ae701852ae6159c712d860a946cd7ca0
 sandbox: https://codesandbox.io/s/z64on3ypm
 links:
