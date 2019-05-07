@@ -26,11 +26,26 @@
     "build": "gatsby build",
     "dev": "gatsby develop",
     "start": "serve public/",
+    "format": "prettier --write '{gatsby-*.js,src/**/*.{js,jsx,json,css}}'",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "now-build": "npm run build"
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
     "gh-pages": "^2.0.1",
-    "prettier": "^1.14.2"
+    "husky": "^2.2.0",
+    "lint-staged": "^8.1.6",
+    "prettier": "^1.17.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{gatsby-*.js,src/**/*.{js,jsx,json,css}}": [
+      "npm run format",
+      "git add"
+    ]
   }
 }
