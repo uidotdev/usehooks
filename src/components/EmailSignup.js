@@ -8,7 +8,7 @@ const EmailSignup = () => {
 
    const subscribe = async e => {
       e.preventDefault();
-      if (validateEmail(email)) {
+      // if (validateEmail(email)) {
          setSubscribed(true);
          await fetch('/api/subscribe', {
             method: 'POST',
@@ -17,9 +17,9 @@ const EmailSignup = () => {
             },
             body: JSON.stringify({ email })
          });
-      } else {
-         alert('The email address you entered was invalid');
-      }
+      // } else {
+      //    alert('The email address you entered was invalid');
+      // }
    };
 
    return (
