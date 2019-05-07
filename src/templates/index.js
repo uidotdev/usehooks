@@ -4,65 +4,52 @@ import Layout from '../components/Layout';
 import Search from '../components/Search';
 import { PostTemplate } from '../templates/post.js';
 
-const PaginationPrevious = (first, previousUrl) => {
-   return first ? (
-      <a href='#' className='pagination-previous'>
-         Previous
-      </a>
-   ) : (
-      <Link className='pagination-previous' to={previousUrl}>
-         Previous
-      </Link>
-   );
-};
+// const PaginationPrevious = (first, previousUrl) => {
+//    return first ? (
+//       <a href='#' className='pagination-previous'>
+//          Previous
+//       </a>
+//    ) : (
+//       <Link className='pagination-previous' to={previousUrl}>
+//          Previous
+//       </Link>
+//    );
+// };
 
-const PaginationNext = (last, nextUrl) => {
-   return last ? (
-      <a href='#' className='pagination-next'>
-         Next Page
-      </a>
-   ) : (
-      <Link className='pagination-next' to={nextUrl}>
-         Next Page
-      </Link>
-   );
-};
+// const PaginationNext = (last, nextUrl) => {
+//    return last ? (
+//       <a href='#' className='pagination-next'>
+//          Next Page
+//       </a>
+//    ) : (
+//       <Link className='pagination-next' to={nextUrl}>
+//          Next Page
+//       </Link>
+//    );
+// };
 
 const IndexPage = ({ pageContext }) => {
    const [search, setSearch] = useState('');
-   const [searchMatches, setSearchMatches] = useState([]);
+   // const [searchMatches, setSearchMatches] = useState([]);
    const { group, index, first, last, pageCount } = pageContext;
    const previousUrl = index - 1 == 1 ? '' : '/page/' + (index - 1).toString();
    const nextUrl = '/page/' + (index + 1).toString();
 
-   const searchPosts = () => {
-      const query = search !== '' && new RegExp(search, 'gi');
-      //considering we're searching for hooks, 'use' probably isn't going to be very helpful
-      if (!query || query === 'use') return;
-      const matches = group.filter(({ node: { frontmatter: { title } } }) => query.test(title));
-      setSearchMatches(matches);
-   };
-
-   useEffect(
-      () => {
-         searchPosts();
-      },
-      [search]
-   );
+   // const searchPosts = () => {
+   //    const query = search !== '' && new RegExp(search, 'gi');
+   //    //considering we're searching for hooks, 'use' probably isn't going to be very helpful
+   //    if (!query || query === 'use') return;
+   //    const matches = group.filter(({ node: { frontmatter: { title } } }) => query.test(title));
+   //    setSearchMatches(matches);
+   // };
 
    return (
       <Layout>
-         <Search value={search} onChange={setSearch} />
+         {/* <Search value={search} onChange={setSearch} /> */}
 
-         {search === '' ? (
-            group.map(({ node }) => (
-               <PostTemplate key={node.id} content={node.html} frontmatter={node.frontmatter} slug={node.fields.slug} />
-            ))
-         ) : (
-            searchMatches.map(({ node }) => (
-               <PostTemplate key={node.id} content={node.html} frontmatter={node.frontmatter} slug={node.fields.slug} />
-            ))
-         )}
+         {group.map(({ node }) => (
+            <PostTemplate key={node.id} content={node.html} frontmatter={node.frontmatter} slug={node.fields.slug} />
+         ))}
 
          <nav
             className='pagination is-centered'
@@ -83,19 +70,15 @@ const IndexPage = ({ pageContext }) => {
                }}>
                Previous
             </Link>
-            {/* //if there's a search taking place and less than 10 results, don't present the user with a next page link */}
-            {searchMatches.length > 0 &&
-            searchMatches.length < 10 && (
-               <Link
-                  className='pagination-next'
-                  to={nextUrl}
-                  disabled={last}
-                  style={{
-                     'pointer-events': last ? 'none' : 'auto'
-                  }}>
-                  Next Page
-               </Link>
-            )}
+            <Link
+               className='pagination-next'
+               to={nextUrl}
+               disabled={last}
+               style={{
+                  'pointer-events': last ? 'none' : 'auto'
+               }}>
+               Next Page
+            </Link>
 
             <ul className='pagination-list'>
                {Array(pageCount).fill(null).map((_, i) => {
