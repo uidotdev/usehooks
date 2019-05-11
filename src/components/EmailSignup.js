@@ -25,7 +25,6 @@ const EmailSignup = () => {
             ) : (
                <Fragment>
                   <Title>📩&nbsp;&nbsp;Get new recipes in your inbox</Title>
-
                   <form onSubmit={e => subscribe(e)}>
                      <div className='field has-addons'>
                         <div className='control is-expanded'>
