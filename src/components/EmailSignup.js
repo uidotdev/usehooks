@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
-import { validateEmail } from '../utils';
 
 const EmailSignup = () => {
    const [subscribed, setSubscribed] = useState(false);
@@ -8,18 +7,14 @@ const EmailSignup = () => {
 
    const subscribe = async e => {
       e.preventDefault();
-      // if (validateEmail(email)) {
-         setSubscribed(true);
-         await fetch('/api/subscribe', {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email })
-         });
-      // } else {
-      //    alert('The email address you entered was invalid');
-      // }
+      setSubscribed(true);
+      await fetch('/api/subscribe', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({ email })
+      });
    };
 
    return (
