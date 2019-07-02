@@ -21,7 +21,6 @@ To run locally, `yarn`, then `yarn dev`, then open [localhost:8000](https://loca
 [useDebounce](https://usehooks.com/useDebounce/)<br/>
 [useOnScreen](https://usehooks.com/useOnScreen/)<br/>
 [usePrevious](https://usehooks.com/usePrevious/)<br/>
-[usePrevious](https://usehooks.com/usePrevious/)<br/>
 [useOnClickOutside](https://usehooks.com/useOnClickOutside/)<br/>
 [useAnimation](https://usehooks.com/useAnimation/)<br/>
 [useWindowSize](https://usehooks.com/useWindowSize/)<br/>
