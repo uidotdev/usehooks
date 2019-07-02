@@ -61,7 +61,7 @@ class IndexPage extends React.Component {
             to={nextUrl}
             disabled={last}
             style={{
-              "pointer-events": last ? "none" : "auto"
+              pointerEvents: last ? "none" : "auto"
             }}
           >
             Next Page
@@ -75,7 +75,7 @@ class IndexPage extends React.Component {
                 const url = pageNum === 1 ? "" : `/page/${pageNum}`;
 
                 return (
-                  <li>
+                  <li key={i}>
                     <Link
                       className={
                         "pagination-link" + (isCurrent ? " is-current" : "")

@@ -84,8 +84,6 @@ export const PostTemplate = ({ content, frontmatter, slug }) => {
 const Post = ({ data, pageContext }) => {
   const { markdownRemark: post } = data;
 
-  console.log("pageContext", pageContext);
-
   const { next } = pageContext;
 
   return (
