@@ -4,7 +4,7 @@ import { graphql, Link } from "gatsby";
 import styled from "styled-components";
 import Layout from "../components/Layout";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { tomorrow as codeStyle } from "react-syntax-highlighter/dist/styles/prism";
+import { tomorrow as codeStyle } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 export const PostTemplate = ({ content, frontmatter, slug }) => {
   return (
