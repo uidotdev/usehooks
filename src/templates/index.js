@@ -51,7 +51,7 @@ class IndexPage extends React.Component {
             style={{
               // Temp hack to prevent clicking
               // TODO: Render a link without a href instead
-              "pointer-events": first ? "none" : "auto"
+              pointerEvents: first ? "none" : "auto"
             }}
           >
             Previous
