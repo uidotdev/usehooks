@@ -27,8 +27,9 @@
     "dev": "gatsby develop",
     "start": "serve public/",
     "format": "prettier --write '{gatsby-*.js,src/**/*.{js,jsx,json,css}}'",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
-    "now-build": "npm run build"
+    "now-build": "npm run build",
+    "deploy": "now",
+    "deploy:prod": "now --target production"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
