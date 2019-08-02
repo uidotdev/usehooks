@@ -52,6 +52,11 @@ const Layout = ({ children }) => (
             integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
             crossorigin="anonymous"
           />
+
+          <meta
+            name="google-site-verification"
+            content="CJpclzkv90awODeXoBk1uJbZxcBpHYMZo7rp7qTiELg"
+          />
         </Helmet>
 
         {children}
