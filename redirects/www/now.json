@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "name": "usehooks-www-redirect",
+  "alias": ["www.usehooks.com"],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "status": 301,
+      "headers": { "Location": "https://usehooks.com/$1" }
+    }
+  ]
+}
