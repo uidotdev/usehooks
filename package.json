@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "author": "Gabe Ragland",
   "dependencies": {
+    "analytics": "^0.1.16",
+    "analytics-plugin-ga": "^0.1.4",
     "babel-plugin-styled-components": "^1.10.6",
     "gatsby": "^2.11.7",
     "gatsby-paginate": "^1.1.0",
