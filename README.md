@@ -26,3 +26,10 @@ To run locally, `yarn`, then `yarn dev`, then open [localhost:8000](https://loca
 [useWindowSize](https://usehooks.com/useWindowSize/)<br/>
 [useHover](https://usehooks.com/useHover/)<br/>
 [useLocalStorage](https://usehooks.com/useLocalStorage/)
+
+
+<p align="center">
+  <a href="./LICENSE"><strong>Unlicense</strong></a> &mdash; public domain<br/><br/>
+  Check out my other project:&nbsp;&nbsp;&nbsp;<a href="https://divjoy.com"><strong>Divjoy</strong></a> &mdash; The React codebase generator ✨
+ 
+</p>
