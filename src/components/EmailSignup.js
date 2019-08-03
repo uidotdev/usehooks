@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import fetch from "unfetch";
 import styled from "styled-components";
+import analytics from "./../utils/analytics.js";
 
 class EmailSignup extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class EmailSignup extends React.Component {
 
   subscribe = async email => {
     this.setState({ subscribed: true });
+    analytics.track("subscribe");
 
     const response = await new Promise((resolve, reject) => {
       fetch("/api/subscribe", {
