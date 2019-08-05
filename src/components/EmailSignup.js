@@ -35,12 +35,19 @@ class EmailSignup extends React.Component {
         <div className="card-content">
           {subscribed ? (
             <div className="has-text-centered has-text-weight-semibold">
-              You are subscribed&nbsp;&nbsp;🎉
+              You are subscribed&nbsp;&nbsp;
+              <span role="img" aria-label="party">
+                🎉
+              </span>
             </div>
           ) : (
             <Fragment>
-              <Title>📩&nbsp;&nbsp;Get new recipes in your inbox</Title>
-
+              <Title>
+                <span role="img" aria-label="letter">
+                  📩
+                </span>
+                &nbsp;&nbsp;Get new recipes in your inbox
+              </Title>
               <form
                 onSubmit={event => {
                   event.preventDefault();

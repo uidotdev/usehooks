@@ -39,7 +39,12 @@ export const PostTemplate = ({ content, frontmatter, slug }) => {
 
       {frontmatter.links && frontmatter.links.length && (
         <Links>
-          <div className="links-title">📚 Also check out:</div>
+          <div className="links-title">
+            <span role="img" aria-label="party">
+              📚
+            </span>
+            Also check out:
+          </div>
           <ul>
             {frontmatter.links.map((link, i) => (
               <LinksLi key={i}>

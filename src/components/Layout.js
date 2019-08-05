@@ -14,7 +14,9 @@ export const Layout = ({ children }) => {
             <Logo to="/">
               useHooks
               <span>(</span>
-              🐠
+              <span role="img" aria-label="fish">
+                🐠
+              </span>
               <span>)</span>
             </Logo>
           </h1>
