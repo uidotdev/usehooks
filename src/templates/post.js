@@ -42,7 +42,12 @@ export const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
 
       {(permalink === true || extraLinks.length > 0) && (
         <Links>
-          <div className="links-title">📚 Also check out:</div>
+          <div className="links-title">
+            <span role="img" aria-label="party">
+              📚
+            </span>
+            Also check out:
+          </div>
           <ul>
             {extraLinks.map((link, i) => (
               <LinksLi key={i}>
