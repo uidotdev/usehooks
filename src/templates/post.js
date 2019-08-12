@@ -63,14 +63,18 @@ export const PostTemplate = ({ content, frontmatter, slug }) => {
         <div className="level-item is-hidden-mobile">
           <span>•</span>
         </div>
-        <div className="level-item">
-          <a target="_blank" href={frontmatter.sandbox}>
-            Open in CodeSandbox
-          </a>
-        </div>
-        <div className="level-item is-hidden-mobile">
-          <span>•</span>
-        </div>
+        {frontmatter.sandbox && (
+          <>
+            <div className="level-item">
+              <a target="_blank" href={frontmatter.sandbox}>
+                Open in CodeSandbox
+              </a>
+            </div>
+            <div className="level-item is-hidden-mobile">
+              <span>•</span>
+            </div>
+          </>
+        )}
         <div className="level-item">
           <a target="_blank" href={frontmatter.gist}>
             Suggest a change
