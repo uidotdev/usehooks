@@ -7,6 +7,7 @@ If you'd like to submit new post ideas, improve existing posts, or change anythi
 To run locally, `yarn`, then `yarn dev`, then open [localhost:8000](https://localhost:8000).
 
 ## Post Index
+[useAuth](https://usehooks.com/useAuth/)<br/>
 [useEventListener](https://usehooks.com/useEventListener/)<br/>
 [useWhyDidYouUpdate](https://usehooks.com/useWhyDidYouUpdate/)<br/>
 [useDarkMode](https://usehooks.com/useDarkMode/)<br/>
