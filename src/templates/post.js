@@ -92,7 +92,7 @@ const Post = ({ data, pageContext }) => {
 
   return (
     <Layout>
-      <Helmet title={`${post.frontmatter.title} | useHooks`}>
+      <Helmet title={`${post.frontmatter.title} React Hook - useHooks`}>
         <meta property="og:title" content={post.frontmatter.title} />
         <meta property="og:description" content="" />
         <meta name="twitter:card" content="summary_large_image" />
