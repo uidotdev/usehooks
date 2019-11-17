@@ -44,31 +44,21 @@ export const Layout = ({ children }) => {
             <div className="column is-6">
               <div className="title is-5">What all this about?</div>
               <p>
-                <i>Hooks</i> are a new addition in React 16.8 that lets you use
-                state and other React features without writing a class. This
-                website provides easy to understand code examples to help you
-                learn how hooks work and hopefully inspire you to take advantage
-                of them in your next project. Be sure to check out the{" "}
+                <i>Hooks</i> are a new addition in React that lets you use state
+                and other React features without writing a class. This website
+                provides easy to understand code examples to help you learn how
+                hooks work and inspire you to take advantage of them in your
+                next project. And if you are starting a new project soon you may
+                enjoy my other tool,{" "}
                 <a
                   target="_blank"
-                  href="https://reactjs.org/docs/hooks-intro.html"
+                  href="https://divjoy.com"
                   onClick={() => {
-                    analytics.track("clickAboutDocs");
+                    analytics.track("clickAboutDivjoy");
                   }}
                 >
-                  official docs
+                  a React codebase generator 🤖
                 </a>
-                . You can also submit post ideas in our{` `}
-                <a
-                  target="_blank"
-                  href="https://github.com/gragland/usehooks"
-                  onClick={() => {
-                    analytics.track("clickAboutGithub");
-                  }}
-                >
-                  Github repo
-                </a>
-                .
               </p>
             </div>
 
@@ -162,7 +152,7 @@ const GitHubLink = () => {
         className="fab fa-github"
         style={{
           position: "absolute",
-          fontSize: "1.5rem",
+          fontSize: "1.8rem",
           top: "1rem",
           right: "1rem",
           color: "white"
