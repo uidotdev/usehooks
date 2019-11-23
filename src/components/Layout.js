@@ -42,23 +42,27 @@ export const Layout = ({ children }) => {
         <Container>
           <div className="columns is-vcentered ">
             <div className="column is-6">
-              <div className="title is-5">What all this about?</div>
+              <div className="title is-5">What's all this about?</div>
               <p>
                 <i>Hooks</i> are a new addition in React that lets you use state
                 and other React features without writing a class. This website
                 provides easy to understand code examples to help you learn how
                 hooks work and inspire you to take advantage of them in your
-                next project. And if you are starting a new project soon you may
-                enjoy my other tool,{" "}
+                next project. You may also like my{" "}
                 <a
-                  target="_blank"
+                  //target="_blank"
                   href="https://divjoy.com"
+                  style={{
+                    //textDecoration: "underline",
+                    fontWeight: "bold"
+                  }}
                   onClick={() => {
                     analytics.track("clickAboutDivjoy");
                   }}
                 >
-                  a React codebase generator 🤖
-                </a>
+                  React app builder
+                </a>{" "}
+                ✨️
               </p>
             </div>
 
