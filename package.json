@@ -31,7 +31,7 @@
     "format": "prettier --write '{gatsby-*.js,src/**/*.{js,jsx,json,css}}'",
     "now-build": "npm run build",
     "deploy": "now",
-    "deploy:prod": "now --target production"
+    "deploy:prod": "now --prod"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
@@ -50,5 +50,8 @@
       "npm run format",
       "git add"
     ]
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
