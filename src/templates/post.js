@@ -5,8 +5,11 @@ import styled from "styled-components";
 import Layout from "../components/Layout";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow as codeStyle } from "react-syntax-highlighter/dist/esm/styles/prism";
+import analytics from "./../utils/analytics.js";
 
-export const PostTemplate = ({ content, frontmatter, slug }) => {
+export const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
+  const extraLinks = frontmatter.links || [];
+
   return (
     <Hook id={frontmatter.title}>
       <Name>
@@ -37,13 +40,19 @@ export const PostTemplate = ({ content, frontmatter, slug }) => {
         {frontmatter.code}
       </SyntaxHighlighter>
 
-      {frontmatter.links && frontmatter.links.length && (
+      {(permalink === true || extraLinks.length > 0) && (
         <Links>
           <div className="links-title">📚 Also check out:</div>
           <ul>
-            {frontmatter.links.map((link, i) => (
+            {extraLinks.map((link, i) => (
               <LinksLi key={i}>
-                <a target={link.target || "_blank"} href={link.url}>
+                <a
+                  target={link.target || "_blank"}
+                  href={link.url}
+                  onClick={() => {
+                    analytics.track("clickExtraLink");
+                  }}
+                >
                   {link.name}
                 </a>{" "}
                 -{" "}
@@ -54,6 +63,25 @@ export const PostTemplate = ({ content, frontmatter, slug }) => {
                 />
               </LinksLi>
             ))}
+            {permalink === true && (
+              <LinksLi key="divjoy">
+                <a
+                  href="https://divjoy.com?promo=usehooks"
+                  onClick={() => {
+                    analytics.track("clickExtraDivjoyLink");
+                  }}
+                >
+                  Divjoy
+                </a>{" "}
+                -{" "}
+                <span>
+                  The easiest way to start your next React project. Pick
+                  everything you need, like auth, analytics, payments, and more
+                  + a nice looking template and then export a complete React
+                  codebase. It saves you weeks of development time.
+                </span>
+              </LinksLi>
+            )}
           </ul>
         </Links>
       )}
@@ -101,6 +129,7 @@ const Post = ({ data, pageContext }) => {
         content={post.html}
         frontmatter={post.frontmatter}
         slug={post.fields.slug}
+        permalink={true}
       />
 
       <More>

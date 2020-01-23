@@ -3,10 +3,6 @@ templateKey: post
 title: useRouter
 date: "2019-10-21"
 gist: https://gist.github.com/gragland/8322804ba43392d5a1e96d37d1a38218
-links:
-  - url: https://divjoy.com
-    name: Divjoy
-    description: React app builder that includes a similar useRouter hook in all exported codebases
 code: "import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';\r\nimport queryString from 'query-string';\r\n\r\n\/\/ Usage\r\nfunction MyComponent(){\r\n  \/\/ Get the router object\r\n  const router = useRouter();\r\n\r\n  \/\/ Get value from query string (?postId=123) or route param (\/:postId)\r\n  console.log(router.query.postId);\r\n\r\n  \/\/ Get current pathname\r\n  console.log(router.pathname)\r\n\r\n  \/\/ Navigate with with router.push()\r\n  return (\r\n    <button onClick={(e) => router.push('\/about')}>About<\/button>\r\n  );\r\n}\r\n\r\n\/\/ Hook\r\nexport function useRouter() {\r\n  const params = useParams();\r\n  const location = useLocation();\r\n  const history = useHistory();\r\n  const match = useRouteMatch();\r\n\r\n  \/\/ Return our custom router object\r\n  \/\/ Memoize so that a new object is only returned if something changes\r\n  return useMemo(() => {\r\n    return {\r\n      \/\/ For convenience add push(), replace(), pathname at top level\r\n      push: history.push,\r\n      replace: history.replace,\r\n      pathname: location.pathname,\r\n      \/\/ Merge params and parsed query string into single \"query\" object\r\n      \/\/ so that they can be used interchangeably.\r\n      \/\/ Example: \/:topic?sort=popular -> { topic: \"react\", sort: \"popular\" }\r\n      query: {\r\n        ...queryString.parse(location.search), \/\/ Convert string to object\r\n        ...params\r\n      },\r\n      \/\/ Include match, location, history objects so we have\r\n      \/\/ access to extra React Router functionality if needed.\r\n      match,\r\n      location,\r\n      history\r\n    };\r\n  }, [params, match, location, history]);\r\n}"
 ---
 
