@@ -1,0 +1,15 @@
+---
+templateKey: post
+title: useComparePrevious
+date: "2020-04-07"
+gist: https://gist.github.com/gragland/ca6806dbb849efa32be8a6919e281d09
+links:
+  - url: https://github.com/facebook/react/issues/14476
+    name: useEffect custom comparator
+    description: Related discussion in the React Github repo that has other potential solutions
+code: "import React, { useState, useEffect, useRef } from 'react';\r\n\r\n\/\/ Usage\r\nfunction MyComponent({ obj }) {\r\n  \/\/ We want the previous obj if obj.id is the same as the new obj.id\r\n  \/\/ We pass a custom equality function as the second arg to our hook.\r\n  const theObj = useComparePrevious(obj, prev => prev && prev.id === obj.id);\r\n  \r\n  \/\/ Here we want to fire off an effect if theObj changes.\r\n  \/\/ If we had used obj directly without the above hook and obj was technically a\r\n  \/\/ new object on every render then the effect would fire on every render.\r\n  \/\/ Worse yet, if our effect triggered a state change it could cause an endless loop.\r\n  \/\/ (effect runs -> state change causes rerender -> effect runs -> etc ...)\r\n  useEffect(() => {\r\n    \/\/ Take some action like fetch data and set state\r\n  }, [theObj]);\r\n  \r\n  \/\/ So why not just do this?\r\n  useEffect(() => {\r\n    \/\/ Well, if we use obj here then eslint-plugin-hooks would rightfully complain\r\n    \/\/ that obj is not in the useEffect dependency array. By using our hook above we\r\n    \/\/ are more explicit about our custom equality checking and can separate that concern\r\n    \/\/ from that of our effect logic.\r\n  }, [obj.id]);\r\n    \r\n  return <div> ... <\/div>;\r\n}\r\n  \r\n\/\/ Hook\r\nfunction useComparePrevious(value, compare) {\r\n  \/\/ Ref for storing previous value\r\n  const previousRef = useRef();\r\n  const previous = previousRef.current;\r\n\r\n  \/\/ Pass previous and new value to compare function\r\n  const isEqual = compare(previous, value);\r\n\r\n  \/\/ If not equal update previous to new value (for next render)\r\n  \/\/ and then return new new value below.\r\n  useEffect(() => {\r\n    if (!isEqual) {\r\n      previousRef.current = value;\r\n    }\r\n  });\r\n\r\n  return isEqual ? previous : value;\r\n}"
+---
+
+This hook allows us to use the previous value of something if it's equal to the new value, as determined by a custom equality checking function (as opposed to true referential equality). If that sounds confusing, think of it this way: It's like [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo) but instead of passing an array of dependencies, we instead pass a function that gets both the previous and new value and can deem them equal however we want.
+<br/><br/>
+Most of the time this hook shouldn't be necessary. Where it really comes in handy is if you want to offer a library to other developers and it would be akward to force them to always memoize a value before passing it to your library. While the example below is a bit abstract, I'll be posting a new hook recipe tomorrow that would have been really difficult to build without using useComparePrevious internally. So check back tomorrow for more ;)
