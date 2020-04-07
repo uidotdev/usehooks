@@ -51,7 +51,7 @@ export const Layout = ({ children }) => {
                 next project. You may also like my{" "}
                 <a
                   //target="_blank"
-                  href="https://divjoy.com"
+                  href="https://divjoy.com?promo=usehooks"
                   style={{
                     //textDecoration: "underline",
                     fontWeight: "bold"
