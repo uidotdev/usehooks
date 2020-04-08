@@ -40,7 +40,7 @@ export const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
         {frontmatter.code}
       </SyntaxHighlighter>
 
-      {(permalink === true || extraLinks.length > 0) && (
+      {extraLinks.length > 0 && (
         <Links>
           <div className="links-title">📚 Also check out:</div>
           <ul>
@@ -63,6 +63,7 @@ export const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
                 />
               </LinksLi>
             ))}
+            {/*
             {permalink === true && (
               <LinksLi key="divjoy">
                 <a
@@ -73,15 +74,10 @@ export const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
                 >
                   Divjoy
                 </a>{" "}
-                -{" "}
-                <span>
-                  The easiest way to start your next React project. Pick
-                  everything you need, like auth, analytics, payments, and more
-                  + a nice looking template and then export a complete React
-                  codebase. It saves you weeks of development time.
-                </span>
+                - <span>The easiest way to start your next React project</span>
               </LinksLi>
             )}
+            */}
           </ul>
         </Links>
       )}

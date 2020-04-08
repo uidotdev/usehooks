@@ -1,5 +1,4 @@
 {
-  "name": "usehooks",
   "version": 2,
   "env": {
     "mailchimp_api_key": "@usehooks-mailchimp-api-key",
