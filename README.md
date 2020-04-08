@@ -8,7 +8,7 @@ To run locally, `yarn`, then `yarn dev`, then open [localhost:8000](https://loca
 
 ## Post Index
 
-[useComparePrevious](https://usehooks.com/useComparePrevious/)<br/>
+[useMemoCompare](https://usehooks.com/useMemoCompare/)<br/>
 [useAsync](https://usehooks.com/useAsync/)<br/>
 [useRequireAuth](https://usehooks.com/useRequireAuth/)<br/>
 [useRouter](https://usehooks.com/useRouter/)<br/>
