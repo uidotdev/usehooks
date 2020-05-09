@@ -40,7 +40,7 @@ export const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
         {frontmatter.code}
       </SyntaxHighlighter>
 
-      {extraLinks.length > 0 && (
+      {(permalink === true || extraLinks.length > 0) && (
         <Links>
           <div className="links-title">📚 Also check out:</div>
           <ul>
@@ -63,21 +63,21 @@ export const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
                 />
               </LinksLi>
             ))}
-            {/*
+
             {permalink === true && (
               <LinksLi key="divjoy">
                 <a
-                  href="https://divjoy.com?promo=usehooks"
+                  href="https://divjoy.com?utm_source=usehooks&utm_medium=website&utm_campaign=usehooks-post-links"
                   onClick={() => {
                     analytics.track("clickExtraDivjoyLink");
                   }}
                 >
                   Divjoy
                 </a>{" "}
-                - <span>The easiest way to start your next React project</span>
+                -{" "}
+                <span>React starter kit from the creator of usehooks.com</span>
               </LinksLi>
             )}
-            */}
           </ul>
         </Links>
       )}
@@ -211,7 +211,7 @@ const Links = styled("div")`
   margin-top: 15px;
   border-radius: 10px;
   .links-title {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
   }
 `;

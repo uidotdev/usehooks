@@ -50,8 +50,7 @@ export const Layout = ({ children }) => {
                 hooks work and inspire you to take advantage of them in your
                 next project. You may also like my{" "}
                 <a
-                  //target="_blank"
-                  href="https://divjoy.com?promo=usehooks"
+                  href="https://divjoy.com?utm_source=usehooks&utm_medium=website&utm_campaign=usehooks-homepage&utm_content=about"
                   style={{
                     //textDecoration: "underline",
                     fontWeight: "bold"
@@ -60,7 +59,7 @@ export const Layout = ({ children }) => {
                     analytics.track("clickAboutDivjoy");
                   }}
                 >
-                  React app builder
+                  React starter kit
                 </a>{" "}
                 ✨️
               </p>
