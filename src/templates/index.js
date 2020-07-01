@@ -11,7 +11,7 @@ class IndexPage extends React.Component {
   render() {
     const { pageContext } = this.props;
     const { group, index, first, last, pageCount } = pageContext;
-    const previousUrl = index - 1 == 1 ? "" : "/page/" + (index - 1).toString();
+    const previousUrl = index - 1 == 1 ? "/" : `/page/${index - 1}`;
     const nextUrl = "/page/" + (index + 1).toString();
     const { search } = this.state;
 
@@ -72,7 +72,7 @@ class IndexPage extends React.Component {
               .map((value, i) => {
                 const pageNum = i + 1;
                 const isCurrent = index === pageNum;
-                const url = pageNum === 1 ? "" : `/page/${pageNum}`;
+                const url = pageNum === 1 ? "/" : `/page/${pageNum}`;
 
                 return (
                   <li key={i}>
