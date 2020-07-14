@@ -8,22 +8,16 @@ code:"const getKeyName = keyCode => {
   switch (keyCode) {
     case 37:
       return "left";
-      break;
     case 38:
       return "up";
-      break;
     case 39:
       return "right";
-      break;
     case 40:
       return "down";
-      break;
     case 65:
       return "A";
-      break;
     case 66:
       return "B";
-      break;
   }
 };
 
