@@ -8,8 +8,9 @@ import analytics from "./../utils/analytics.js";
 export const Layout = ({ children }) => {
   return (
     <App>
-      <GitHubLink />
+      {/* <Bar></Bar> */}
       <div className="hero is-bold is-primary has-text-centered">
+        <GitHubLink />
         <div className="hero-body">
           <h1 className="title is-size-2-mobile is-1 is-spaced has-text-weight-bold">
             <Logo to="/">
@@ -189,5 +190,17 @@ const FooterLevel = styled("div").attrs({ className: "level" })`
   }
   a:hover {
     text-decoration: underline;
+  }
+`;
+
+const Bar = styled("div")`
+  font-size: 20px;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  background-color: black;
+
+  > a:link {
+    text-decoration: none;
   }
 `;
