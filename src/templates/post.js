@@ -35,7 +35,11 @@ export const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
       <SyntaxHighlighter
         language="javascript"
         style={codeStyle}
-        customStyle={{ borderRadius: "10px", padding: "1.5em" }}
+        customStyle={{
+          borderRadius: "10px",
+          padding: "1.5em",
+          fontSize: "14px"
+        }}
       >
         {frontmatter.code}
       </SyntaxHighlighter>
