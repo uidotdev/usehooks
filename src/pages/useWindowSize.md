@@ -12,7 +12,7 @@ code:
   {\r\n    return {\r\n      width: isClient ? window.innerWidth : undefined,\r\n
   \     height: isClient ? window.innerHeight : undefined\r\n    };\r\n  }\r\n\r\n
   \ const [windowSize, setWindowSize] = useState(getSize);\r\n\r\n  useEffect(() =>
-  {\r\n    if (!isClient) {\r\n      return false;\r\n    }\r\n    \r\n    function
+  {\r\n    if (!isClient) {\r\n      return;\r\n    }\r\n    \r\n    function
   handleResize() {\r\n      setWindowSize(getSize());\r\n    }\r\n\r\n    window.addEventListener('resize',
   handleResize);\r\n    return () => window.removeEventListener('resize', handleResize);\r\n
   \ }, []); // Empty array ensures that effect is only run on mount and unmount\r\n\r\n
