@@ -40,7 +40,7 @@ export const PostTemplate = ({ content, frontmatter, slug }) => {
       {frontmatter.links && frontmatter.links.length && (
         <Links>
           <div className="links-title">
-            <span role="img" aria-label="party">
+            <span role="img" aria-label="books">
               📚
             </span>
             Also check out:
