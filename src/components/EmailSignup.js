@@ -17,8 +17,8 @@ const EmailSignup = () => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ email }).then(r => r.json())
-    });
+      body: JSON.stringify({ email })
+    }).then(r => r.json());
   };
 
   return (
