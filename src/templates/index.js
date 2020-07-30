@@ -5,95 +5,90 @@ import Layout from "../components/Layout";
 import Search from "../components/Search";
 import { PostTemplate } from "../templates/post.js";
 
-class IndexPage extends React.Component {
-  state = { search: "" };
+const IndexPage = ({ pageContext }) => {
+  //const [search, setSearch] = useState("");
+  // const [searchMatches, setSearchMatches] = useState([]);
 
-  render() {
-    const { pageContext } = this.props;
-    const { group, index, first, last, pageCount } = pageContext;
-    const previousUrl = index - 1 == 1 ? "/" : `/page/${index - 1}`;
-    const nextUrl = "/page/" + (index + 1).toString();
-    const { search } = this.state;
+  const { group, index, first, last, pageCount } = pageContext;
+  const previousUrl = index - 1 == 1 ? "/" : `/page/${index - 1}`;
+  const nextUrl = "/page/" + (index + 1).toString();
 
-    // const filteredPosts = search ? searchPosts(posts, search) : posts;
+  return (
+    <Layout>
+      {/*
+      <Search
+        value={search}
+        onChange={value => setSearch({ search: value })}
+      />
+      */}
 
-    return (
-      <Layout>
-        {/*
-        <Search
-          value={this.search}
-          onChange={value => this.setState({ search: value })}
+      {group.map(({ node }) => (
+        <PostTemplate
+          key={node.id}
+          content={node.html}
+          frontmatter={node.frontmatter}
+          slug={node.fields.slug}
         />
-        */}
+      ))}
 
-        {group.map(({ node }) => (
-          <PostTemplate
-            key={node.id}
-            content={node.html}
-            frontmatter={node.frontmatter}
-            slug={node.fields.slug}
-          />
-        ))}
-
-        <nav
-          className="pagination is-centered"
-          role="navigation"
-          aria-label="pagination"
+      <nav
+        className="pagination is-centered"
+        role="navigation"
+        aria-label="pagination"
+        style={{
+          maxWidth: "600px",
+          margin: "0 auto"
+        }}
+      >
+        <Link
+          className="pagination-previous"
+          to={previousUrl}
+          disabled={first}
           style={{
-            maxWidth: "600px",
-            margin: "0 auto"
+            // Temp hack to prevent clicking
+            // TODO: Render a link without a href instead
+            pointerEvents: first ? "none" : "auto"
           }}
         >
-          <Link
-            className="pagination-previous"
-            to={previousUrl}
-            disabled={first}
-            style={{
-              // Temp hack to prevent clicking
-              // TODO: Render a link without a href instead
-              pointerEvents: first ? "none" : "auto"
-            }}
-          >
-            Previous
-          </Link>
-          <Link
-            className="pagination-next"
-            to={nextUrl}
-            disabled={last}
-            style={{
-              pointerEvents: last ? "none" : "auto"
-            }}
-          >
-            Next Page
-          </Link>
-          <ul className="pagination-list">
-            {Array(pageCount)
-              .fill(null)
-              .map((value, i) => {
-                const pageNum = i + 1;
-                const isCurrent = index === pageNum;
-                const url = pageNum === 1 ? "/" : `/page/${pageNum}`;
+          Previous
+        </Link>
+        <Link
+          className="pagination-next"
+          to={nextUrl}
+          disabled={last}
+          style={{
+            pointerEvents: last ? "none" : "auto"
+          }}
+        >
+          Next Page
+        </Link>
+        <ul className="pagination-list">
+          {Array(pageCount)
+            .fill(null)
+            .map((value, i) => {
+              const pageNum = i + 1;
+              const isCurrent = index === pageNum;
+              const url = pageNum === 1 ? "/" : `/page/${pageNum}`;
 
-                return (
-                  <li key={i}>
-                    <Link
-                      className={
-                        "pagination-link" + (isCurrent ? " is-current" : "")
-                      }
-                      to={url}
-                    >
-                      {pageNum}
-                    </Link>
-                  </li>
-                );
-              })}
-          </ul>
-          {/*<span>{` Page ${index} of ${pageCount}`}</span>*/}
-        </nav>
-      </Layout>
-    );
-  }
-}
+              return (
+                <li key={i}>
+                  <Link
+                    className={
+                      "pagination-link" + (isCurrent ? " is-current" : "")
+                    }
+                    to={url}
+                  >
+                    {pageNum}
+                  </Link>
+                </li>
+              );
+            })}
+        </ul>
+        {/*<span>{` Page ${index} of ${pageCount}`}</span>*/}
+      </nav>
+    </Layout>
+  );
+};
 
 export default IndexPage;
 
