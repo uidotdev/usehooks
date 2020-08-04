@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Link } from "gatsby";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow as codeStyle } from "react-syntax-highlighter/dist/esm/styles/prism";
 import analytics from "./../utils/analytics.js";
-import { Hook, Composes, Name, Content, Links, LinksLi, Info } from "./styled";
+import { Composes, Content, Hook, Info, Links, LinksLi, Name } from "./styled";
 
 const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
   const extraLinks = frontmatter.links || [];
+  const [codeKey, setCodeKey] = useState("code");
+  const isCodeSwitchAvailable = useMemo(() => Boolean(frontmatter.tsCode), []);
+
+  const handleSwitchCodeClick = useCallback(() => {
+    setCodeKey(key => (key === "code" ? "tsCode" : "code"));
+  }, []);
 
   return (
     <Hook id={frontmatter.title}>
@@ -28,7 +34,16 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
       )}
 
       <Content dangerouslySetInnerHTML={{ __html: content }} />
-
+      {isCodeSwitchAvailable && (
+        <Content>
+          <button
+            className="button is-secondary has-text-weight-semibold"
+            onClick={handleSwitchCodeClick}
+          >
+            View in {codeKey === "code" ? "TypeScript" : "JavaScript"}
+          </button>
+        </Content>
+      )}
       <SyntaxHighlighter
         language="javascript"
         style={codeStyle}
@@ -38,7 +53,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
           fontSize: "14px"
         }}
       >
-        {frontmatter.code}
+        {frontmatter[codeKey]}
       </SyntaxHighlighter>
 
       {(permalink === true || extraLinks.length > 0) && (
