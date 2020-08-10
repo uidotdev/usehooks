@@ -1,9 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "gatsby";
 import Layout from "../components/Layout";
-import Search from "../components/Search";
-import { PostTemplate } from "../templates/post.js";
+// import Search from "../components/Search";
+import PostTemplate from "../components/PostTemplate";
 
 const IndexPage = ({ pageContext }) => {
   //const [search, setSearch] = useState("");
