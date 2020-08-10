@@ -31,6 +31,7 @@ exports.createPages = ({ actions, graphql }) => {
                 description
               }
               code
+              tsCode
             }
           }
         }
