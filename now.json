@@ -20,11 +20,5 @@
       "src": "/api/subscribe",
       "dest": "/mailchimp/index.js"
     }
-  ],
-  "redirects": [
-    {
-      "source": "/useMemoCompare",
-      "destination": "/usePreviousCompare"
-    }
   ]
 }
