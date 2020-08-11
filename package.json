@@ -30,8 +30,8 @@
     "start": "serve public/",
     "format": "prettier --write '{gatsby-*.js,src/**/*.{js,jsx,json,css}}'",
     "now-build": "npm run build",
-    "deploy": "now",
-    "deploy:prod": "now --prod"
+    "deploy": "vercel",
+    "deploy:prod": "vercel --prod"
   },
   "devDependencies": {
     "eslint": "^7.5.0",
