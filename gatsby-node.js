@@ -32,6 +32,7 @@ exports.createPages = ({ actions, graphql }) => {
               }
               code
               tsCode
+              ogImage
             }
           }
         }

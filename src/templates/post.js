@@ -17,6 +17,12 @@ const Post = ({ data, pageContext }) => {
         <meta property="og:title" content={post.frontmatter.title} />
         <meta property="og:description" content="" />
         <meta name="twitter:card" content="summary_large_image" />
+        {post.frontmatter.ogImage && (
+          <meta
+            property="og:image"
+            content={"https://usehooks.com/img/" + post.frontmatter.ogImage}
+          />
+        )}
       </Helmet>
       <PostTemplate
         content={post.html}
@@ -60,6 +66,7 @@ export const pageQuery = graphql`
         }
         code
         tsCode
+        ogImage
       }
     }
   }
