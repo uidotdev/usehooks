@@ -12,6 +12,8 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
 
   const handleSwitchCodeClick = useCallback(() => {
     setCodeKey(key => (key === "code" ? "tsCode" : "code"));
+
+    analytics.track("clickTsToggle");
   }, []);
 
   return (
