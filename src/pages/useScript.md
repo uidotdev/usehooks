@@ -11,7 +11,99 @@ links:
   - url: https://github.com/palmerhq/the-platform#usescript
     name: useScript from palmerhq/the-platform
     description: Similar hook but returns a promise for use with React Suspense.
-code: "import { useState, useEffect } from 'react';\r\n\r\n\/\/ Usage\r\nfunction App() {\r\n  const status = useScript(\r\n    'https:\/\/pm28k14qlj.codesandbox.io\/test-external-script.js'\r\n  );\r\n\r\n  return (\r\n    <div>\r\n      <div>\r\n        Script status: <b>{status}<\/b>\r\n      <\/div>\r\n      {status === \"ready\" && (\r\n        <div>\r\n          Script function call response: <b>{TEST_SCRIPT.start()}<\/b>\r\n        <\/div>\r\n      )}\r\n    <\/div>\r\n  );\r\n}\r\n\r\n\/\/ Hook\r\nfunction useScript(src) {\r\n  \/\/ Keep track of script status (\"idle\", \"loading\", \"ready\", \"error\")\r\n  const [status, setStatus] = useState(src ? \"loading\" : \"idle\");\r\n\r\n  useEffect(\r\n    () => {\r\n      \/\/ Allow falsy src value if waiting on other data needed for\r\n      \/\/ constructing the script URL passed to this hook.\r\n      if (!src) {\r\n        setStatus(\"idle\");\r\n        return;\r\n      }\r\n\r\n      \/\/ Fetch existing script element by src\r\n      \/\/ It may have been added by another intance of this hook\r\n      let script = document.querySelector(`script[src=\"${src}\"]`);\r\n\r\n      if (!script) {\r\n        \/\/ Create script\r\n        script = document.createElement(\"script\");\r\n        script.src = src;\r\n        script.async = true;\r\n        script.setAttribute(\"data-status\", \"loading\");\r\n        \/\/ Add script to document body\r\n        document.body.appendChild(script);\r\n\r\n        \/\/ Store status in attribute on script\r\n        \/\/ This can be read by other instances of this hook\r\n        const setAttributeFromEvent = (event) => {\r\n          script.setAttribute(\r\n            \"data-status\",\r\n            event.type === \"load\" ? \"ready\" : \"error\"\r\n          );\r\n        };\r\n\r\n        script.addEventListener(\"load\", setAttributeFromEvent);\r\n        script.addEventListener(\"error\", setAttributeFromEvent);\r\n      } else {\r\n        \/\/ Grab existing script status from attribute and set to state.\r\n        setStatus(script.getAttribute(\"data-status\"));\r\n      }\r\n\r\n      \/\/ Script event handler to update status in state\r\n      \/\/ Note: Even if the script already exists we still need to add\r\n      \/\/ event handlers to update the state for *this* hook instance.\r\n      const setStateFromEvent = (event) => {\r\n        setStatus(event.type === \"load\" ? \"ready\" : \"error\");\r\n      };\r\n\r\n      \/\/ Add event listeners\r\n      script.addEventListener(\"load\", setStateFromEvent);\r\n      script.addEventListener(\"error\", setStateFromEvent);\r\n\r\n      \/\/ Remove event listeners on cleanup\r\n      return () => {\r\n        if (script) {\r\n          script.removeEventListener(\"load\", setStateFromEvent);\r\n          script.removeEventListener(\"error\", setStateFromEvent);\r\n        }\r\n      };\r\n    },\r\n    [src] \/\/ Only re-run effect if script src changes\r\n  );\r\n\r\n  return status;\r\n}"
+code: ""
 ---
 
 This hook makes it super easy to dynamically load an external script and know when its loaded. This is useful when you need to interact with a 3rd party library (Stripe, Google Analytics, etc) and you'd prefer to load the script when needed rather then include it in the document head for every page request. In the example below we wait until the script has loaded successfully before calling a function declared in the script. If you're interested in seeing how this would look if implemented as a Higher Order Component then check out the [source of react-script-loader-hoc](https://github.com/sesilio/react-script-loader-hoc/blob/master/src/index.js). I personally find it much more readable as a hook. Another advantage is because you can use this hook multiple times within a component, we don't need to add support for loading multiple scripts and we can keep our hook logic nice and simple.
+
+```jsx
+import { useState, useEffect } from 'react';
+
+// Usage
+function App() {
+  const status = useScript(
+    'https://pm28k14qlj.codesandbox.io/test-external-script.js'
+  );
+
+  return (
+    <div>
+      <div>
+        Script status: <b>{status}</b>
+      </div>
+      {status === "ready" && (
+        <div>
+          Script function call response: <b>{TEST_SCRIPT.start()}</b>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Hook
+function useScript(src) {
+  // Keep track of script status ("idle", "loading", "ready", "error")
+  const [status, setStatus] = useState(src ? "loading" : "idle");
+
+  useEffect(
+    () => {
+      // Allow falsy src value if waiting on other data needed for
+      // constructing the script URL passed to this hook.
+      if (!src) {
+        setStatus("idle");
+        return;
+      }
+
+      // Fetch existing script element by src
+      // It may have been added by another intance of this hook
+      let script = document.querySelector(`script[src="${src}"]`);
+
+      if (!script) {
+        // Create script
+        script = document.createElement("script");
+        script.src = src;
+        script.async = true;
+        script.setAttribute("data-status", "loading");
+        // Add script to document body
+        document.body.appendChild(script);
+
+        // Store status in attribute on script
+        // This can be read by other instances of this hook
+        const setAttributeFromEvent = (event) => {
+          script.setAttribute(
+            "data-status",
+            event.type === "load" ? "ready" : "error"
+          );
+        };
+
+        script.addEventListener("load", setAttributeFromEvent);
+        script.addEventListener("error", setAttributeFromEvent);
+      } else {
+        // Grab existing script status from attribute and set to state.
+        setStatus(script.getAttribute("data-status"));
+      }
+
+      // Script event handler to update status in state
+      // Note: Even if the script already exists we still need to add
+      // event handlers to update the state for *this* hook instance.
+      const setStateFromEvent = (event) => {
+        setStatus(event.type === "load" ? "ready" : "error");
+      };
+
+      // Add event listeners
+      script.addEventListener("load", setStateFromEvent);
+      script.addEventListener("error", setStateFromEvent);
+
+      // Remove event listeners on cleanup
+      return () => {
+        if (script) {
+          script.removeEventListener("load", setStateFromEvent);
+          script.removeEventListener("error", setStateFromEvent);
+        }
+      };
+    },
+    [src] // Only re-run effect if script src changes
+  );
+
+  return status;
+}
+```
