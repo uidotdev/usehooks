@@ -1,19 +1,26 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { Link } from "gatsby";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { tomorrow as codeStyle } from "react-syntax-highlighter/dist/esm/styles/prism";
 import analytics from "./../utils/analytics.js";
-import { Composes, Content, Hook, Info, Links, LinksLi, Name } from "./styled";
+import {
+  CodeContent,
+  Composes,
+  Content,
+  Hook,
+  Info,
+  Links,
+  LinksLi,
+  Name
+} from "./styled";
 
 const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
   const extraLinks = frontmatter.links || [];
-  const [codeKey, setCodeKey] = useState("code");
-  const isCodeSwitchAvailable = useMemo(() => Boolean(frontmatter.tsCode), []);
+  const [lang, setLang] = useState("jsx");
+  const isCodeSwitchAvailable = useMemo(() => Boolean(frontmatter.tsCode), [
+    frontmatter.tsCode
+  ]);
 
   const handleSwitchCodeClick = useCallback(() => {
-    setCodeKey(key => (key === "code" ? "tsCode" : "code"));
-
-    analytics.track("clickTsToggle");
+    setLang(value => (value === "jsx" ? "tsx" : "jsx"));
   }, []);
 
   return (
@@ -35,28 +42,20 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
         </Composes>
       )}
 
-      <Content dangerouslySetInnerHTML={{ __html: content }} />
+      <CodeContent
+        language={lang}
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
       {isCodeSwitchAvailable && (
         <Content>
           <button
             className="button is-secondary has-text-weight-semibold"
             onClick={handleSwitchCodeClick}
           >
-            View in {codeKey === "code" ? "TypeScript" : "JavaScript"}
+            View in {lang === "jsx" ? "TypeScript" : "JavaScript"}
           </button>
         </Content>
       )}
-      <SyntaxHighlighter
-        language="javascript"
-        style={codeStyle}
-        customStyle={{
-          borderRadius: "10px",
-          padding: "1.5em",
-          fontSize: "14px"
-        }}
-      >
-        {frontmatter[codeKey]}
-      </SyntaxHighlighter>
 
       {(permalink === true || extraLinks.length > 0) && (
         <Links>

@@ -86,3 +86,20 @@ export const More = styled.div`
     margin-right: 10px;
   }
 `;
+
+export const CodeContent = styled(Content)`
+  ${({ language }) =>
+    language === "tsx" &&
+    `
+  .gatsby-highlight[data-language=jsx] {
+    display: none;
+  }
+`}
+  ${({ language }) =>
+    language === "jsx" &&
+    `
+  .gatsby-highlight[data-language=tsx] {
+    display: none;
+  }
+`}
+`;
