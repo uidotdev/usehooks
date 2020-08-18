@@ -4,7 +4,6 @@ title: useWindowSize
 date: "2018-10-31"
 gist: https://gist.github.com/gragland/4e3d9b1c934a18dc76f585350f97e321
 sandbox: https://codesandbox.io/s/jj61r2w6z5
-code: ""
 ---
 
 A really common need is to get the current size of the browser window.

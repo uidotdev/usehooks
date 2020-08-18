@@ -15,9 +15,10 @@ import {
 const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
   const extraLinks = frontmatter.links || [];
   const [lang, setLang] = useState("jsx");
-  const isCodeSwitchAvailable = useMemo(() => Boolean(frontmatter.tsCode), [
-    frontmatter.tsCode
-  ]);
+  const isCodeSwitchAvailable = useMemo(
+    () => Boolean(frontmatter.isMultilingual),
+    [frontmatter.isMultilingual]
+  );
 
   const handleSwitchCodeClick = useCallback(() => {
     setLang(value => (value === "jsx" ? "tsx" : "jsx"));

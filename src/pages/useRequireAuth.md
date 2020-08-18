@@ -5,7 +5,6 @@ date: "2019-11-17"
 composes: ["useAuth", "useRouter"]
 gist: https://gist.github.com/gragland/d0fa96ced6b1cf0e6f073964573266f4
 links:
-code: ""
 ---
 
 A common need is a way to redirect the user if they are signed out and trying to view a page that should require them to be authenticated. This example shows how you can easily compose our [`useAuth`](/useAuth) and [`useRouter`](/useRouter) hooks to create a new `useRequireAuth` hook that does just that. Of course, this functionality could be added directly to our `useAuth` hook, but then we'd need to make that hook aware of our router logic. Using the power of hook composition we can keep the other two hooks as simple as possible and just utilize our new `useRequireAuth` when redirection is needed.

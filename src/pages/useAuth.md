@@ -3,7 +3,6 @@ templateKey: post
 title: useAuth
 date: "2019-08-12"
 gist: https://gist.github.com/gragland/25910a537e397844312870fcfc3ee74b
-code: ""
 ---
 
 A very common scenario is you have a bunch of components that need to render different depending on whether the current user is logged in and sometimes call authentication methods like `signin`, `signout`, `sendPasswordResetEmail`, etc.

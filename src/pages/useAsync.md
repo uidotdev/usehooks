@@ -15,8 +15,7 @@ links:
     name: react-async
     description: React component and hook for declarative promise resolution and data fetching.
 
-code: ""
-tsCode: "1"
+isMultilingual: true
 ---
 
 It's generally a good practice to indicate to users the status of any async request. An example would be fetching data from an API and displaying a loading indicator before rendering the results. Another example would be a form where you want to disable the submit button when the submission is pending and then display either a success or error message when it completes.

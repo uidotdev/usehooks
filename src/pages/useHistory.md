@@ -13,7 +13,6 @@ links:
   - url: https://codesandbox.io/s/yv3004lqnj
     name: React useHistory hook
     description: An alternate implementation of useHistory by <a target="_blank"  href="https://twitter.com/juice49">@juice49</a>.
-code: ""
 ---
 
 This hook makes it really easy to add undo/redo functionality to your app. Our recipe is a simple drawing app. It generates a grid of blocks, allows you to click any block to toggle its color, and uses the useHistory hook so we can undo, redo, or clear all changes to the canvas. Check out our [CodeSandbox demo](https://codesandbox.io/s/32rqn6zq0p). Within our hook we're using useReducer to store state instead of useState, which should look familiar to anyone that's used redux (read more about useReducer in the [official docs](https://reactjs.org/docs/hooks-reference.html#usereducer)). The hook code was copied, with minor changes, from the excellent [use-undo library](https://github.com/xxhomey19/use-undo), so if you'd like to pull this into your project you can also use that library via npm.

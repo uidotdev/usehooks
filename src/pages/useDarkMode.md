@@ -9,8 +9,7 @@ links:
   - url: https://github.com/donavon/use-dark-mode
     name: donavon/use-dark-mode
     description: A more configurable implementation of this hook that syncs changes across browser tabs and handles SSR. Provided much of the code and inspiration for this post.
-code: ""
-tsCode: "1"
+isMultilingual: true
 ---
 
 This hook handles all the stateful logic required to add a <b>☾ dark mode</b> toggle to your website. It utilizes localStorage to remember the user's chosen mode, defaults to their browser or OS level setting using the `prefers-color-scheme` media query and manages the setting of a `.dark-mode` className on `body` to apply your styles.

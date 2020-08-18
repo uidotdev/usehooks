@@ -11,8 +11,7 @@ links:
   - url: https://codesandbox.io/s/26mjowzpr?from-embed
     name: Masonry Grid
     description: Original source of our useMedia v1 code. This demo uses react-spring to animate when images change columns.
-code: ""
-tsCode: "1"
+isMultilingual: true
 ---
 
 This hook makes it super easy to utilize media queries in your component logic. In our example below we render a different number of columns depending on which media query matches the current screen width, and then distribute images amongst the columns in a way that limits column height difference (we don't want one column way longer than the rest).

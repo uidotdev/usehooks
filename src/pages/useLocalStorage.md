@@ -8,8 +8,7 @@ links:
   - url: https://github.com/donavon/use-persisted-state
     name: use-persisted-state
     description: A more advanced implementation that syncs between tabs and browser windows.
-code: ""
-tsCode: "1"
+isMultilingual: true
 ---
 
 Sync state to local storage so that it persists through a page refresh.

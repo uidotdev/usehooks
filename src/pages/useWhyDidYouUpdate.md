@@ -4,7 +4,6 @@ title: useWhyDidYouUpdate
 date: "2019-02-21"
 gist: https://gist.github.com/gragland/fe89992181663d5e46d024dec8a8e5e6
 sandbox: https://codesandbox.io/s/kx83n7201o
-code: ""
 ---
 
 This hook makes it easy to see which prop changes are causing a component to re-render. If a function is particularly expensive to run and you know it renders the same results given the same props you can use the `React.memo` higher order component, as we've done with the `Counter` component in the below example. In this case if you're still seeing re-renders that seem unnecessary you can drop in the `useWhyDidYouUpdate` hook and check your console to see which props changed between renders and view their previous/current values. Pretty nifty huh?

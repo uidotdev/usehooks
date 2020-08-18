@@ -8,7 +8,6 @@ links:
   - url: https://jeremenichelli.io/2019/01/how-hooks-might-shape-design-systems-built-in-react/
     name: How hooks might shape design systems built in React
     description: Great blog post that inspired this hook recipe. Their version of the useLockBodyScroll hook accepts a toggle argument to give more control over lock state.
-code: ""
 ---
 
 Sometimes you want to prevent your users from being able to scroll the body of your page while a particular component is absolutely positioned over your page (think modal or full-screen mobile menu). It can be confusing to see the background content scroll underneath a modal, especially if you intended to scroll an area within the modal. Well, this hook solves that! Simply call the useLockBodyScroll hook in any component and body scrolling will be locked until that component unmounts. See it in action in the [CodeSandbox Demo](https://codesandbox.io/s/yvkol51m81).

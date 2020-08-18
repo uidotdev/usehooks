@@ -8,7 +8,6 @@ links:
   - url: https://gist.github.com/gragland/a32d08580b7e0604ff02cb069826ca2f
     name: useHover with callback ref
     description: Alternate version that supports changing the element that hoverRef is applied to
-code: ""
 ---
 
 Detect whether the mouse is hovering an element. The hook returns a ref

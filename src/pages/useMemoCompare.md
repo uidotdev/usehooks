@@ -7,7 +7,6 @@ links:
   - url: https://github.com/facebook/react/issues/14476
     name: useEffect custom comparator
     description: Related discussion in the React Github repo that has other potential solutions
-code: ""
 ---
 
 This hook is similar to [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo), but instead of passing an array of dependencies we pass a custom compare function that receives the previous and new value. The compare function can then compare nested properties, call object methods, or anything else to determine equality. If the compare function returns true then the hook returns the old object reference.

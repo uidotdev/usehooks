@@ -8,7 +8,6 @@ links:
   - url: https://github.com/Andarist/use-onclickoutside
     name: Andarist/use-onclickoutside
     description: Similar logic implemented as a library. Also accounts for passive events. Good choice if you want to pull something from github/npm.
-code: ""
 ---
 
 This hook allows you to detect clicks outside of a specified element.

@@ -8,7 +8,6 @@ links:
   - url: https://github.com/thebuilder/react-intersection-observer
     name: react-intersection-observer
     description: A more robust and configurable implementation of this hook.
-code: ""
 ---
 
 This hook allows you to easily detect when an element is visible on the

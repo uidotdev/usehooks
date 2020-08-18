@@ -4,7 +4,6 @@ title: useAnimation
 date: "2018-11-02"
 gist: https://gist.github.com/gragland/28e628fb347afb908e945d43f9068d45
 sandbox: https://codesandbox.io/s/qxnmn1n45q
-code: ""
 ---
 
 This hook allows you to smoothly animate any value using an easing function (linear, elastic, etc). In the example we call the useAnimation hook three times to animated three balls on to the screen at different intervals. Additionally we show how easy it is to compose hooks. Our useAnimation hook doesn't actual make use of useState or useEffect itself, but instead serves as a wrapper around the useAnimationTimer hook. Having the timer logic abstracted out into its own hook gives us better code readability and the ability to use timer logic in other contexts. Be sure to check out the [CodeSandbox Demo](https://codesandbox.io/s/qxnmn1n45q) for this one.

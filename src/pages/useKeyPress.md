@@ -11,7 +11,6 @@ links:
     description:
       A fork of this recipe by <a target="_blank"  href="https://twitter.com/jhsu">@jhsu</a>
       that detects multiple keys at once.
-code: ""
 ---
 
 This hook makes it easy to detect when the user is pressing a specific key on their keyboard. The recipe is fairly simple, as I want to show how little code is required, but I challenge any readers to create a more advanced version of this hook. Detecting when multiple keys are held down at the same time would be a nice addition. Bonus points: also require they be held down in a specified order. Feel free to share anything you've created in this [recipe's gist](https://gist.github.com/gragland/b61b8f46114edbcf2a9e4bd5eb9f47f5).

@@ -8,7 +8,6 @@ links:
   - url: https://github.com/donavon/use-event-listener
     name: donavon/use-event-listener
     description: Original source for this hook available as a library
-code: ""
 ---
 
 If you find yourself adding a lot of event listeners using `useEffect` you might consider moving that logic to a custom hook. In the recipe below we create a `useEventListener` hook that handles checking if `addEventListener` is supported, adding the event listener, and removal on cleanup. See it in action in the [CodeSandbox demo](https://codesandbox.io/s/z64on3ypm).

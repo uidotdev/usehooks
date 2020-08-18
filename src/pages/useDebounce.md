@@ -4,7 +4,6 @@ title: useDebounce
 date: "2018-11-09"
 gist: https://gist.github.com/gragland/e50346f02e7edf4f81cc0bda33d3cae6
 sandbox: https://codesandbox.io/s/711r1zmq50
-code: ""
 ---
 
 This hook allows you to debounce any fast changing value. The debounced value will only reflect the latest value when the useDebounce hook has not been called for the specified time period. When used in conjunction with useEffect, as we do in the recipe below, you can easily ensure that expensive operations like API calls are not executed too frequently. The example below allows you to search the Marvel Comic API and uses useDebounce to prevent API calls from being fired on every keystroke. Be sure to check out the [CodeSandbox demo](https://codesandbox.io/s/711r1zmq50) for this one. Hook code and inspiration from [github.com/xnimorz/use-debounce](https://github.com/xnimorz/use-debounce).

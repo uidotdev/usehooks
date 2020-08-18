@@ -4,7 +4,6 @@ title: useMemo
 date: "2018-11-12"
 gist: https://gist.github.com/gragland/5ed9a4bd45a7775a5802e35de93fc3b6
 sandbox: https://codesandbox.io/s/jjxypyk86w
-code: ""
 ---
 
 React has a built-in hook called useMemo that allows you to memoize expensive functions so that you can avoid calling them on every render. You simple pass in a function and an array of inputs and useMemo will only recompute the memoized value when one of the inputs has changed. In our example below we have an expensive function called computeLetterCount (for demo purposes we make it slow by including a large and completely unnecessary loop). When the current selected word changes you'll notice a delay as it has to recall computeLetterCount on the new word. We also have a separate counter that gets incremented every time the increment button is clicked. When that counter is incremented you'll notice that there is zero lag between renders. This is because computeLetterCount is not called again. The input word hasn't changed and thus the cached value is returned. You'll probably want to check out the [CodeSandbox demo](https://codesandbox.io/s/jjxypyk86w) so you can see for yourself.
