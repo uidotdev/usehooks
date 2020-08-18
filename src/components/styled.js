@@ -91,14 +91,14 @@ export const CodeContent = styled(Content)`
   ${({ language }) =>
     language === "tsx" &&
     `
-  .gatsby-highlight[data-language=jsx] {
+  .grvsc-container[data-language=jsx] {
     display: none;
   }
 `}
   ${({ language }) =>
     language === "jsx" &&
     `
-  .gatsby-highlight[data-language=tsx] {
+  .grvsc-container[data-language=tsx] {
     display: none;
   }
 `}
