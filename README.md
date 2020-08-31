@@ -2,7 +2,9 @@
 
 This is the repository for [usehooks.com](https://usehooks.com), a [Gatsby](https://www.gatsbyjs.org) powered blog that publishes easy to understand React Hook code recipes.
 
-If you'd like to submit new post ideas, improve existing posts, or change anything about the website feel free to submit an issue or pull-request.
+If you'd like to submit new post ideas, improve existing posts, or change anything about the website feel free to submit an issue or pull-request. 
+
+Please consider sponsoring this project through my [Github sponsors page](https://github.com/sponsors/gragland). Any level of support is appreciated. I have a few higher tiers that include having your company listed on usehooks website and newsletter.
 
 To run locally, `yarn`, then `yarn dev`, then open [localhost:8000](https://localhost:8000).
 
