@@ -88,18 +88,16 @@ export const More = styled.div`
 `;
 
 export const CodeContent = styled(Content)`
-  ${({ language }) =>
-    language === "tsx" &&
-    `
-  .grvsc-container[data-language=jsx] {
-    display: none;
+  .grvsc-container {
+    margin-top: 2rem;
   }
-`}
-  ${({ language }) =>
-    language === "jsx" &&
-    `
-  .grvsc-container[data-language=tsx] {
-    display: none;
+
+  .grvsc-source {
+    padding-left: 0;
   }
-`}
+
+  ${({ language }) =>
+    `.grvsc-container[data-language=${language === "tsx" ? "jsx" : "tsx"}] {
+      display: none;
+    }`}
 `;

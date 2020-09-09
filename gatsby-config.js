@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   siteMetadata: {
     title: "useHooks",
@@ -28,7 +30,10 @@ module.exports = {
           {
             resolve: `gatsby-remark-vscode`,
             options: {
-              theme: "Dark+ (default dark)" // Or install your favorite theme from GitHub
+              theme: `Tomorrow Night Eighties`, // From package.json: contributes.themes[0].label
+              extensions: [
+                `${__dirname}/ms-vscode.Theme-TomorrowKit-0.1.4.vsix`
+              ]
             }
           },
           {
