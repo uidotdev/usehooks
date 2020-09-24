@@ -93,7 +93,7 @@ const useAsync = (asyncFunction, immediate = true) => {
 };
 ```
 
-```tsx
+```typescript
 import React, { useState, useEffect, useCallback } from 'react';
 
 // Usage

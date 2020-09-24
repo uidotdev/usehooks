@@ -73,7 +73,7 @@ function useLocalStorage(key, initialValue) {
 }
 ```
 
-```tsx
+```typescript
 import { useState } from 'react';
 
 // Usage

@@ -97,7 +97,9 @@ export const CodeContent = styled(Content)`
   }
 
   ${({ language }) =>
-    `.grvsc-container[data-language=${language === "tsx" ? "jsx" : "tsx"}] {
+    `.grvsc-container[data-language=${
+      language === "tsx" ? "jsx" : "typescript"
+    }] {
       display: none;
     }`}
 `;

@@ -74,7 +74,7 @@ function usePrefersDarkMode() {
 }
 ```
 
-```tsx
+```typescript
 // Usage
 function App() {
   const [darkMode, setDarkMode] = useDarkMode();

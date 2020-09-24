@@ -104,7 +104,7 @@ function useMedia(queries, values, defaultValue) {
 }
 ```
 
-```tsx
+```typescript
 import { useState, useEffect } from 'react';
 
 function App() {
