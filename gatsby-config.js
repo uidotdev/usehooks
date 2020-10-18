@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   siteMetadata: {
     title: "useHooks",
@@ -25,6 +27,15 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          {
+            resolve: `gatsby-remark-vscode`,
+            options: {
+              theme: `Tomorrow Night Eighties`, // From package.json: contributes.themes[0].label
+              extensions: [
+                `${__dirname}/ms-vscode.Theme-TomorrowKit-0.1.4.vsix`
+              ]
+            }
+          },
           {
             resolve: "gatsby-remark-external-links",
             options: {

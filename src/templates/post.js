@@ -64,8 +64,7 @@ export const pageQuery = graphql`
           name
           description
         }
-        code
-        tsCode
+        isMultilingual
         ogImage
       }
     }

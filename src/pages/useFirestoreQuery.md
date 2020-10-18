@@ -12,7 +12,112 @@ links:
   - url: https://github.com/nandorojo/swr-firestore
     name: SWR Firestore
     description: Firestore query hooks built on top of SWR
-code: "\/\/ Usage\r\nfunction ProfilePage({ uid }) {\r\n  \/\/ Subscribe to Firestore document\r\n  const { data, status, error } = useFirestoreQuery(\r\n    firestore.collection(\"profiles\").doc(uid)\r\n  );\r\n  \r\n  if (status === \"loading\"){\r\n    return \"Loading...\"; \r\n  }\r\n  \r\n  if (status === \"error\"){\r\n    return `Error: ${error.message}`;\r\n  }\r\n\r\n  return (\r\n    <div>\r\n      <ProfileHeader avatar={data.avatar} name={data.name} \/>\r\n      <Posts posts={data.posts} \/>\r\n    <\/div>\r\n  );\r\n}\r\n\r\n\/\/ Reducer for hook state and actions\r\nconst reducer = (state, action) => {\r\n  switch (action.type) {\r\n    case \"idle\":\r\n      return { status: \"idle\", data: undefined, error: undefined };\r\n    case \"loading\":\r\n      return { status: \"loading\", data: undefined, error: undefined };\r\n    case \"success\":\r\n      return { status: \"success\", data: action.payload, error: undefined };\r\n    case \"error\":\r\n      return { status: \"error\", data: undefined, error: action.payload };\r\n    default:\r\n      throw new Error(\"invalid action\");\r\n  }\r\n}\r\n\r\n\/\/ Hook\r\nfunction useFirestoreQuery(query) {\r\n  \/\/ Our initial state\r\n  \/\/ Start with an \"idle\" status if query is falsy, as that means hook consumer is\r\n  \/\/ waiting on required data before creating the query object.\r\n  \/\/ Example: useFirestoreQuery(uid && firestore.collection(\"profiles\").doc(uid))\r\n  const initialState = { \r\n    status: query ? \"loading\" : \"idle\", \r\n    data: undefined, \r\n    error: undefined \r\n  };\r\n  \r\n  \/\/ Setup our state and actions\r\n  const [state, dispatch] = useReducer(reducer, initialState);\r\n  \r\n  \/\/ Get cached Firestore query object with useMemoCompare (https:\/\/usehooks.com\/useMemoCompare)\r\n  \/\/ Needed because firestore.collection(\"profiles\").doc(uid) will always being a new object reference\r\n  \/\/ causing effect to run -> state change -> rerender -> effect runs -> etc ...\r\n  \/\/ This is nicer than requiring hook consumer to always memoize query with useMemo.\r\n  const queryCached = useMemoCompare(query, prevQuery => {\r\n    \/\/ Use built-in Firestore isEqual method to determine if \"equal\"\r\n    return prevQuery && query && query.isEqual(prevQuery);\r\n  });\r\n\r\n  useEffect(() => {\r\n    \/\/ Return early if query is falsy and reset to \"idle\" status in case\r\n    \/\/ we're coming from \"success\" or \"error\" status due to query change.\r\n    if (!queryCached) {\r\n      dispatch({ type: \"idle\" });\r\n      return;\r\n    }\r\n    \r\n    dispatch({ type: \"loading\" });\r\n    \r\n    \/\/ Subscribe to query with onSnapshot\r\n    \/\/ Will unsubscribe on cleanup since this returns an unsubscribe function\r\n    return queryCached.onSnapshot(\r\n      response => {\r\n        \/\/ Get data for collection or doc\r\n        const data = response.docs\r\n          ? getCollectionData(response)\r\n          : getDocData(response);\r\n        \r\n        dispatch({ type: \"success\", payload: data });\r\n      },\r\n      error => {\r\n        dispatch({ type: \"error\", payload: error });\r\n      }\r\n    );\r\n    \r\n  }, [queryCached]); \/\/ Only run effect if queryCached changes\r\n\r\n  return state;\r\n}\r\n\r\n\/\/ Get doc data and merge doc.id\r\nfunction getDocData(doc) {\r\n  return doc.exists === true ? { id: doc.id, ...doc.data() } : null;\r\n}\r\n\r\n\/\/ Get array of doc data from collection\r\nfunction getCollectionData(collection) {\r\n  return collection.docs.map(getDocData);\r\n}"
 ---
 
 This hook makes it super easy to subscribe to data in your Firestore database without having to worry about state management. Instead of calling Firestore's `query.onSnapshot()` method you simply pass a query to `useFirestoreQuery()` and you get back everything you need, including `status`, `data`, and `error`. Your component will re-render when data changes and your subscription will be automatically removed when the component unmounts. Our example even supports dependent queries where you can wait on needed data by passing a falsy value to the hook. Read through the recipe and comments below to see how it works.
+
+```jsx
+// Usage
+function ProfilePage({ uid }) {
+  // Subscribe to Firestore document
+  const { data, status, error } = useFirestoreQuery(
+    firestore.collection("profiles").doc(uid)
+  );
+
+  if (status === "loading"){
+    return "Loading...";
+  }
+
+  if (status === "error"){
+    return `Error: ${error.message}`;
+  }
+
+  return (
+    <div>
+      <ProfileHeader avatar={data.avatar} name={data.name} />
+      <Posts posts={data.posts} />
+    </div>
+  );
+}
+
+// Reducer for hook state and actions
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "idle":
+      return { status: "idle", data: undefined, error: undefined };
+    case "loading":
+      return { status: "loading", data: undefined, error: undefined };
+    case "success":
+      return { status: "success", data: action.payload, error: undefined };
+    case "error":
+      return { status: "error", data: undefined, error: action.payload };
+    default:
+      throw new Error("invalid action");
+  }
+}
+
+// Hook
+function useFirestoreQuery(query) {
+  // Our initial state
+  // Start with an "idle" status if query is falsy, as that means hook consumer is
+  // waiting on required data before creating the query object.
+  // Example: useFirestoreQuery(uid && firestore.collection("profiles").doc(uid))
+  const initialState = {
+    status: query ? "loading" : "idle",
+    data: undefined,
+    error: undefined
+  };
+
+  // Setup our state and actions
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Get cached Firestore query object with useMemoCompare (https://usehooks.com/useMemoCompare)
+  // Needed because firestore.collection("profiles").doc(uid) will always being a new object reference
+  // causing effect to run -> state change -> rerender -> effect runs -> etc ...
+  // This is nicer than requiring hook consumer to always memoize query with useMemo.
+  const queryCached = useMemoCompare(query, prevQuery => {
+    // Use built-in Firestore isEqual method to determine if "equal"
+    return prevQuery && query && query.isEqual(prevQuery);
+  });
+
+  useEffect(() => {
+    // Return early if query is falsy and reset to "idle" status in case
+    // we're coming from "success" or "error" status due to query change.
+    if (!queryCached) {
+      dispatch({ type: "idle" });
+      return;
+    }
+
+    dispatch({ type: "loading" });
+
+    // Subscribe to query with onSnapshot
+    // Will unsubscribe on cleanup since this returns an unsubscribe function
+    return queryCached.onSnapshot(
+      response => {
+        // Get data for collection or doc
+        const data = response.docs
+          ? getCollectionData(response)
+          : getDocData(response);
+
+        dispatch({ type: "success", payload: data });
+      },
+      error => {
+        dispatch({ type: "error", payload: error });
+      }
+    );
+
+  }, [queryCached]); // Only run effect if queryCached changes
+
+  return state;
+}
+
+// Get doc data and merge doc.id
+function getDocData(doc) {
+  return doc.exists === true ? { id: doc.id, ...doc.data() } : null;
+}
+
+// Get array of doc data from collection
+function getCollectionData(collection) {
+  return collection.docs.map(getDocData);
+}
+```

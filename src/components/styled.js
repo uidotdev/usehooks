@@ -86,3 +86,20 @@ export const More = styled.div`
     margin-right: 10px;
   }
 `;
+
+export const CodeContent = styled(Content)`
+  .grvsc-container {
+    margin-top: 2rem;
+  }
+
+  .grvsc-source {
+    padding-left: 0;
+  }
+
+  ${({ language }) =>
+    `.grvsc-container[data-language=${
+      language === "tsx" ? "jsx" : "typescript"
+    }] {
+      display: none;
+    }`}
+`;
