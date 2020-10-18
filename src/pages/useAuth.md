@@ -3,7 +3,6 @@ templateKey: post
 title: useAuth
 date: "2019-08-12"
 gist: https://gist.github.com/gragland/25910a537e397844312870fcfc3ee74b
-code: "\/\/ Top level App component\r\nimport React from \"react\";\r\nimport { ProvideAuth } from \".\/use-auth.js\";\r\n\r\nfunction App(props) {\r\n  return (\r\n    <ProvideAuth>\r\n      {\/* \r\n        Route components here, depending on how your app is structured.\r\n        If using Next.js this would be \/pages\/_app.js\r\n      *\/}\r\n    <\/ProvideAuth>\r\n  );\r\n}\r\n\r\n\/\/ Any component that wants auth state\r\nimport React from \"react\";\r\nimport { useAuth } from \".\/use-auth.js\";\r\n\r\nfunction Navbar(props) {\r\n  \/\/ Get auth state and re-render anytime it changes\r\n  const auth = useAuth();\r\n\r\n  return (\r\n    <NavbarContainer>\r\n      <Logo \/>\r\n      <Menu>\r\n        <Link to=\"\/about\">About<\/Link>\r\n        <Link to=\"\/contact\">Contact<\/Link>\r\n        {auth.user ? (\r\n          <Fragment>\r\n            <Link to=\"\/account\">Account ({auth.user.email})<\/Link>\r\n            <Button onClick={() => auth.signout()}>Signout<\/Button>\r\n          <\/Fragment>\r\n        ) : (\r\n          <Link to=\"\/signin\">Signin<\/Link>\r\n        )}\r\n      <\/Menu>\r\n    <\/NavbarContainer>\r\n  );\r\n}\r\n\r\n\/\/ Hook (use-auth.js)\r\nimport React, { useState, useEffect, useContext, createContext } from \"react\";\r\nimport * as firebase from \"firebase\/app\";\r\nimport \"firebase\/auth\";\r\n\r\n\/\/ Add your Firebase credentials\r\nfirebase.initializeApp({\r\n  apiKey: \"\",\r\n  authDomain: \"\",\r\n  projectId: \"\",\r\n  appID: \"\"\r\n});\r\n\r\nconst authContext = createContext();\r\n\r\n\/\/ Provider component that wraps your app and makes auth object ...\r\n\/\/ ... available to any child component that calls useAuth().\r\nexport function ProvideAuth({ children }) {\r\n  const auth = useProvideAuth();\r\n  return <authContext.Provider value={auth}>{children}<\/authContext.Provider>;\r\n}\r\n\r\n\/\/ Hook for child components to get the auth object ...\r\n\/\/ ... and re-render when it changes.\r\nexport const useAuth = () => {\r\n  return useContext(authContext);\r\n};\r\n\r\n\/\/ Provider hook that creates auth object and handles state\r\nfunction useProvideAuth() {\r\n  const [user, setUser] = useState(null);\r\n  \r\n  \/\/ Wrap any Firebase methods we want to use making sure ...\r\n  \/\/ ... to save the user to state.\r\n  const signin = (email, password) => {\r\n    return firebase\r\n      .auth()\r\n      .signInWithEmailAndPassword(email, password)\r\n      .then(response => {\r\n        setUser(response.user);\r\n        return response.user;\r\n      });\r\n  };\r\n\r\n  const signup = (email, password) => {\r\n    return firebase\r\n      .auth()\r\n      .createUserWithEmailAndPassword(email, password)\r\n      .then(response => {\r\n        setUser(response.user);\r\n        return response.user;\r\n      });\r\n  };\r\n\r\n  const signout = () => {\r\n    return firebase\r\n      .auth()\r\n      .signOut()\r\n      .then(() => {\r\n        setUser(false);\r\n      });\r\n  };\r\n\r\n  const sendPasswordResetEmail = email => {\r\n    return firebase\r\n      .auth()\r\n      .sendPasswordResetEmail(email)\r\n      .then(() => {\r\n        return true;\r\n      });\r\n  };\r\n\r\n  const confirmPasswordReset = (code, password) => {\r\n    return firebase\r\n      .auth()\r\n      .confirmPasswordReset(code, password)\r\n      .then(() => {\r\n        return true;\r\n      });\r\n  };\r\n\r\n  \/\/ Subscribe to user on mount\r\n  \/\/ Because this sets state in the callback it will cause any ...\r\n  \/\/ ... component that utilizes this hook to re-render with the ...\r\n  \/\/ ... latest auth object.\r\n  useEffect(() => {\r\n    const unsubscribe = firebase.auth().onAuthStateChanged(user => {\r\n      if (user) {\r\n        setUser(user);\r\n      } else {\r\n        setUser(false);\r\n      }\r\n    });\r\n\r\n    \/\/ Cleanup subscription on unmount\r\n    return () => unsubscribe();\r\n  }, []);\r\n  \r\n  \/\/ Return the user object and auth methods\r\n  return {\r\n    user,\r\n    signin,\r\n    signup,\r\n    signout,\r\n    sendPasswordResetEmail,\r\n    confirmPasswordReset\r\n  };\r\n}"
 ---
 
 A very common scenario is you have a bunch of components that need to render different depending on whether the current user is logged in and sometimes call authentication methods like `signin`, `signout`, `sendPasswordResetEmail`, etc.
@@ -11,3 +10,156 @@ A very common scenario is you have a bunch of components that need to render dif
 This is a perfect use-case for a `useAuth` hook that enables any component to get the current auth state and re-render if it changes. Rather than have each instance of the `useAuth` hook fetch the current user, the hook simply calls `useContext` to get the data from farther up in the component tree. The real magic happens in our `<ProvideAuth>` component and our `useProvideAuth` hook which wraps all our authentication methods (in this case we're using Firebase) and then uses React Context to make the current auth object available to all child components that call `useAuth`. Whew, that was a mouthfull...
 <br/><br/>
 Hopefully as you read through the code below it should all make sense. Another reason I like this method is it neatly abstracts away our actual auth provider (Firebase), making it super easy to change providers in the future.
+
+```jsx
+// Top level App component
+import React from "react";
+import { ProvideAuth } from "./use-auth.js";
+
+function App(props) {
+  return (
+    <ProvideAuth>
+      {/*
+        Route components here, depending on how your app is structured.
+        If using Next.js this would be /pages/_app.js
+      */}
+    </ProvideAuth>
+  );
+}
+
+// Any component that wants auth state
+import React from "react";
+import { useAuth } from "./use-auth.js";
+
+function Navbar(props) {
+  // Get auth state and re-render anytime it changes
+  const auth = useAuth();
+
+  return (
+    <NavbarContainer>
+      <Logo />
+      <Menu>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+        {auth.user ? (
+          <Fragment>
+            <Link to="/account">Account ({auth.user.email})</Link>
+            <Button onClick={() => auth.signout()}>Signout</Button>
+          </Fragment>
+        ) : (
+          <Link to="/signin">Signin</Link>
+        )}
+      </Menu>
+    </NavbarContainer>
+  );
+}
+
+// Hook (use-auth.js)
+import React, { useState, useEffect, useContext, createContext } from "react";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+
+// Add your Firebase credentials
+firebase.initializeApp({
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  appID: ""
+});
+
+const authContext = createContext();
+
+// Provider component that wraps your app and makes auth object ...
+// ... available to any child component that calls useAuth().
+export function ProvideAuth({ children }) {
+  const auth = useProvideAuth();
+  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+}
+
+// Hook for child components to get the auth object ...
+// ... and re-render when it changes.
+export const useAuth = () => {
+  return useContext(authContext);
+};
+
+// Provider hook that creates auth object and handles state
+function useProvideAuth() {
+  const [user, setUser] = useState(null);
+
+  // Wrap any Firebase methods we want to use making sure ...
+  // ... to save the user to state.
+  const signin = (email, password) => {
+    return firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(response => {
+        setUser(response.user);
+        return response.user;
+      });
+  };
+
+  const signup = (email, password) => {
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(response => {
+        setUser(response.user);
+        return response.user;
+      });
+  };
+
+  const signout = () => {
+    return firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setUser(false);
+      });
+  };
+
+  const sendPasswordResetEmail = email => {
+    return firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        return true;
+      });
+  };
+
+  const confirmPasswordReset = (code, password) => {
+    return firebase
+      .auth()
+      .confirmPasswordReset(code, password)
+      .then(() => {
+        return true;
+      });
+  };
+
+  // Subscribe to user on mount
+  // Because this sets state in the callback it will cause any ...
+  // ... component that utilizes this hook to re-render with the ...
+  // ... latest auth object.
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(false);
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
+  // Return the user object and auth methods
+  return {
+    user,
+    signin,
+    signup,
+    signout,
+    sendPasswordResetEmail,
+    confirmPasswordReset
+  };
+}
+```
