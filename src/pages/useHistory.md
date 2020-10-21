@@ -18,185 +18,136 @@ links:
 This hook makes it really easy to add undo/redo functionality to your app. Our recipe is a simple drawing app. It generates a grid of blocks, allows you to click any block to toggle its color, and uses the useHistory hook so we can undo, redo, or clear all changes to the canvas. Check out our [CodeSandbox demo](https://codesandbox.io/s/32rqn6zq0p). Within our hook we're using useReducer to store state instead of useState, which should look familiar to anyone that's used redux (read more about useReducer in the [official docs](https://reactjs.org/docs/hooks-reference.html#usereducer)). The hook code was copied, with minor changes, from the excellent [use-undo library](https://github.com/xxhomey19/use-undo), so if you'd like to pull this into your project you can also use that library via npm.
 
 ```jsx
-import { useReducer, useCallback } from 'react';
+import { useReducer, useCallback } from "react";
 
 // Usage
-function
-  App() {
+function App() {
   const { state, set, undo, redo, clear, canUndo, canRedo } = useHistory({});
 
-
-   return (
+  return (
     <div className="container">
       <div className="controls">
-
-         <div className="title">U0001F469‍U0001F3A8 Click squares to draw</div>
-
-         <button onClick={undo} disabled={!canUndo}>
+        <div className="title">👩‍🎨 Click squares to draw</div>
+        <button onClick={undo} disabled={!canUndo}>
           Undo
         </button>
-
-         <button onClick={redo} disabled={!canRedo}>
+        <button onClick={redo} disabled={!canRedo}>
           Redo
         </button>
-
-         <button onClick={clear}>Clear</button>
+        <button onClick={clear}>Clear</button>
       </div>
 
-      <div
-  className="grid">
+      <div className="grid">
         {((blocks, i, len) => {
-          // Generate
-  a grid of blocks
+          // Generate a grid of blocks
           while (++i <= len) {
-            const index =
-  i;
+            const index = i;
             blocks.push(
               <div
-                // Give
-  block "active" class if true in state object
-                className={'block'
-  + (state[index] ? ' active' : '')}
-                // Toggle boolean value of
-  clicked block and merge into current state
-                onClick={() => set({
-  ...state, [index]: !state[index] })}
+                // Give block "active" class if true in state object
+                className={"block" + (state[index] ? " active" : "")}
+                // Toggle boolean value of clicked block and merge into current state
+                onClick={() => set({ ...state, [index]: !state[index] })}
                 key={i}
               />
-
-             );
+            );
           }
           return blocks;
         })([], 0, 625)}
-
-       </div>
+      </div>
     </div>
   );
 }
 
-// Initial state that we pass into
-  useReducer
+// Initial state that we pass into useReducer
 const initialState = {
-  // Array of previous state values updated
-  each time we push a new state
+  // Array of previous state values updated each time we push a new state
   past: [],
   // Current state value
-  present:
-  null,
+  present: null,
   // Will contain "future" state values if we undo (so we can redo)
-
-   future: []
+  future: [],
 };
 
-// Our reducer function to handle state changes based
-  on action
+// Our reducer function to handle state changes based on action
 const reducer = (state, action) => {
-  const { past, present, future
-  } = state;
+  const { past, present, future } = state;
 
   switch (action.type) {
-    case 'UNDO':
-      const previous
-  = past[past.length - 1];
+    case "UNDO":
+      const previous = past[past.length - 1];
       const newPast = past.slice(0, past.length - 1);
 
-
-       return {
+      return {
         past: newPast,
         present: previous,
-        future:
-  [present, ...future]
+        future: [present, ...future],
       };
-    case 'REDO':
+    case "REDO":
       const next = future[0];
-
-       const newFuture = future.slice(1);
+      const newFuture = future.slice(1);
 
       return {
-        past:
-  [...past, present],
+        past: [...past, present],
         present: next,
-        future: newFuture
+        future: newFuture,
       };
-
-     case 'SET':
+    case "SET":
       const { newPresent } = action;
 
-      if (newPresent
-  === present) {
+      if (newPresent === present) {
         return state;
       }
       return {
-        past:
-  [...past, present],
+        past: [...past, present],
         present: newPresent,
-        future: []
+        future: [],
       };
-
-     case 'CLEAR':
+    case "CLEAR":
       const { initialPresent } = action;
 
-      return
-  {
+      return {
         ...initialState,
-        present: initialPresent
+        present: initialPresent,
       };
-
-   }
+  }
 };
 
 // Hook
-const useHistory = initialPresent => {
-  const [state,
-  dispatch] = useReducer(reducer, {
+const useHistory = (initialPresent) => {
+  const [state, dispatch] = useReducer(reducer, {
     ...initialState,
-    present: initialPresent
-
-   });
+    present: initialPresent,
+  });
 
   const canUndo = state.past.length !== 0;
-  const canRedo = state.future.length
-  !== 0;
+  const canRedo = state.future.length !== 0;
 
   // Setup our callback functions
-  // We memoize with useCallback
-  to prevent unnecessary re-renders
+  // We memoize with useCallback to prevent unnecessary re-renders
 
-  const undo = useCallback(
-    () =>
-  {
-      if (canUndo) {
-        dispatch({ type: 'UNDO' });
-      }
+  const undo = useCallback(() => {
+    if (canUndo) {
+      dispatch({ type: "UNDO" });
+    }
+  }, [canUndo, dispatch]);
 
-     },
-    [canUndo, dispatch]
+  const redo = useCallback(() => {
+    if (canRedo) {
+      dispatch({ type: "REDO" });
+    }
+  }, [canRedo, dispatch]);
+
+  const set = useCallback(
+    (newPresent) => dispatch({ type: "SET", newPresent }),
+    [dispatch]
   );
 
-  const redo = useCallback(
-
-     () => {
-      if (canRedo) {
-        dispatch({ type: 'REDO' });
-      }
-
-     },
-    [canRedo, dispatch]
-  );
-
-  const set = useCallback(newPresent
-  => dispatch({ type: 'SET', newPresent }), [
-    dispatch
+  const clear = useCallback(() => dispatch({ type: "CLEAR", initialPresent }), [
+    dispatch,
   ]);
 
-  const
-  clear = useCallback(() => dispatch({ type: 'CLEAR', initialPresent }), [
-    dispatch
-
-   ]);
-
   // If needed we could also return past and future state
-  return
-  { state: state.present, set, undo, redo, clear, canUndo, canRedo };
+  return { state: state.present, set, undo, redo, clear, canUndo, canRedo };
 };
 ```

@@ -16,12 +16,12 @@ links:
 This hook makes it super easy to dynamically load an external script and know when its loaded. This is useful when you need to interact with a 3rd party library (Stripe, Google Analytics, etc) and you'd prefer to load the script when needed rather then include it in the document head for every page request. In the example below we wait until the script has loaded successfully before calling a function declared in the script. If you're interested in seeing how this would look if implemented as a Higher Order Component then check out the [source of react-script-loader-hoc](https://github.com/sesilio/react-script-loader-hoc/blob/master/src/index.js). I personally find it much more readable as a hook. Another advantage is because you can use this hook multiple times within a component, we don't need to add support for loading multiple scripts and we can keep our hook logic nice and simple.
 
 ```jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 // Usage
 function App() {
   const status = useScript(
-    'https://pm28k14qlj.codesandbox.io/test-external-script.js'
+    "https://pm28k14qlj.codesandbox.io/test-external-script.js"
   );
 
   return (

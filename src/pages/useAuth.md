@@ -64,7 +64,7 @@ firebase.initializeApp({
   apiKey: "",
   authDomain: "",
   projectId: "",
-  appID: ""
+  appID: "",
 });
 
 const authContext = createContext();
@@ -92,7 +92,7 @@ function useProvideAuth() {
     return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(response => {
+      .then((response) => {
         setUser(response.user);
         return response.user;
       });
@@ -102,7 +102,7 @@ function useProvideAuth() {
     return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(response => {
+      .then((response) => {
         setUser(response.user);
         return response.user;
       });
@@ -117,7 +117,7 @@ function useProvideAuth() {
       });
   };
 
-  const sendPasswordResetEmail = email => {
+  const sendPasswordResetEmail = (email) => {
     return firebase
       .auth()
       .sendPasswordResetEmail(email)
@@ -140,7 +140,7 @@ function useProvideAuth() {
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
       } else {
@@ -159,7 +159,7 @@ function useProvideAuth() {
     signup,
     signout,
     sendPasswordResetEmail,
-    confirmPasswordReset
+    confirmPasswordReset,
   };
 }
 ```

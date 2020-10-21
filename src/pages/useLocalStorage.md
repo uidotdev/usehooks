@@ -16,12 +16,12 @@ Usage is similar to useState except we pass in a local storage key so that we ca
 default to that value on page load instead of the specified initial value.
 
 ```jsx
-import { useState } from 'react';
+import { useState } from "react";
 
 // Usage
 function App() {
   // Similar to useState but first arg is key to the value in local storage.
-  const [name, setName] = useLocalStorage('name', 'Bob');
+  const [name, setName] = useLocalStorage("name", "Bob");
 
   return (
     <div>
@@ -29,7 +29,7 @@ function App() {
         type="text"
         placeholder="Enter your name"
         value={name}
-        onChange={e => setName(e.target.value)}
+        onChange={(e) => setName(e.target.value)}
       />
     </div>
   );
@@ -54,7 +54,7 @@ function useLocalStorage(key, initialValue) {
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
-  const setValue = value => {
+  const setValue = (value) => {
     try {
       // Allow value to be a function so we have same API as useState
       const valueToStore =
@@ -74,12 +74,12 @@ function useLocalStorage(key, initialValue) {
 ```
 
 ```typescript
-import { useState } from 'react';
+import { useState } from "react";
 
 // Usage
 function App() {
   // Similar to useState but first arg is key to the value in local storage.
-  const [name, setName] = useLocalStorage<string>('name', 'Bob');
+  const [name, setName] = useLocalStorage<string>("name", "Bob");
 
   return (
     <div>
@@ -87,7 +87,7 @@ function App() {
         type="text"
         placeholder="Enter your name"
         value={name}
-        onChange={e => setName(e.target.value)}
+        onChange={(e) => setName(e.target.value)}
       />
     </div>
   );

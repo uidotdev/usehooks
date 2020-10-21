@@ -23,7 +23,7 @@ It's generally a good practice to indicate to users the status of any async requ
 Rather than litter your components with a bunch of `useState` calls to keep track of the state of an async function, you can use our custom hook which takes an async function as an input and returns the `value`, `error`, and `status` values we need to properly update our UI. Possible values for `status` prop are: "idle", "pending", "success", "error". As you'll see in the code below, our hook allows both immediate execution and delayed execution using the returned `execute` function.
 
 ```jsx
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 
 // Usage
 function App() {
@@ -31,11 +31,11 @@ function App() {
 
   return (
     <div>
-      {status === 'idle' && <div>Start your journey by clicking a button</div>}
-      {status === 'success' && <div>{value}</div>}
-      {status === 'error' && <div>{error}</div>}
-      <button onClick={execute} disabled={status === 'pending'}>
-        {status !== 'pending' ? 'Click me' : 'Loading...'}
+      {status === "idle" && <div>Start your journey by clicking a button</div>}
+      {status === "success" && <div>{value}</div>}
+      {status === "error" && <div>{error}</div>}
+      <button onClick={execute} disabled={status === "pending"}>
+        {status !== "pending" ? "Click me" : "Loading..."}
       </button>
     </div>
   );
@@ -48,15 +48,15 @@ const myFunction = () => {
     setTimeout(() => {
       const rnd = Math.random() * 10;
       rnd <= 5
-        ? resolve('Submitted successfully uD83DuDE4C')
-        : reject('Oh no there was an error uD83DuDE1E');
+        ? resolve("Submitted successfully 🙌")
+        : reject("Oh no there was an error 😞");
     }, 2000);
   });
 };
 
 // Hook
 const useAsync = (asyncFunction, immediate = true) => {
-  const [status, setStatus] = useState('idle');
+  const [status, setStatus] = useState("idle");
   const [value, setValue] = useState(null);
   const [error, setError] = useState(null);
 
@@ -65,18 +65,18 @@ const useAsync = (asyncFunction, immediate = true) => {
   // useCallback ensures the below useEffect is not called
   // on every render, but only if asyncFunction changes.
   const execute = useCallback(() => {
-    setStatus('pending');
+    setStatus("pending");
     setValue(null);
     setError(null);
 
     return asyncFunction()
-      .then(response => {
+      .then((response) => {
         setValue(response);
-        setStatus('success');
+        setStatus("success");
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error);
-        setStatus('error');
+        setStatus("error");
       });
   }, [asyncFunction]);
 
@@ -94,7 +94,7 @@ const useAsync = (asyncFunction, immediate = true) => {
 ```
 
 ```typescript
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 
 // Usage
 function App() {
@@ -102,11 +102,11 @@ function App() {
 
   return (
     <div>
-      {status === 'idle' && <div>Start your journey by clicking a button</div>}
-      {status === 'success' && <div>{value}</div>}
-      {status === 'error' && <div>{error}</div>}
-      <button onClick={execute} disabled={status === 'pending'}>
-        {status !== 'pending' ? 'Click me' : 'Loading...'}
+      {status === "idle" && <div>Start your journey by clicking a button</div>}
+      {status === "success" && <div>{value}</div>}
+      {status === "error" && <div>{error}</div>}
+      <button onClick={execute} disabled={status === "pending"}>
+        {status !== "pending" ? "Click me" : "Loading..."}
       </button>
     </div>
   );
@@ -119,8 +119,8 @@ const myFunction = (): Promise<string> => {
     setTimeout(() => {
       const rnd = Math.random() * 10;
       rnd <= 5
-        ? resolve('Submitted successfully 🙌')
-        : reject('Oh no there was an error 😞');
+        ? resolve("Submitted successfully 🙌")
+        : reject("Oh no there was an error 😞");
     }, 2000);
   });
 };
@@ -131,8 +131,8 @@ const useAsync = <T, E = string>(
   immediate = true
 ) => {
   const [status, setStatus] = useState<
-    'idle' | 'pending' | 'success' | 'error'
-  >('idle');
+    "idle" | "pending" | "success" | "error"
+  >("idle");
   const [value, setValue] = useState<T | null>(null);
   const [error, setError] = useState<E | null>(null);
 
@@ -141,18 +141,18 @@ const useAsync = <T, E = string>(
   // useCallback ensures the below useEffect is not called
   // on every render, but only if asyncFunction changes.
   const execute = useCallback(() => {
-    setStatus('pending');
+    setStatus("pending");
     setValue(null);
     setError(null);
 
     return asyncFunction()
       .then((response: any) => {
         setValue(response);
-        setStatus('success');
+        setStatus("success");
       })
       .catch((error: any) => {
         setError(error);
-        setStatus('error');
+        setStatus("error");
       });
   }, [asyncFunction]);
 

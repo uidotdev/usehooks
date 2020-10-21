@@ -13,10 +13,10 @@ links:
 If you find yourself adding a lot of event listeners using `useEffect` you might consider moving that logic to a custom hook. In the recipe below we create a `useEventListener` hook that handles checking if `addEventListener` is supported, adding the event listener, and removal on cleanup. See it in action in the [CodeSandbox demo](https://codesandbox.io/s/z64on3ypm).
 
 ```jsx
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from "react";
 
 // Usage
-function App(){
+function App() {
   // State for storing mouse coordinates
   const [coords, setCoords] = useState({ x: 0, y: 0 });
 
@@ -31,7 +31,7 @@ function App(){
   );
 
   // Add event listener using our hook
-  useEventListener('mousemove', handler);
+  useEventListener("mousemove", handler);
 
   return (
     <h1>
@@ -41,7 +41,7 @@ function App(){
 }
 
 // Hook
-function useEventListener(eventName, handler, element = window){
+function useEventListener(eventName, handler, element = window) {
   // Create a ref that stores handler
   const savedHandler = useRef();
 
@@ -61,7 +61,7 @@ function useEventListener(eventName, handler, element = window){
       if (!isSupported) return;
 
       // Create event listener that calls handler function stored in ref
-      const eventListener = event => savedHandler.current(event);
+      const eventListener = (event) => savedHandler.current(event);
 
       // Add event listener
       element.addEventListener(eventName, eventListener);
@@ -73,5 +73,5 @@ function useEventListener(eventName, handler, element = window){
     },
     [eventName, element] // Re-run if eventName or element changes
   );
-};
+}
 ```

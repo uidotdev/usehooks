@@ -17,7 +17,7 @@ across all of our components that need this kind of functionality (dropdown menu
 tooltips, etc).
 
 ```jsx
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 // Usage
 function App() {
@@ -32,7 +32,7 @@ function App() {
     <div>
       {isModalOpen ? (
         <div ref={ref}>
-          uD83DuDC4B Hey, I'm a modal. Click anywhere outside of me to close.
+          👋 Hey, I'm a modal. Click anywhere outside of me to close.
         </div>
       ) : (
         <button onClick={() => setModalOpen(true)}>Open Modal</button>
@@ -45,7 +45,7 @@ function App() {
 function useOnClickOutside(ref, handler) {
   useEffect(
     () => {
-      const listener = event => {
+      const listener = (event) => {
         // Do nothing if clicking ref's element or descendent elements
         if (!ref.current || ref.current.contains(event.target)) {
           return;
@@ -54,12 +54,12 @@ function useOnClickOutside(ref, handler) {
         handler(event);
       };
 
-      document.addEventListener('mousedown', listener);
-      document.addEventListener('touchstart', listener);
+      document.addEventListener("mousedown", listener);
+      document.addEventListener("touchstart", listener);
 
       return () => {
-        document.removeEventListener('mousedown', listener);
-        document.removeEventListener('touchstart', listener);
+        document.removeEventListener("mousedown", listener);
+        document.removeEventListener("touchstart", listener);
       };
     },
     // Add ref and handler to effect dependencies

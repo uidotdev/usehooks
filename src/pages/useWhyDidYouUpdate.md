@@ -11,13 +11,13 @@ This hook makes it easy to see which prop changes are causing a component to re-
 A huge thanks to Bruno Lemos for the [idea and original code](https://twitter.com/brunolemos/status/1090377532845801473). You can also see it in action in the [CodeSandbox demo](https://codesandbox.io/s/kx83n7201o).
 
 ```jsx
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 // Let's pretend this <Counter> component is expensive to re-render so ...
 // ... we wrap with React.memo, but we're still seeing performance issues :/
 // So we add useWhyDidYouUpdate and check our console to see what's going on.
-const Counter = React.memo(props => {
-  useWhyDidYouUpdate('Counter', props);
+const Counter = React.memo((props) => {
+  useWhyDidYouUpdate("Counter", props);
   return <div style={props.style}>{props.count}</div>;
 });
 
@@ -32,8 +32,8 @@ function App() {
   // Thanks to our hook we figured this out and realized we should probably ...
   // ... move this object outside of the component body.
   const counterStyle = {
-    fontSize: '3rem',
-    color: 'red'
+    fontSize: "3rem",
+    color: "red",
   };
 
   return (
@@ -63,20 +63,20 @@ function useWhyDidYouUpdate(name, props) {
       // Use this object to keep track of changed props
       const changesObj = {};
       // Iterate through keys
-      allKeys.forEach(key => {
+      allKeys.forEach((key) => {
         // If previous is different from current
         if (previousProps.current[key] !== props[key]) {
           // Add to changesObj
           changesObj[key] = {
             from: previousProps.current[key],
-            to: props[key]
+            to: props[key],
           };
         }
       });
 
       // If changesObj not empty then output to console
       if (Object.keys(changesObj).length) {
-        console.log('[why-did-you-update]', name, changesObj);
+        console.log("[why-did-you-update]", name, changesObj);
       }
     }
 
