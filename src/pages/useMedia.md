@@ -19,12 +19,12 @@ This hook makes it super easy to utilize media queries in your component logic. 
 You could create a hook that directly measures screen width instead of using media queries, but this method is nice because it makes it easy to share media queries between JS and your stylesheet. See it in action in the [CodeSandbox Demo](https://codesandbox.io/s/6jlmpjq9vw).
 
 ```jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 function App() {
   const columnCount = useMedia(
     // Media queries
-    ['(min-width: 1500px)', '(min-width: 1000px)', '(min-width: 600px)'],
+    ["(min-width: 1500px)", "(min-width: 1000px)", "(min-width: 600px)"],
     // Column counts (relates to above media queries by array index)
     [5, 4, 3],
     // Default column count
@@ -37,7 +37,7 @@ function App() {
   // Create array of arrays that will hold each column's items
   let columns = new Array(columnCount).fill().map(() => []);
 
-  data.forEach(item => {
+  data.forEach((item) => {
     // Get index of shortest column
     const shortColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
     // Add item
@@ -50,14 +50,14 @@ function App() {
   return (
     <div className="App">
       <div className="columns is-mobile">
-        {columns.map(column => (
+        {columns.map((column) => (
           <div className="column">
-            {column.map(item => (
+            {column.map((item) => (
               <div
                 className="image-container"
                 style={{
                   // Size image container to aspect ratio of image
-                  paddingTop: (item.height / item.width) * 100 + '%'
+                  paddingTop: (item.height / item.width) * 100 + "%",
                 }}
               >
                 <img src={item.image} alt="" />
@@ -73,14 +73,14 @@ function App() {
 // Hook
 function useMedia(queries, values, defaultValue) {
   // Array containing a media query list for each query
-  const mediaQueryLists = queries.map(q => window.matchMedia(q));
+  const mediaQueryLists = queries.map((q) => window.matchMedia(q));
 
   // Function that gets value based on matching media query
   const getValue = () => {
     // Get index of first media query that matches
-    const index = mediaQueryLists.findIndex(mql => mql.matches);
+    const index = mediaQueryLists.findIndex((mql) => mql.matches);
     // Return related value or defaultValue if none
-    return typeof values[index] !== 'undefined' ? values[index] : defaultValue;
+    return typeof values[index] !== "undefined" ? values[index] : defaultValue;
   };
 
   // State and setter for matched value
@@ -93,9 +93,10 @@ function useMedia(queries, values, defaultValue) {
       // ... current values of hook args (as this hook callback is created once on mount).
       const handler = () => setValue(getValue);
       // Set a listener for each media query with above handler as callback.
-      mediaQueryLists.forEach(mql => mql.addListener(handler));
+      mediaQueryLists.forEach((mql) => mql.addListener(handler));
       // Remove listeners on cleanup
-      return () => mediaQueryLists.forEach(mql => mql.removeListener(handler));
+      return () =>
+        mediaQueryLists.forEach((mql) => mql.removeListener(handler));
     },
     [] // Empty array ensures effect is only run on mount and unmount
   );
@@ -105,12 +106,12 @@ function useMedia(queries, values, defaultValue) {
 ```
 
 ```typescript
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 function App() {
   const columnCount = useMedia<number>(
     // Media queries
-    ['(min-width: 1500px)', '(min-width: 1000px)', '(min-width: 600px)'],
+    ["(min-width: 1500px)", "(min-width: 1000px)", "(min-width: 600px)"],
     // Column counts (relates to above media queries by array index)
     [5, 4, 3],
     // Default column count
@@ -121,9 +122,11 @@ function App() {
   let columnHeights = new Array(columnCount).fill(0);
 
   // Create array of arrays that will hold each column's items
-  let columns = new Array(columnCount).fill().map(() => []) as Array<DataProps[]>;
+  let columns = new Array(columnCount).fill().map(() => []) as Array<
+    DataProps[]
+  >;
 
-  (data as DataProps[]).forEach(item => {
+  (data as DataProps[]).forEach((item) => {
     // Get index of shortest column
     const shortColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
     // Add item
@@ -136,14 +139,14 @@ function App() {
   return (
     <div className="App">
       <div className="columns is-mobile">
-        {columns.map(column => (
+        {columns.map((column) => (
           <div className="column">
-            {column.map(item => (
+            {column.map((item) => (
               <div
                 className="image-container"
                 style={{
                   // Size image container to aspect ratio of image
-                  paddingTop: (item.height / item.width) * 100 + '%'
+                  paddingTop: (item.height / item.width) * 100 + "%",
                 }}
               >
                 <img src={item.image} alt="" />
@@ -159,12 +162,12 @@ function App() {
 // Hook
 const useMedia = <T>(queries: string[], values: T[], defaultValue: T) => {
   // Array containing a media query list for each query
-  const mediaQueryLists = queries.map(q => window.matchMedia(q));
+  const mediaQueryLists = queries.map((q) => window.matchMedia(q));
 
   // Function that gets value based on matching media query
   const getValue = () => {
     // Get index of first media query that matches
-    const index = mediaQueryLists.findIndex(mql => mql.matches);
+    const index = mediaQueryLists.findIndex((mql) => mql.matches);
     // Return related value or defaultValue if none
     return values?.[index] || defaultValue;
   };
@@ -179,13 +182,14 @@ const useMedia = <T>(queries: string[], values: T[], defaultValue: T) => {
       // ... current values of hook args (as this hook callback is created once on mount).
       const handler = () => setValue(getValue);
       // Set a listener for each media query with above handler as callback.
-      mediaQueryLists.forEach(mql => mql.addListener(handler));
+      mediaQueryLists.forEach((mql) => mql.addListener(handler));
       // Remove listeners on cleanup
-      return () => mediaQueryLists.forEach(mql => mql.removeListener(handler));
+      return () =>
+        mediaQueryLists.forEach((mql) => mql.removeListener(handler));
     },
     [] // Empty array ensures effect is only run on mount and unmount
   );
 
   return value;
-}
+};
 ```

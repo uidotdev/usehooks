@@ -24,11 +24,11 @@ function ProfilePage({ uid }) {
     firestore.collection("profiles").doc(uid)
   );
 
-  if (status === "loading"){
+  if (status === "loading") {
     return "Loading...";
   }
 
-  if (status === "error"){
+  if (status === "error") {
     return `Error: ${error.message}`;
   }
 
@@ -54,7 +54,7 @@ const reducer = (state, action) => {
     default:
       throw new Error("invalid action");
   }
-}
+};
 
 // Hook
 function useFirestoreQuery(query) {
@@ -65,7 +65,7 @@ function useFirestoreQuery(query) {
   const initialState = {
     status: query ? "loading" : "idle",
     data: undefined,
-    error: undefined
+    error: undefined,
   };
 
   // Setup our state and actions
@@ -75,7 +75,7 @@ function useFirestoreQuery(query) {
   // Needed because firestore.collection("profiles").doc(uid) will always being a new object reference
   // causing effect to run -> state change -> rerender -> effect runs -> etc ...
   // This is nicer than requiring hook consumer to always memoize query with useMemo.
-  const queryCached = useMemoCompare(query, prevQuery => {
+  const queryCached = useMemoCompare(query, (prevQuery) => {
     // Use built-in Firestore isEqual method to determine if "equal"
     return prevQuery && query && query.isEqual(prevQuery);
   });
@@ -93,7 +93,7 @@ function useFirestoreQuery(query) {
     // Subscribe to query with onSnapshot
     // Will unsubscribe on cleanup since this returns an unsubscribe function
     return queryCached.onSnapshot(
-      response => {
+      (response) => {
         // Get data for collection or doc
         const data = response.docs
           ? getCollectionData(response)
@@ -101,11 +101,10 @@ function useFirestoreQuery(query) {
 
         dispatch({ type: "success", payload: data });
       },
-      error => {
+      (error) => {
         dispatch({ type: "error", payload: error });
       }
     );
-
   }, [queryCached]); // Only run effect if queryCached changes
 
   return state;

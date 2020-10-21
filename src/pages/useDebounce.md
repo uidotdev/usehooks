@@ -9,13 +9,13 @@ sandbox: https://codesandbox.io/s/711r1zmq50
 This hook allows you to debounce any fast changing value. The debounced value will only reflect the latest value when the useDebounce hook has not been called for the specified time period. When used in conjunction with useEffect, as we do in the recipe below, you can easily ensure that expensive operations like API calls are not executed too frequently. The example below allows you to search the Marvel Comic API and uses useDebounce to prevent API calls from being fired on every keystroke. Be sure to check out the [CodeSandbox demo](https://codesandbox.io/s/711r1zmq50) for this one. Hook code and inspiration from [github.com/xnimorz/use-debounce](https://github.com/xnimorz/use-debounce).
 
 ```jsx
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 // Usage
 function App() {
   // State and setters for ...
   // Search term
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   // API search results
   const [results, setResults] = useState([]);
   // Searching status (whether there is pending API request)
@@ -31,7 +31,7 @@ function App() {
     () => {
       if (debouncedSearchTerm) {
         setIsSearching(true);
-        searchCharacters(debouncedSearchTerm).then(results => {
+        searchCharacters(debouncedSearchTerm).then((results) => {
           setIsSearching(false);
           setResults(results);
         });
@@ -46,18 +46,16 @@ function App() {
     <div>
       <input
         placeholder="Search Marvel Comics"
-        onChange={e => setSearchTerm(e.target.value)}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
 
       {isSearching && <div>Searching ...</div>}
 
-      {results.map(result => (
+      {results.map((result) => (
         <div key={result.id}>
           <h4>{result.title}</h4>
           <img
-            src={`${result.thumbnail.path}/portrait_incredible.${
-              result.thumbnail.extension
-            }`}
+            src={`${result.thumbnail.path}/portrait_incredible.${result.thumbnail.extension}`}
           />
         </div>
       ))}
@@ -67,16 +65,16 @@ function App() {
 
 // API search function
 function searchCharacters(search) {
-  const apiKey = 'f9dfb1e8d466d36c27850bedd2047687';
+  const apiKey = "f9dfb1e8d466d36c27850bedd2047687";
   return fetch(
     `https://gateway.marvel.com/v1/public/comics?apikey=${apiKey}&titleStartsWith=${search}`,
     {
-      method: 'GET'
+      method: "GET",
     }
   )
-    .then(r => r.json())
-    .then(r => r.data.results)
-    .catch(error => {
+    .then((r) => r.json())
+    .then((r) => r.data.results)
+    .catch((error) => {
       console.error(error);
       return [];
     });

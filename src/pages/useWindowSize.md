@@ -11,7 +11,7 @@ This hook returns an object containing the window's width and height. If execute
 server-side (no window object) the value of width and height will be undefined.
 
 ```jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 // Usage
 function App() {

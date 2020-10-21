@@ -16,7 +16,7 @@ It's worth noting that, unlike useMemo, this hook isn't meant to avoid expensive
 Read through the recipe and comments below. For a more practical example be sure to check out our [useFirestoreQuery](https://usehooks.com/useFirestoreQuery) hook.
 
 ```jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
 // Usage
 function MyComponent({ obj }) {
