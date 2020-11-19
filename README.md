@@ -35,6 +35,7 @@ To run locally, `yarn`, then `yarn dev`, then open [localhost:8000](https://loca
 [useWindowSize](https://usehooks.com/useWindowSize/)<br/>
 [useHover](https://usehooks.com/useHover/)<br/>
 [useLocalStorage](https://usehooks.com/useLocalStorage/)
+[useContextMenu](https://usehooks.com/useContextMenu/)
 
 <p align="center">
   <a href="./LICENSE"><strong>Unlicense</strong></a> &mdash; public domain
