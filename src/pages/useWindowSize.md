@@ -4,6 +4,7 @@ title: useWindowSize
 date: "2018-10-31"
 gist: https://gist.github.com/gragland/4e3d9b1c934a18dc76f585350f97e321
 sandbox: https://codesandbox.io/s/jj61r2w6z5
+isMultilingual: true
 ---
 
 A really common need is to get the current size of the browser window.
@@ -57,13 +58,13 @@ function useWindowSize() {
 }
 ```
 
-```typescript jsx
+```typescript
 import { useState, useEffect } from "react";
 
 // Define general type for useWindowSize hook, which includes width and height
 interface Size {
-  width: number | undefined,
-  height: number | undefined,
+  width: number | undefined;
+  height: number | undefined;
 }
 
 // Usage
