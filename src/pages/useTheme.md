@@ -4,6 +4,7 @@ title: useTheme
 date: "2019-01-07"
 gist: https://gist.github.com/gragland/509efd16c695e7817eb70921c77c8a05
 sandbox: https://codesandbox.io/s/15mko9187
+isMultilingual: true
 links:
   - url: https://medium.com/geckoboard-under-the-hood/how-we-made-our-product-more-personalized-with-css-variables-and-react-b29298fde608
     name: CSS Variables and React
@@ -42,6 +43,52 @@ function App() {
 function useTheme(theme) {
   useLayoutEffect(
     () => {
+      // Iterate through each value in theme object
+      for (const key in theme) {
+        // Update css variables in document's root element
+        document.documentElement.style.setProperty(`--${key}`, theme[key]);
+      }
+    },
+    [theme] // Only call again if theme object reference changes
+  );
+}
+```
+
+```typescript
+import { useLayoutEffect } from "react";
+import "./styles.scss"; // -> https://codesandbox.io/s/15mko9187
+
+// Usage
+const theme = {
+  "button-padding": "16px",
+  "button-font-size": "14px",
+  "button-border-radius": "4px",
+  "button-border": "none",
+  "button-color": "#FFF",
+  "button-background": "#6772e5",
+  "button-hover-border": "none",
+  "button-hover-color": "#FFF",
+};
+
+// This is type of "theme" object, kind of dynamic type
+interface Theme {
+    [name: string]: string;
+}
+
+function App() {
+  useTheme(theme);
+
+  return (
+    <div>
+      <button className="button">Button</button>
+    </div>
+  );
+}
+
+// Hook
+function useTheme(theme: Theme): void {
+  useLayoutEffect(
+    (): void => {
       // Iterate through each value in theme object
       for (const key in theme) {
         // Update css variables in document's root element
