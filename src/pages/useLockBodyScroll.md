@@ -4,6 +4,7 @@ title: useLockBodyScroll
 date: "2019-01-15"
 gist: https://gist.github.com/gragland/f50690d2724aec1bd513de8596dcd9b9
 sandbox: https://codesandbox.io/s/yvkol51m81
+isMultilingual: true
 links:
   - url: https://jeremenichelli.io/2019/01/how-hooks-might-shape-design-systems-built-in-react/
     name: How hooks might shape design systems built in React
@@ -54,6 +55,65 @@ function useLockBodyScroll() {
   useLayoutEffect(() => {
     // Get original body overflow
     const originalStyle = window.getComputedStyle(document.body).overflow;
+    // Prevent scrolling on mount
+    document.body.style.overflow = "hidden";
+    // Re-enable scrolling when component unmounts
+    return () => (document.body.style.overflow = originalStyle);
+  }, []); // Empty array ensures effect is only run on mount and unmount
+}
+```
+
+```typescript
+import { useState, useLayoutEffect } from "react";
+
+// Usage
+function App() {
+  // State for our modal
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  return (
+    <div>
+      <button onClick={() => setModalOpen(true)}>Show Modal</button>
+      <Content />
+      {modalOpen && (
+        <Modal
+          title="Try scrolling"
+          content="I bet you you can't! Muahahaha 😈"
+          onClose={() => setModalOpen(false)}
+        />
+      )}
+    </div>
+  );
+}
+
+
+// Define modal props type
+type ModalProps = {
+  title: string;
+  content: string;
+  onClose: () => void;
+}
+
+function Modal({ title, content, onClose } : ModalProps) {
+  // Call hook to lock body scroll
+  useLockBodyScroll();
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal">
+        <h2>{title}</h2>
+        <p>{content}</p>
+      </div>
+    </div>
+  );
+}
+
+// Hook
+function useLockBodyScroll(): void {
+  // useLaoutEffect callback return type is "() => void" type
+  useLayoutEffect(() : () => void => {
+    // Get original body overflow
+    const originalStyle: string = window.getComputedStyle(document.body).overflow;
     // Prevent scrolling on mount
     document.body.style.overflow = "hidden";
     // Re-enable scrolling when component unmounts
