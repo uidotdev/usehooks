@@ -81,7 +81,7 @@ function useOnScreen(ref, rootMargin = "0px") {
 ```
 
 ```typescript
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, MutableRefObject  } from "react";
 
 // Usage
 function App() {
@@ -90,7 +90,7 @@ function App() {
   // Call the hook passing in ref and root margin
   // In this case it would only be considered onScreen if more ...
   // ... than 300px of element is visible.
-  const onScreen: boolean = useOnScreen(ref, "-300px");
+  const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-300px");
 
   return (
     <div>
@@ -118,7 +118,7 @@ function App() {
 }
 
 // Hook
-function useOnScreen(ref: any, rootMargin: string = "0px"): boolean {
+function useOnScreen<T extends Element>(ref: MutableRefObject<T>, rootMargin: string = "0px"): boolean {
   // State and setter for storing whether element is visible
   const [isIntersecting, setIntersecting] = useState<boolean>(false);
 
