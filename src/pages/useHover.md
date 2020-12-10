@@ -64,7 +64,7 @@ function App() {
 // Hook
 // T - could be any type of HTML element like: HTMLDivElement, HTMLParagraphElement and etc.
 // hook returns tuple(array) with type [any, boolean]
-function useHover<T>(): [any, boolean] {
+function useHover<T>(): [MutableRefObject<T>, boolean] {
   const [value, setValue] = useState<boolean>(false); 
 
   const ref: any = useRef<T | null>(null);

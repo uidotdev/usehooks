@@ -107,7 +107,7 @@ function useDebounce(value, delay) {
 }
 ```
 
-```typescript jsx
+```typescript
 import { useState, useEffect, useRef } from "react";
 
 // Usage
