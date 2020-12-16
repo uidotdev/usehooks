@@ -38,6 +38,7 @@ function App() {
         });
       } else {
         setResults([]);
+        setIsSearching(false);
       }
     },
     [debouncedSearchTerm] // Only call effect if debounced search term changes
