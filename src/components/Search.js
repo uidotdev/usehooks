@@ -2,15 +2,14 @@ import React from "react";
 
 export default ({ value, onChange }) => {
   return (
-    <div style={{ maxWidth: "300px", margin: "40px auto 0 auto" }}>
+    <div style={{ marginTop: "-20px", marginBottom: "20px" }}>
       <div className="control has-icons-left">
         <input
-          style={{ borderColor: "#078b61" }}
-          className="input is-medium"
+          className="input"
           type="text"
           placeholder="Search"
           value={value}
-          onChange={({ target: { value } }) => onChange(value)}
+          onChange={onChange}
         />
         <span className="icon is-small is-left">
           <i className="fas fa-search" />

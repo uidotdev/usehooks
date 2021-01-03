@@ -53,7 +53,7 @@ exports.createPages = ({ actions, graphql }) => {
       pathPrefix: "page", // This is optional and defaults to an empty string if not used
       buildPath: (index, pathPrefix) =>
         index > 1 ? `${pathPrefix}/${index}` : `/`, // This is optional and this is the default
-      context: {} // This is optional and defaults to an empty object if not used
+      context: {posts} // This is optional and defaults to an empty object if not used
     });
 
     posts.forEach((edge, index) => {

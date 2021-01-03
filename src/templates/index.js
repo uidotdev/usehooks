@@ -1,90 +1,122 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "gatsby";
 import Layout from "../components/Layout";
-// import Search from "../components/Search";
+import Search from "../components/Search";
 import PostTemplate from "../components/PostTemplate";
 
 const IndexPage = ({ pageContext }) => {
-  //const [search, setSearch] = useState("");
-  // const [searchMatches, setSearchMatches] = useState([]);
+  const {
+    group,
+    index,
+    first,
+    last,
+    pageCount,
+    additionalContext,
+  } = pageContext;
 
-  const { group, index, first, last, pageCount } = pageContext;
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredPosts, setFilteredPosts] = useState(additionalContext.posts);
+
   const previousUrl = index - 1 == 1 ? "/" : `/page/${index - 1}`;
   const nextUrl = "/page/" + (index + 1).toString();
 
+  const hasSearchResult = filteredPosts && searchValue !== "";
+  const posts = hasSearchResult ? filteredPosts : group;
+
+  const handleFilter = (event) => {
+    const filteredPosts = additionalContext.posts.filter((post) =>
+      post.node.frontmatter.title
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase().trim())
+    );
+
+    setSearchValue(event.target.value);
+    setFilteredPosts(filteredPosts);
+  };
+
   return (
     <Layout>
-      {/*
-      <Search
-        value={search}
-        onChange={value => setSearch({ search: value })}
-      />
-      */}
+      <Search value={searchValue} onChange={handleFilter} />
 
-      {group.map(({ node }) => (
-        <PostTemplate
-          key={node.id}
-          content={node.html}
-          frontmatter={node.frontmatter}
-          slug={node.fields.slug}
-        />
-      ))}
+      {Boolean(posts.length) ? (
+        posts.map(({ node }) => (
+          <PostTemplate
+            key={node.id}
+            content={node.html}
+            frontmatter={node.frontmatter}
+            slug={node.fields.slug}
+          />
+        ))
+      ) : (
+        <div>No results</div>
+      )}
 
-      <nav
-        className="pagination is-centered"
-        role="navigation"
-        aria-label="pagination"
-        style={{
-          maxWidth: "600px",
-          margin: "0 auto"
-        }}
-      >
-        <Link
-          className="pagination-previous"
-          to={previousUrl}
-          disabled={first}
+      {/*{group.map(({ node }) => (*/}
+      {/*  <PostTemplate*/}
+      {/*    key={node.id}*/}
+      {/*    content={node.html}*/}
+      {/*    frontmatter={node.frontmatter}*/}
+      {/*    slug={node.fields.slug}*/}
+      {/*  />*/}
+      {/*))}*/}
+
+      {!hasSearchResult && (
+        <nav
+          className="pagination is-centered"
+          role="navigation"
+          aria-label="pagination"
           style={{
-            // Temp hack to prevent clicking
-            // TODO: Render a link without a href instead
-            pointerEvents: first ? "none" : "auto"
+            maxWidth: "600px",
+            margin: "0 auto",
           }}
         >
-          Previous
-        </Link>
-        <Link
-          className="pagination-next"
-          to={nextUrl}
-          disabled={last}
-          style={{
-            pointerEvents: last ? "none" : "auto"
-          }}
-        >
-          Next Page
-        </Link>
-        <ul className="pagination-list">
-          {Array(pageCount)
-            .fill(null)
-            .map((value, i) => {
-              const pageNum = i + 1;
-              const isCurrent = index === pageNum;
-              const url = pageNum === 1 ? "/" : `/page/${pageNum}`;
+          <Link
+            className="pagination-previous"
+            to={previousUrl}
+            disabled={first}
+            style={{
+              // Temp hack to prevent clicking
+              // TODO: Render a link without a href instead
+              pointerEvents: first ? "none" : "auto",
+            }}
+          >
+            Previous
+          </Link>
+          <Link
+            className="pagination-next"
+            to={nextUrl}
+            disabled={last}
+            style={{
+              pointerEvents: last ? "none" : "auto",
+            }}
+          >
+            Next Page
+          </Link>
+          <ul className="pagination-list">
+            {Array(pageCount)
+              .fill(null)
+              .map((value, i) => {
+                const pageNum = i + 1;
+                const isCurrent = index === pageNum;
+                const url = pageNum === 1 ? "/" : `/page/${pageNum}`;
 
-              return (
-                <li key={i}>
-                  <Link
-                    className={
-                      "pagination-link" + (isCurrent ? " is-current" : "")
-                    }
-                    to={url}
-                  >
-                    {pageNum}
-                  </Link>
-                </li>
-              );
-            })}
-        </ul>
-        {/*<span>{` Page ${index} of ${pageCount}`}</span>*/}
-      </nav>
+                return (
+                  <li key={i}>
+                    <Link
+                      className={
+                        "pagination-link" + (isCurrent ? " is-current" : "")
+                      }
+                      to={url}
+                    >
+                      {pageNum}
+                    </Link>
+                  </li>
+                );
+              })}
+          </ul>
+          {/*<span>{` Page ${index} of ${pageCount}`}</span>*/}
+        </nav>
+      )}
     </Layout>
   );
 };
@@ -97,7 +129,7 @@ function searchPosts(posts, search) {
   let titles = {};
 
   // Get all posts that have a matching title
-  const filterPostsByTitle = posts.filter(post => {
+  const filterPostsByTitle = posts.filter((post) => {
     const hook = post.node.frontmatter;
     const titleLowerCase = hook.title.toLowerCase();
     const doesInclude = titleLowerCase.includes(search.toLowerCase());
@@ -110,7 +142,7 @@ function searchPosts(posts, search) {
   });
 
   // Get all posts that have a matching description and DON'T match by title
-  const filterPostsByDescription = posts.filter(post => {
+  const filterPostsByDescription = posts.filter((post) => {
     const hook = post.node.frontmatter;
     const titleLowerCase = hook.title.toLowerCase();
     const description = post.node.html || "";
