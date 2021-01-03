@@ -6,37 +6,55 @@ import Layout from "../components/Layout";
 import PostTemplate from "../components/PostTemplate";
 import { More } from "../components/styled";
 
-const Post = ({ data, pageContext }) => {
-  const { markdownRemark: post } = data;
+const Post = ({
+  // data,
+  pageContext,
+  children,
+}) => {
+  // const { mdx } = data;
 
-  const { next } = pageContext;
+  //  ____                                                ___   _____
+  // |  _ \    ___   _ __ ___     ___   __   __   ___    |_ _| |_   _|
+  // | |_) |  / _ \ | '_ ` _ \   / _ \  \ \ / /  / _ \    | |    | |
+  // |  _ <  |  __/ | | | | | | | (_) |  \ V /  |  __/    | |    | |
+  // |_| \_\  \___| |_| |_| |_|  \___/    \_/    \___|   |___|   |_|
+  //
+  // console.log('mdx', mdx);
+  // ^^^^^^^^
+
+  const { ...post } = pageContext;
+
+  //  ____                                                ___   _____
+  // |  _ \    ___   _ __ ___     ___   __   __   ___    |_ _| |_   _|
+  // | |_) |  / _ \ | '_ ` _ \   / _ \  \ \ / /  / _ \    | |    | |
+  // |  _ <  |  __/ | | | | | | | (_) |  \ V /  |  __/    | |    | |
+  // |_| \_\  \___| |_| |_| |_|  \___/    \_/    \___|   |___|   |_|
+  //
+  console.log("post", post, pageContext);
+  // ^^^^^^^^
 
   return (
     <Layout>
-      <Helmet title={`${post.frontmatter.title} React Hook - useHooks`}>
-        <meta property="og:title" content={post.frontmatter.title} />
+      <Helmet title={`${post.title} React Hook - useHooks`}>
+        <meta property="og:title" content={post.title} />
         <meta property="og:description" content="" />
         <meta name="twitter:card" content="summary_large_image" />
-        {post.frontmatter.ogImage && (
+        {post.ogImage && (
           <meta
             property="og:image"
-            content={"https://usehooks.com/img/" + post.frontmatter.ogImage}
+            content={"https://usehooks.com/img/" + post.ogImage}
           />
         )}
       </Helmet>
-      <PostTemplate
-        content={post.html}
-        frontmatter={post.frontmatter}
-        slug={post.fields.slug}
-        permalink={true}
-      />
+      <PostTemplate content={post.html} frontmatter={post} permalink={true} />
+      {children}
 
-      <More>
+      {/* <More>
         Next recipe:
         <Link to={next.fields.slug} rel="next" className="next">
-          {next.frontmatter.title}
+          {next.title}
         </Link>
-      </More>
+      </More> */}
     </Layout>
   );
 };
@@ -47,7 +65,7 @@ export default Post;
 
 export const pageQuery = graphql`
   query PostByID($id: String!) {
-    markdownRemark(id: { eq: $id }) {
+    mdx(id: { eq: $id }) {
       id
       html
       fields {
