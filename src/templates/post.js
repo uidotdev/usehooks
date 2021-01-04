@@ -11,27 +11,7 @@ const Post = ({
   pageContext,
   children,
 }) => {
-  // const { mdx } = data;
-
-  //  ____                                                ___   _____
-  // |  _ \    ___   _ __ ___     ___   __   __   ___    |_ _| |_   _|
-  // | |_) |  / _ \ | '_ ` _ \   / _ \  \ \ / /  / _ \    | |    | |
-  // |  _ <  |  __/ | | | | | | | (_) |  \ V /  |  __/    | |    | |
-  // |_| \_\  \___| |_| |_| |_|  \___/    \_/    \___|   |___|   |_|
-  //
-  // console.log('mdx', mdx);
-  // ^^^^^^^^
-
   const { ...post } = pageContext;
-
-  //  ____                                                ___   _____
-  // |  _ \    ___   _ __ ___     ___   __   __   ___    |_ _| |_   _|
-  // | |_) |  / _ \ | '_ ` _ \   / _ \  \ \ / /  / _ \    | |    | |
-  // |  _ <  |  __/ | | | | | | | (_) |  \ V /  |  __/    | |    | |
-  // |_| \_\  \___| |_| |_| |_|  \___/    \_/    \___|   |___|   |_|
-  //
-  console.log("post", post, pageContext);
-  // ^^^^^^^^
 
   return (
     <Layout>
@@ -46,8 +26,9 @@ const Post = ({
           />
         )}
       </Helmet>
-      <PostTemplate content={post.html} frontmatter={post} permalink={true} />
-      {children}
+      <PostTemplate content={post.html} frontmatter={post} permalink={true}>
+        {children}
+      </PostTemplate>
 
       {/* <More>
         Next recipe:

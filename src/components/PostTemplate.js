@@ -9,20 +9,20 @@ import {
   Info,
   Links,
   LinksLi,
-  Name
+  Name,
 } from "./styled";
 
-const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
+const PostTemplate = ({ content, frontmatter, slug, permalink, children }) => {
   const extraLinks = frontmatter.links || [];
-  const [lang, setLang] = useState("jsx");
-  const isCodeSwitchAvailable = useMemo(
-    () => Boolean(frontmatter.isMultilingual),
-    [frontmatter.isMultilingual]
-  );
+  // const [lang, setLang] = useState("jsx");
+  // const isCodeSwitchAvailable = useMemo(
+  //   () => Boolean(frontmatter.isMultilingual),
+  //   [frontmatter.isMultilingual]
+  // );
 
-  const handleSwitchCodeClick = useCallback(() => {
-    setLang(value => (value === "jsx" ? "tsx" : "jsx"));
-  }, []);
+  // const handleSwitchCodeClick = useCallback(() => {
+  //   setLang(value => (value === "jsx" ? "tsx" : "jsx"));
+  // }, []);
 
   return (
     <Hook id={frontmatter.title}>
@@ -43,11 +43,12 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
         </Composes>
       )}
 
-      <CodeContent
+      {/* <CodeContent
         language={lang}
         dangerouslySetInnerHTML={{ __html: content }}
-      />
-      {isCodeSwitchAvailable && (
+      /> */}
+      {children}
+      {/* {isCodeSwitchAvailable && (
         <Content>
           <button
             className="button is-secondary has-text-weight-semibold"
@@ -56,7 +57,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
             View in {lang === "jsx" ? "TypeScript" : "JavaScript"}
           </button>
         </Content>
-      )}
+      )} */}
 
       {(permalink === true || extraLinks.length > 0) && (
         <Links>
@@ -81,7 +82,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
                 -{" "}
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: link.description
+                    __html: link.description,
                   }}
                 />
               </LinksLi>
