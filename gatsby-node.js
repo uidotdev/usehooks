@@ -7,14 +7,11 @@ exports.createPages = ({ actions, graphql }) => {
 
   return graphql(`
     {
-      allMarkdownRemark(
-        sort: { order: DESC, fields: [frontmatter___date] }
-        limit: 1000
-      ) {
+      allMdx(sort: { order: DESC, fields: [frontmatter___date] }, limit: 1000) {
         edges {
           node {
             id
-            html
+            body
             fields {
               slug
             }
@@ -43,7 +40,7 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors);
     }
 
-    let posts = result.data.allMarkdownRemark.edges;
+    let posts = result.data.allMdx.edges;
 
     createPaginatedPages({
       edges: posts,

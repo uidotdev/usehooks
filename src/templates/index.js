@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
+import { MDXRenderer } from "gatsby-plugin-mdx";
 import Layout from "../components/Layout";
 // import Search from "../components/Search";
 import PostTemplate from "../components/PostTemplate";
@@ -24,10 +25,11 @@ const IndexPage = ({ pageContext }) => {
       {group.map(({ node }) => (
         <PostTemplate
           key={node.id}
-          content={node.html}
           frontmatter={node.frontmatter}
           slug={node.fields.slug}
-        />
+        >
+          <MDXRenderer>{node.body}</MDXRenderer>
+        </PostTemplate>
       ))}
 
       <nav
