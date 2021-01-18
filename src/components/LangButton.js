@@ -1,36 +1,25 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 
-export const useLangButton = () => {
-  const [syntax, setSyntax] = useState("jsx");
+const LangButton = () => {
+  const handleClick = useCallback((event) => {
+    const postContaner = event.target.parentElement;
+    const tsClassName = "show-typescript";
 
-  const switchLang = useCallback(() => {
-    setSyntax((lang) => (lang === "jsx" ? "tsx" : "jsx"));
+    if (postContaner.classList.contains(tsClassName)) {
+      postContaner.classList.remove(tsClassName);
+    } else {
+      postContaner.classList.add(tsClassName);
+    }
   }, []);
 
-  return {
-    syntax,
-    switchLang,
-  };
-};
-
-const LangButton = ({ onClick }) => {
-  const handleClick = (event) => {
-    //  ____                                                ___   _____
-    // |  _ \    ___   _ __ ___     ___   __   __   ___    |_ _| |_   _|
-    // | |_) |  / _ \ | '_ ` _ \   / _ \  \ \ / /  / _ \    | |    | |
-    // |  _ <  |  __/ | | | | | | | (_) |  \ V /  |  __/    | |    | |
-    // |_| \_\  \___| |_| |_| |_|  \___/    \_/    \___|   |___|   |_|
-    //
-    // console.log('event', event);
-    // ^^^^^^^^
-
-    if (event.target.parentElement.classList.contains("show-typescript")) {
-      event.target.parentElement.classList.remove("show-typescript");
-    } else {
-      event.target.parentElement.classList.add("show-typescript");
-    }
-  };
-  return <button onClick={handleClick}>Click it</button>;
+  return (
+    <button
+      className="button is-secondary has-text-weight-semibold"
+      onClick={handleClick}
+    >
+      Click it
+    </button>
+  );
 };
 
 LangButton.displayName = "LangButton";
