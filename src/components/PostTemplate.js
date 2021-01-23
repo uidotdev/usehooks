@@ -1,28 +1,10 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React from "react";
 import { Link } from "gatsby";
 import analytics from "./../utils/analytics.js";
-import {
-  CodeContent,
-  Composes,
-  Content,
-  Hook,
-  Info,
-  Links,
-  LinksLi,
-  Name,
-} from "./styled";
+import { Composes, Hook, Info, Links, LinksLi, Name } from "./styled";
 
-const PostTemplate = ({ content, frontmatter, slug, permalink, children }) => {
+const PostTemplate = ({ frontmatter, slug, permalink, children }) => {
   const extraLinks = frontmatter.links || [];
-  // const [lang, setLang] = useState("jsx");
-  // const isCodeSwitchAvailable = useMemo(
-  //   () => Boolean(frontmatter.isMultilingual),
-  //   [frontmatter.isMultilingual]
-  // );
-
-  // const handleSwitchCodeClick = useCallback(() => {
-  //   setLang(value => (value === "jsx" ? "tsx" : "jsx"));
-  // }, []);
 
   return (
     <Hook id={frontmatter.title}>
@@ -43,21 +25,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink, children }) => {
         </Composes>
       )}
 
-      {/* <CodeContent
-        language={lang}
-        dangerouslySetInnerHTML={{ __html: content }}
-      /> */}
       {children}
-      {/* {isCodeSwitchAvailable && (
-        <Content>
-          <button
-            className="button is-secondary has-text-weight-semibold"
-            onClick={handleSwitchCodeClick}
-          >
-            View in {lang === "jsx" ? "TypeScript" : "JavaScript"}
-          </button>
-        </Content>
-      )} */}
 
       {(permalink === true || extraLinks.length > 0) && (
         <Links>
