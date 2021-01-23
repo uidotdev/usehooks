@@ -6,8 +6,12 @@ import EmailSignup from "./EmailSignup";
 import analytics from "./../utils/analytics.js";
 import { MDXProvider } from "@mdx-js/react";
 import LangButton from "./LangButton";
+import Syntax from "./Syntax";
 
-const shortcodes = { LangButton };
+const shortcodes = {
+  LangButton,
+  pre: Syntax,
+};
 
 export const Layout = ({ children }) => {
   return (
