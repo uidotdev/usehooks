@@ -27,7 +27,6 @@ exports.createPages = ({ actions, graphql }) => {
                 name
                 description
               }
-              isMultilingual
               ogImage
             }
           }

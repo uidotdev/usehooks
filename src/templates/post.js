@@ -63,7 +63,6 @@ export const pageQuery = graphql`
           name
           description
         }
-        isMultilingual
         ogImage
       }
     }
