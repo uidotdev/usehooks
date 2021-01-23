@@ -30,40 +30,7 @@ module.exports = {
         defaultLayouts: {
           default: require.resolve("./src/templates/post.js"),
         },
-
-        // gatsbyRemarkPlugins: [
-        //   {
-        //     resolve: `gatsby-remark-vscode`,
-        //     options: {
-        //       theme: `Tomorrow Night Eighties`, // From package.json: contributes.themes[0].label
-        //       extensions: [
-        //         `${__dirname}/ms-vscode.Theme-TomorrowKit-0.1.4.vsix`,
-        //       ],
-        //     },
-        //   },
-        //   {
-        //     resolve: "gatsby-remark-external-links",
-        //     options: {
-        //       target: "_blank",
-        //       rel: null,
-        //     },
-        //   },
-        // ],
-      },
-    },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-vscode`,
-            options: {
-              theme: `Tomorrow Night Eighties`, // From package.json: contributes.themes[0].label
-              extensions: [
-                `${__dirname}/ms-vscode.Theme-TomorrowKit-0.1.4.vsix`,
-              ],
-            },
-          },
+        gatsbyRemarkPlugins: [
           {
             resolve: "gatsby-remark-external-links",
             options: {
@@ -91,8 +58,8 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.edges.map((edge) => {
+            serialize: ({ query: { site, allMdx } }) => {
+              return allMdx.edges.map((edge) => {
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.excerpt,
                   date: edge.node.frontmatter.date,
@@ -104,7 +71,7 @@ module.exports = {
             },
             query: `
               {
-                allMarkdownRemark(
+                allMdx(
                   limit: 1000,
                   sort: { order: DESC, fields: [frontmatter___date] },
                   filter: { frontmatter: { templateKey: { eq: "post" } } }
