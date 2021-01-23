@@ -1,24 +1,36 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import styled from "styled-components";
+
+const StyledButton = styled(({ className, ...props }) => (
+  <button
+    className={`button is-secondary has-text-weight-semibold ${className}`}
+    {...props}
+  />
+))`
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+`;
 
 const LangButton = () => {
+  const [isTS, setIsTS] = useState(false);
+
   const handleClick = useCallback((event) => {
     const postContaner = event.target.parentElement;
     const tsClassName = "show-typescript";
 
     if (postContaner.classList.contains(tsClassName)) {
       postContaner.classList.remove(tsClassName);
+      setIsTS(false);
     } else {
       postContaner.classList.add(tsClassName);
+      setIsTS(true);
     }
   }, []);
 
   return (
-    <button
-      className="button is-secondary has-text-weight-semibold"
-      onClick={handleClick}
-    >
-      Click it
-    </button>
+    <StyledButton onClick={handleClick}>
+      {`View in ${isTS ? "JavaScript" : "TypeScript"}`}
+    </StyledButton>
   );
 };
 
