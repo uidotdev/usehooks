@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
+import analytics from "../utils/analytics";
 
 const StyledButton = styled(({ className, ...props }) => (
   <button
@@ -17,6 +18,7 @@ const LangButton = () => {
   const handleClick = useCallback((event) => {
     const postContaner = event.target.parentElement;
     const tsClassName = "show-typescript";
+    analytics.track("clickTsToggle");
 
     if (postContaner.classList.contains(tsClassName)) {
       postContaner.classList.remove(tsClassName);
