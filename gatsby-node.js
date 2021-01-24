@@ -7,14 +7,11 @@ exports.createPages = ({ actions, graphql }) => {
 
   return graphql(`
     {
-      allMarkdownRemark(
-        sort: { order: DESC, fields: [frontmatter___date] }
-        limit: 1000
-      ) {
+      allMdx(sort: { order: DESC, fields: [frontmatter___date] }, limit: 1000) {
         edges {
           node {
             id
-            html
+            body
             fields {
               slug
             }
@@ -30,20 +27,19 @@ exports.createPages = ({ actions, graphql }) => {
                 name
                 description
               }
-              isMultilingual
               ogImage
             }
           }
         }
       }
     }
-  `).then(result => {
+  `).then((result) => {
     if (result.errors) {
-      result.errors.forEach(e => console.error(e.toString()));
+      result.errors.forEach((e) => console.error(e.toString()));
       return Promise.reject(result.errors);
     }
 
-    let posts = result.data.allMarkdownRemark.edges;
+    let posts = result.data.allMdx.edges;
 
     createPaginatedPages({
       edges: posts,
@@ -53,7 +49,7 @@ exports.createPages = ({ actions, graphql }) => {
       pathPrefix: "page", // This is optional and defaults to an empty string if not used
       buildPath: (index, pathPrefix) =>
         index > 1 ? `${pathPrefix}/${index}` : `/`, // This is optional and this is the default
-      context: {} // This is optional and defaults to an empty object if not used
+      context: {}, // This is optional and defaults to an empty object if not used
     });
 
     posts.forEach((edge, index) => {
@@ -70,8 +66,8 @@ exports.createPages = ({ actions, graphql }) => {
         // additional data can be passed via context
         context: {
           id,
-          next
-        }
+          next,
+        },
       });
     });
   });
@@ -80,12 +76,12 @@ exports.createPages = ({ actions, graphql }) => {
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
 
-  if (node.internal.type === `MarkdownRemark`) {
+  if (node.internal.type === `MarkdownRemark` || node.internal.type === `Mdx`) {
     const value = createFilePath({ node, getNode });
     createNodeField({
       name: `slug`,
       node,
-      value
+      value,
     });
   }
 };

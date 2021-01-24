@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
+import { MDXRenderer } from "gatsby-plugin-mdx";
 import Layout from "../components/Layout";
 // import Search from "../components/Search";
 import PostTemplate from "../components/PostTemplate";
@@ -24,10 +25,11 @@ const IndexPage = ({ pageContext }) => {
       {group.map(({ node }) => (
         <PostTemplate
           key={node.id}
-          content={node.html}
           frontmatter={node.frontmatter}
           slug={node.fields.slug}
-        />
+        >
+          <MDXRenderer>{node.body}</MDXRenderer>
+        </PostTemplate>
       ))}
 
       <nav
@@ -36,7 +38,7 @@ const IndexPage = ({ pageContext }) => {
         aria-label="pagination"
         style={{
           maxWidth: "600px",
-          margin: "0 auto"
+          margin: "0 auto",
         }}
       >
         <Link
@@ -46,7 +48,7 @@ const IndexPage = ({ pageContext }) => {
           style={{
             // Temp hack to prevent clicking
             // TODO: Render a link without a href instead
-            pointerEvents: first ? "none" : "auto"
+            pointerEvents: first ? "none" : "auto",
           }}
         >
           Previous
@@ -56,7 +58,7 @@ const IndexPage = ({ pageContext }) => {
           to={nextUrl}
           disabled={last}
           style={{
-            pointerEvents: last ? "none" : "auto"
+            pointerEvents: last ? "none" : "auto",
           }}
         >
           Next Page
@@ -97,7 +99,7 @@ function searchPosts(posts, search) {
   let titles = {};
 
   // Get all posts that have a matching title
-  const filterPostsByTitle = posts.filter(post => {
+  const filterPostsByTitle = posts.filter((post) => {
     const hook = post.node.frontmatter;
     const titleLowerCase = hook.title.toLowerCase();
     const doesInclude = titleLowerCase.includes(search.toLowerCase());
@@ -110,7 +112,7 @@ function searchPosts(posts, search) {
   });
 
   // Get all posts that have a matching description and DON'T match by title
-  const filterPostsByDescription = posts.filter(post => {
+  const filterPostsByDescription = posts.filter((post) => {
     const hook = post.node.frontmatter;
     const titleLowerCase = hook.title.toLowerCase();
     const description = post.node.html || "";

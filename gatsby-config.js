@@ -4,7 +4,7 @@ module.exports = {
   siteMetadata: {
     title: "useHooks",
     description: "Easy to understand React Hook recipes",
-    siteUrl: "https://usehooks.com"
+    siteUrl: "https://usehooks.com",
   },
   plugins: [
     "gatsby-plugin-styled-components",
@@ -13,38 +13,33 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         path: `${__dirname}/src/pages`,
-        name: "pages"
-      }
+        name: "pages",
+      },
     },
     {
       resolve: "gatsby-source-filesystem",
       options: {
         path: `${__dirname}/static/img`,
-        name: "images"
-      }
+        name: "images",
+      },
     },
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-vscode`,
-            options: {
-              theme: `Tomorrow Night Eighties`, // From package.json: contributes.themes[0].label
-              extensions: [
-                `${__dirname}/ms-vscode.Theme-TomorrowKit-0.1.4.vsix`
-              ]
-            }
-          },
+        extensions: [`.md`, `.mdx`],
+        defaultLayouts: {
+          default: require.resolve("./src/templates/post.js"),
+        },
+        gatsbyRemarkPlugins: [
           {
             resolve: "gatsby-remark-external-links",
             options: {
               target: "_blank",
-              rel: null
-            }
-          }
-        ]
-      }
+              rel: null,
+            },
+          },
+        ],
+      },
     },
     {
       resolve: `gatsby-plugin-feed`,
@@ -63,20 +58,20 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.edges.map(edge => {
+            serialize: ({ query: { site, allMdx } }) => {
+              return allMdx.edges.map((edge) => {
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.excerpt,
                   date: edge.node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                   guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                  custom_elements: [{ "content:encoded": edge.node.html }]
+                  custom_elements: [{ "content:encoded": edge.node.html }],
                 });
               });
             },
             query: `
               {
-                allMarkdownRemark(
+                allMdx(
                   limit: 1000,
                   sort: { order: DESC, fields: [frontmatter___date] },
                   filter: { frontmatter: { templateKey: { eq: "post" } } }
@@ -97,11 +92,11 @@ module.exports = {
             `,
             output: "/rss.xml",
             title: "useHooks",
-            link: "https://usehooks.com"
-          }
-        ]
-      }
+            link: "https://usehooks.com",
+          },
+        ],
+      },
     },
-    `gatsby-plugin-catch-links`
-  ]
+    `gatsby-plugin-catch-links`,
+  ],
 };
