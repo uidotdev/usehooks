@@ -9,7 +9,7 @@ import {
   Info,
   Links,
   LinksLi,
-  Name
+  Name,
 } from "./styled";
 
 const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
@@ -21,7 +21,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
   );
 
   const handleSwitchCodeClick = useCallback(() => {
-    setLang(value => (value === "jsx" ? "tsx" : "jsx"));
+    setLang((value) => (value === "jsx" ? "tsx" : "jsx"));
   }, []);
 
   return (
@@ -81,7 +81,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
                 -{" "}
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: link.description
+                    __html: link.description,
                   }}
                 />
               </LinksLi>

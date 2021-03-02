@@ -37,9 +37,9 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then(result => {
+  `).then((result) => {
     if (result.errors) {
-      result.errors.forEach(e => console.error(e.toString()));
+      result.errors.forEach((e) => console.error(e.toString()));
       return Promise.reject(result.errors);
     }
 
@@ -53,7 +53,7 @@ exports.createPages = ({ actions, graphql }) => {
       pathPrefix: "page", // This is optional and defaults to an empty string if not used
       buildPath: (index, pathPrefix) =>
         index > 1 ? `${pathPrefix}/${index}` : `/`, // This is optional and this is the default
-      context: {} // This is optional and defaults to an empty object if not used
+      context: {}, // This is optional and defaults to an empty object if not used
     });
 
     posts.forEach((edge, index) => {
@@ -70,8 +70,8 @@ exports.createPages = ({ actions, graphql }) => {
         // additional data can be passed via context
         context: {
           id,
-          next
-        }
+          next,
+        },
       });
     });
   });
@@ -85,7 +85,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: `slug`,
       node,
-      value
+      value,
     });
   }
 };

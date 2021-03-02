@@ -5,14 +5,14 @@ export const Hook = styled.div`
 `;
 
 export const Composes = styled.div.attrs({
-  className: "subtitle"
+  className: "subtitle",
 })`
   padding-top: 3px;
   font-size: 0.9rem !important;
 `;
 
 export const Name = styled.h2.attrs({
-  className: "title is-3"
+  className: "title is-3",
 })`
   position: relative;
 
@@ -61,7 +61,7 @@ export const LinksLi = styled.li`
 `;
 
 export const Info = styled.div.attrs({
-  className: "level"
+  className: "level",
 })`
   margin: 20px auto 0 auto;
   max-width: 560px;

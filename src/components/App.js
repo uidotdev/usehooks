@@ -15,7 +15,7 @@ const Layout = ({ children }) => (
         }
       }
     `}
-    render={data => (
+    render={(data) => (
       <>
         <Helmet title="useHooks - Easy to understand React Hook recipes">
           <html lang="en" />

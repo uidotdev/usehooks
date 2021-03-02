@@ -5,9 +5,9 @@ const analytics = Analytics({
   debug: process.env.NODE_ENV !== "production",
   plugins: [
     googleAnalyticsPlugin({
-      trackingId: "UA-195006-22"
-    })
-  ]
+      trackingId: "UA-195006-22",
+    }),
+  ],
 });
 
 export default analytics;
