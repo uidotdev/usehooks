@@ -4,24 +4,36 @@ module.exports = {
   siteMetadata: {
     title: "useHooks",
     description: "Easy to understand React Hook recipes",
-    siteUrl: "https://usehooks.com"
+    siteUrl: "https://usehooks.com",
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `useHooks`,
+        short_name: `useHooks`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#000000`,
+        display: `standalone`,
+        icon: "static/images/favicon/favicon-32x32.png",
+      },
+    },
     "gatsby-plugin-styled-components",
     "gatsby-plugin-react-helmet",
     {
       resolve: "gatsby-source-filesystem",
       options: {
         path: `${__dirname}/src/pages`,
-        name: "pages"
-      }
+        name: "pages",
+      },
     },
     {
       resolve: "gatsby-source-filesystem",
       options: {
         path: `${__dirname}/static/img`,
-        name: "images"
-      }
+        name: "images",
+      },
     },
     {
       resolve: `gatsby-transformer-remark`,
@@ -32,19 +44,19 @@ module.exports = {
             options: {
               theme: `Tomorrow Night Eighties`, // From package.json: contributes.themes[0].label
               extensions: [
-                `${__dirname}/ms-vscode.Theme-TomorrowKit-0.1.4.vsix`
-              ]
-            }
+                `${__dirname}/ms-vscode.Theme-TomorrowKit-0.1.4.vsix`,
+              ],
+            },
           },
           {
             resolve: "gatsby-remark-external-links",
             options: {
               target: "_blank",
-              rel: null
-            }
-          }
-        ]
-      }
+              rel: null,
+            },
+          },
+        ],
+      },
     },
     {
       resolve: `gatsby-plugin-feed`,
@@ -64,13 +76,13 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.edges.map(edge => {
+              return allMarkdownRemark.edges.map((edge) => {
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.excerpt,
                   date: edge.node.frontmatter.date,
                   url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                   guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                  custom_elements: [{ "content:encoded": edge.node.html }]
+                  custom_elements: [{ "content:encoded": edge.node.html }],
                 });
               });
             },
@@ -97,11 +109,11 @@ module.exports = {
             `,
             output: "/rss.xml",
             title: "useHooks",
-            link: "https://usehooks.com"
-          }
-        ]
-      }
+            link: "https://usehooks.com",
+          },
+        ],
+      },
     },
-    `gatsby-plugin-catch-links`
-  ]
+    `gatsby-plugin-catch-links`,
+  ],
 };

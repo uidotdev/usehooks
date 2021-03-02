@@ -26,16 +26,16 @@ export const Layout = ({ children }) => {
             Easy to understand React Hook recipes by{" "}
             <a
               target="_blank"
-              href="https://twitter.com/gabe_ragland"
+              href="https://ui.dev"
               style={{
                 boxShadow: "0 2px 0 0 rgba(255, 255, 255, 0.3)",
-                lineHeight: 2
+                lineHeight: 2,
               }}
               onClick={() => {
-                analytics.track("clickSubtitleTwitter");
+                analytics.track("clickSubtitleLink");
               }}
             >
-              Gabe Ragland
+              ui.dev
             </a>
           </div>
         </div>
@@ -51,20 +51,7 @@ export const Layout = ({ children }) => {
                 and other React features without writing a class. This website
                 provides easy to understand code examples to help you learn how
                 hooks work and inspire you to take advantage of them in your
-                next project. You may also like my{" "}
-                <a
-                  href="https://divjoy.com?utm_source=usehooks&utm_medium=website&utm_campaign=usehooks-homepage&utm_content=about"
-                  style={{
-                    //textDecoration: "underline",
-                    fontWeight: "bold"
-                  }}
-                  onClick={() => {
-                    analytics.track("clickAboutDivjoy");
-                  }}
-                >
-                  React starter kit
-                </a>{" "}
-                ✨️
+                next project.
               </p>
             </div>
 
@@ -161,7 +148,7 @@ const GitHubLink = () => {
           fontSize: "1.8rem",
           top: "1rem",
           right: "1rem",
-          color: "white"
+          color: "white",
         }}
       />
     </a>
