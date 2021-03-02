@@ -1,0 +1,11 @@
+---
+templateKey: post
+title: useKonamiCode
+ogImage: og-use-konami-code.jpg
+date: "2021-01-14"
+gist: https://gist.github.com/gragland/642c9b358fc40990012775a493e3acad
+sandbox:
+code: "import React, { useState, useEffect } from 'react';\r\n\r\n\/\/ Usage\r\nfunction App(){\r\n  \/\/ Call hook with function to fire off  \r\n  \/\/ after konami code is entered.\r\n  useKonamiCode(() => {\r\n    alert('Good job \uD83E\uDD73');\r\n  });\r\n  \r\n  \/\/ Render whatever you like\r\n  return (\r\n    <div>\r\n      Can you find the easter egg?\r\n    <\/div>\r\n  );\r\n}\r\n\r\nfunction useKonamiCode(handler) {\r\n  \/\/ State to hold array of recently pressed keys\r\n  const [keys, setKeys] = useState([]);\r\n\r\n  \/\/ Convert stored keys to string and match against konami code string\r\n  const isKonamiCode = keys.join(' ') === 'up up down down left right left right B A';\r\n\r\n  useEffect(() => {\r\n    let timeout;\r\n\r\n    \/\/ When a key is pressed\r\n    window.document.onkeydown = (e) => {\r\n      \/\/ Update array of keys in state with new key\r\n      setKeys((currentKeys) => [...currentKeys, getKeyName(e.keyCode)]);\r\n      \r\n      \/\/ Clear 5s timeout since key was just pressed\r\n      clearTimeout(timeout);\r\n\r\n      \/\/ Reset keys if 5s passes so user can try again\r\n      timeout = setTimeout(() => setKeys([]), 5000);\r\n    };\r\n  }, []);\r\n\r\n  \/\/ Once konami code is entered call handler function\r\n  \/\/ and reset keys so user can do it again.\r\n  useEffect(() => {\r\n    if (isKonamiCode) {\r\n      handler();\r\n      setKeys([]);\r\n    }\r\n  }, [isKonamiCode, handler]);\r\n\r\n  return isKonamiCode;\r\n}\r\n\r\nconst getKeyName = (keyCode) => {\r\n  return {\r\n    37: 'left',\r\n    38: 'up',\r\n    39: 'right',\r\n    40: 'down',\r\n    65: 'A',\r\n    66: 'B',\r\n  }[keyCode];\r\n};"
+---
+
+This hook makes it easy to fire off a function when the visitor enters the Konami Code on their keyboard (**↑ ↑ ↓ ↓ ← → ← → B A**). Every web app needs a cheat code right? Read through the code comments below to see how it works. Want to try it out? I'm using this hook in production on [divjoy.com](http://divjoy.com). Head over there, enter the code, and something amazing will happen 😻
