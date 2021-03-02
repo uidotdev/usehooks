@@ -7,18 +7,18 @@ const EmailSignup = () => {
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState("");
 
-  const subscribe = event => {
+  const subscribe = (event) => {
     event.preventDefault();
     if (!email) return;
     analytics.track("subscribe");
     setSubscribed(true);
-    return fetch("/api/subscribe", {
+    return fetch("https://usehooks-next.vercel.app/api/subscribe", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email })
-    }).then(r => r.json());
+      body: JSON.stringify({ email }),
+    }).then((r) => r.json());
   };
 
   return (
@@ -46,7 +46,7 @@ const EmailSignup = () => {
                     type="email"
                     className="input"
                     placeholder="Your Email"
-                    onChange={event => {
+                    onChange={(event) => {
                       setEmail(event.target.value);
                     }}
                   />
