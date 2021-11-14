@@ -9,13 +9,117 @@ isMultilingual: true
 
 This hooks help to use URL Search Params as a state within a React Component, much like how there's hook to use localstorage as a state variable.
 It takes query key (of type string) as 1st parameter and optionally a default value as 2nd parameter.
-It also supports passing value type as TS generics for type checkings
-It's useful when you want to read / write URL search params within components, and re-render consuming components when URL search param value changes.
+Default value is set only if the `queryKey` is not present in search param already.
+It also supports passing value type as TS `generics` for type checkings.
+
+It's useful when you want to read / write URL search params within components, and re-render the consuming components when the URL search param value changes.
 
 PS: Currently it assumes your app has `react-router-dom`, which is goto library to handle client side routing.
-
-
+<br><br>
+Usage:
 ```tsx
+const [currentPage, setCurrentPage] = useURLSearchParam<number>('page', 1);
+```
+
+<br><br>
+Code:
+
+```jsx
+import { useEffect, useCallback, useMemo, useRef } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+
+/**
+ * To search value returned by URLSearchParam will always be a string
+ * We need to transform it into it's respective JS type:
+ * Eg: "123" => 123, "1,2,3" => [1,2,3], "false" => false etc...
+*/
+function marshallSearchParamValue(value) {
+  if (value && !isNaN(Number(value))) {
+    return Number(value);
+  }
+  if (value && value === 'false') {
+    return false;
+  }
+  if (value && value === 'true') {
+    return true;
+  }
+  if (typeof value === 'string') {
+    const stringValuesArray = value.split(',');
+
+    if (stringValuesArray.length === 1) {
+      return value;
+    }
+
+    return stringValuesArray.map((value) =>
+      marshallSearchParamValue(value)
+    )
+  }
+
+  return value;
+}
+
+/**
+ *
+ * @param value search param's value in string
+ * @returns search param's value marshalled into JS type
+ */
+function getMarshalledSearchParamValue(value) {
+  return value ? marshallSearchParamValue(value) : value;
+}
+
+export function useURLSearchParam(searchKey, searchValue) {
+  const { search } = useLocation();
+  const history = useHistory();
+  const searchValueRef = useRef(searchValue);
+
+  // using window.location.search instead of useLocation's search to avoid unnecessary deps for useEffect
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    if (
+      searchValueRef.current !== null &&
+      searchValueRef.current !== undefined &&
+      !searchParams.has(searchKey)
+    ) {
+      searchParams.set(searchKey, searchValueRef.current.toString());
+    }
+
+    history.replace({ pathname: window.location.pathname, search: `?${searchParams.toString()}` });
+  }, [history, searchKey]);
+
+  // using useLocation's search to enable re-render on updated search param value
+  const queryValue = useMemo(() => {
+    const searchParams = new URLSearchParams(search);
+
+    return getMarshalledSearchParamValue(searchParams.get(searchKey));
+  }, [search, searchKey]);
+
+  // using window.location.search instead of useLocation's search to avoid infinitie re-render from updating URL
+  const setQueryValue = useCallback(
+    (searchParamValue) => {
+      const searchParams = new URLSearchParams(window.location.search);
+
+      if (searchParamValue === null || searchParamValue === undefined) {
+        searchParams.delete(searchKey);
+      } else {
+        searchParams.set(searchKey, searchParamValue.toString());
+      }
+
+      history.replace({
+        pathname: window.location.pathname,
+        search: `?${searchParams.toString()}`,
+      });
+    },
+    [history, searchKey]
+  );
+
+  return [queryValue, setQueryValue];
+}
+```
+
+
+
+```typescript
 import { useEffect, useCallback, useMemo, useRef } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
