@@ -27,6 +27,7 @@ export const Layout = ({ children }) => {
             <a
               target="_blank"
               href="https://ui.dev"
+              rel="noopener"
               style={{
                 boxShadow: "0 2px 0 0 rgba(255, 255, 255, 0.3)",
                 lineHeight: 2,
@@ -86,7 +87,8 @@ export const Layout = ({ children }) => {
             <div className="level-item">
               <a
                 target="_blank"
-                href="https://twitter.com/gabe_ragland"
+                href="https://twitter.com/uidotdev"
+                rel="noreferrer"
                 onClick={() => {
                   analytics.track("clickFooterTwitter");
                 }}
@@ -100,7 +102,8 @@ export const Layout = ({ children }) => {
             <div className="level-item">
               <a
                 target="_blank"
-                href="https://github.com/gragland/usehooks"
+                href="https://github.com/uidotdev/usehooks"
+                rel="noreferrer"
                 onClick={() => {
                   analytics.track("clickFooterGithub");
                 }}
@@ -115,6 +118,7 @@ export const Layout = ({ children }) => {
               <a
                 target="_blank"
                 href="/rss.xml"
+                rel="noopener"
                 onClick={() => {
                   analytics.track("clickFooterRss");
                 }}
@@ -136,7 +140,8 @@ const GitHubLink = () => {
     <a
       className="is-hidden-mobile"
       target="blank"
-      href="https://github.com/gragland/usehooks"
+      rel="noreferrer"
+      href="https://github.com/uidotdev/usehooks"
       onClick={() => {
         analytics.track("clickTopGithub");
       }}
@@ -179,17 +184,5 @@ const FooterLevel = styled("div").attrs({ className: "level" })`
   }
   a:hover {
     text-decoration: underline;
-  }
-`;
-
-const Bar = styled("div")`
-  font-size: 20px;
-  padding: 1rem;
-  color: white;
-  text-align: center;
-  background-color: black;
-
-  > a:link {
-    text-decoration: none;
   }
 `;

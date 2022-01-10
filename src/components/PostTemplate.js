@@ -71,6 +71,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
               <LinksLi key={i}>
                 <a
                   target={link.target || "_blank"}
+                  rel="noopener"
                   href={link.url}
                   onClick={() => {
                     analytics.track("clickExtraLink");
@@ -113,7 +114,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
         {frontmatter.sandbox && (
           <>
             <div className="level-item">
-              <a target="_blank" href={frontmatter.sandbox}>
+              <a target="_blank" rel="noreferrer" href={frontmatter.sandbox}>
                 Open in CodeSandbox
               </a>
             </div>
@@ -123,7 +124,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
           </>
         )}
         <div className="level-item">
-          <a target="_blank" href={frontmatter.gist}>
+          <a target="_blank" rel="noreferrer" href={frontmatter.gist}>
             Suggest a change
           </a>
         </div>
