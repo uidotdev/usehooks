@@ -1,6 +1,6 @@
 import React from "react";
 import Helmet from "react-helmet";
-import { StaticQuery, graphql, withPrefix } from "gatsby";
+import { StaticQuery, graphql } from "gatsby";
 import ogImage from "./../../static/img/og-image-2.png";
 import "./global.css";
 
