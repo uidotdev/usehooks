@@ -28,7 +28,7 @@ function MyComponent() {
   // Get current pathname
   console.log(router.pathname);
 
-  // Navigate with with router.push()
+  // Navigate with router.push()
   return <button onClick={(e) => router.push("/about")}>About</button>;
 }
 
