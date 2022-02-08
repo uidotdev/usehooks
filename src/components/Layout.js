@@ -4,6 +4,7 @@ import styled from "styled-components";
 import App from "./App";
 import EmailSignup from "./EmailSignup";
 import analytics from "./../utils/analytics.js";
+import { Toaster } from "react-hot-toast";
 
 export const Layout = ({ children }) => {
   return (
@@ -46,10 +47,10 @@ export const Layout = ({ children }) => {
         <Container>
           <div className="columns is-vcentered ">
             <div className="column is-6">
-              <div className="title is-5">What's all this about?</div>
+              <h4 className="title is-5">What's all this about?</h4>
               <p>
-                <i>Hooks</i> are a new addition in React that lets you use state
-                and other React features without writing a class. This website
+                <i>Hooks</i> are a feature in React that allow you use state and
+                other React features without writing classes. This website
                 provides easy to understand code examples to help you learn how
                 hooks work and inspire you to take advantage of them in your
                 next project.
@@ -129,6 +130,14 @@ export const Layout = ({ children }) => {
           </FooterLevel>
         </div>
       </div>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+        }}
+      />
     </App>
   );
 };
