@@ -79,7 +79,14 @@ const EmailSignup = () => {
               goal was to create a JavaScript newsletter that was both
               educational and entertaining. <b>{subcount.toLocaleString()}</b>{" "}
               subscribers and an almost 50% weekly open rate later, it looks
-              like we did it...
+              like{" "}
+              <a
+                target="_blank"
+                href="https://twitter.com/uidotdev/timelines/1428028877129936899"
+              >
+                we did it
+              </a>{" "}
+              ...
             </p>
             <br />
 
@@ -107,7 +114,7 @@ const EmailSignup = () => {
               </div>
             </form>
             <Extra>
-              Join {subcount.toLocaleString()} subscribers. No spam ever. <br />
+              Join {subcount.toLocaleString()} subscribers. {""}
               <a href="https://bytes.dev/archives" target="_blank">
                 See the most recent issue.
               </a>
