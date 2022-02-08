@@ -20,6 +20,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
+    "react-hot-toast": "^2.2.0",
     "react-syntax-highlighter": "^13.0.0",
     "serve": "^11.3.2",
     "styled-components": "^5.1.1",
