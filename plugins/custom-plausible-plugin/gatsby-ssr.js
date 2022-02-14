@@ -4,7 +4,7 @@ exports.onRenderBody = ({ setHeadComponents }) => {
   if (process.env.NODE_ENV === "production") {
     const scriptProps = {
       defer: true,
-      "data-domain": "ui.dev",
+      "data-domain": "usehooks.com",
       src: `https://pl-proxy.uidotdev.workers.dev/js/script.js`,
     };
 
