@@ -22,6 +22,7 @@ module.exports = {
     "gatsby-plugin-styled-components",
     "gatsby-plugin-react-helmet",
     "custom-bytes-subscriber-count-plugin",
+    "custom-plausible-plugin",
     {
       resolve: "gatsby-source-filesystem",
       options: {
