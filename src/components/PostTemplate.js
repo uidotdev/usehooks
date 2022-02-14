@@ -35,10 +35,10 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
         <Composes>
           Composes:{" "}
           {frontmatter.composes.map((title, i) => (
-            <>
+            <React.Fragment key={i}>
               <Link to={`/${title}`}>{title}</Link>
               {i < frontmatter.composes.length - 1 ? "," : ""}{" "}
-            </>
+            </React.Fragment>
           ))}
         </Composes>
       )}
@@ -89,17 +89,24 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
             ))}
 
             {permalink === true && (
-              <LinksLi key="divjoy">
+              <LinksLi key="reactHooksCourse">
                 <a
-                  href="https://divjoy.com?utm_source=usehooks&utm_medium=website&utm_campaign=usehooks-post-links"
+                  href="https://ui.dev/react-hooks"
                   onClick={() => {
-                    analytics.track("clickExtraDivjoyLink");
+                    analytics.track("clickHooksCourseLink");
                   }}
                 >
-                  Divjoy
+                  Our React Hooks course
                 </a>{" "}
-                -{" "}
-                <span>React starter kit from the creator of usehooks.com</span>
+                - <span>Find out more by visiting </span>
+                <a
+                  href="https://ui.dev/react-hooks"
+                  onClick={() => {
+                    analytics.track("clickHooksCourseLink");
+                  }}
+                >
+                  ui.dev
+                </a>{" "}
               </LinksLi>
             )}
           </ul>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useStaticQuery } from "gatsby";
+import { useStaticQuery, graphql } from "gatsby";
 import fetch from "unfetch";
 import styled from "styled-components";
 import toast from "react-hot-toast";
@@ -72,14 +72,12 @@ const EmailSignup = () => {
               <span role="img" aria-label="letter">
                 📩
               </span>
-              &nbsp;&nbsp;Subscribe to Bytes
+              &nbsp;&nbsp; Subscribe to Bytes
             </h4>
             <p>
-              Most newsletters are terrible. Thats why we created Bytes. Our
-              goal was to create a JavaScript newsletter that was both
-              educational and entertaining. <b>{subcount.toLocaleString()}</b>{" "}
-              subscribers and an almost 50% weekly open rate later, it looks
-              like{" "}
+              Is it possible to make JavaScript newsletter that isn't terrible?
+              With <b>{subcount.toLocaleString()}</b> subscribers and almost 50%
+              weekly open rate, it looks like{" "}
               <a
                 target="_blank"
                 href="https://twitter.com/uidotdev/timelines/1428028877129936899"
@@ -108,7 +106,7 @@ const EmailSignup = () => {
                     className="button is-primary has-text-weight-semibold"
                     type="submit"
                   >
-                    {isLoading ? "Loading..." : "Subscribe"}
+                    {isLoading ? "Loading..." : "Get Bytes"}
                   </button>
                 </div>
               </div>

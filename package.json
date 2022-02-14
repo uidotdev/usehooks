@@ -1,10 +1,8 @@
 {
   "name": "usehooks",
   "version": "1.0.0",
-  "author": "Gabe Ragland",
+  "author": "ui.dev",
   "dependencies": {
-    "@analytics/google-analytics": "^0.4.0",
-    "analytics": "^0.5.5",
     "babel-plugin-styled-components": "^1.11.0",
     "gatsby": "^2.24.14",
     "gatsby-paginate": "^1.1.1",
