@@ -57,6 +57,10 @@ const Layout = ({ children }) => (
             name="google-site-verification"
             content="CJpclzkv90awODeXoBk1uJbZxcBpHYMZo7rp7qTiELg"
           />
+          <meta
+            name="facebook-domain-verification"
+            content="wxwu5397kn7qznw0cqfgmd03aeddta"
+          />
         </Helmet>
 
         {children}
