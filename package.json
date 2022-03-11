@@ -7,6 +7,7 @@
     "gatsby": "^2.24.14",
     "gatsby-paginate": "^1.1.1",
     "gatsby-plugin-catch-links": "^2.3.11",
+    "gatsby-plugin-facebook-pixel": "^1.0.8",
     "gatsby-plugin-feed": "^2.5.11",
     "gatsby-plugin-manifest": "^2.12.1",
     "gatsby-plugin-react-helmet": "^3.3.10",
