@@ -8,6 +8,12 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-plugin-facebook-pixel`,
+      options: {
+        pixelId: "186849069509023",
+      },
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `useHooks`,
