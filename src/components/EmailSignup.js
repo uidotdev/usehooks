@@ -69,22 +69,25 @@ const EmailSignup = () => {
         ) : (
           <>
             <h4 className="subtitle is-5">
-              <span role="img" aria-label="letter">
-                📩
-              </span>
+              <figure
+                style={{
+                  display: "inline-block",
+                  position: "relative",
+                  top: "12px",
+                }}
+              >
+                <img
+                  width={40}
+                  height={40}
+                  src="/images/bytes-logo.png"
+                  alt="Bytes"
+                />
+              </figure>
               &nbsp;&nbsp; Subscribe to Bytes
             </h4>
             <p>
-              Is it possible to make JavaScript newsletter that isn't terrible?
-              With <b>{subcount.toLocaleString()}</b> subscribers and almost 50%
-              weekly open rate, it looks like{" "}
-              <a
-                target="_blank"
-                href="https://twitter.com/uidotdev/timelines/1428028877129936899"
-              >
-                we did it
-              </a>{" "}
-              ...
+              The best JavaScript newsletter. Delivered every monday to over{" "}
+              <b>{subcount.toLocaleString()}</b> devs.
             </p>
             <br />
 
@@ -102,6 +105,7 @@ const EmailSignup = () => {
                 </div>
                 <div className="control">
                   <button
+                    style={{ backgroundColor: "#ED203D" }}
                     disabled={isLoading}
                     className="button is-primary has-text-weight-semibold"
                     type="submit"
@@ -112,7 +116,6 @@ const EmailSignup = () => {
               </div>
             </form>
             <Extra>
-              Join {subcount.toLocaleString()} subscribers. {""}
               <a href="https://bytes.dev/archives" target="_blank">
                 See the most recent issue.
               </a>
