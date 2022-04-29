@@ -14,7 +14,7 @@ const Post = ({ data, pageContext }) => {
   return (
     <Layout>
       <Helmet title={`${post.frontmatter.title} React Hook - useHooks`}>
-        <link rel="canonical" href={`https://usehooks.com/${post.fields.slug}/`} />
+        <link rel="canonical" href={`https://usehooks.com${post.fields.slug}`} />
         <meta property="og:title" content={post.frontmatter.title} />
         <meta property="og:description" content="" />
         <meta name="twitter:card" content="summary_large_image" />
