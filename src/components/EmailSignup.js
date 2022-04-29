@@ -86,8 +86,8 @@ const EmailSignup = () => {
               &nbsp;&nbsp; Subscribe to Bytes
             </h4>
             <p>
-              The best JavaScript newsletter. Delivered every monday to{" "}
-              <b>{subcount.toLocaleString()}</b> devs.
+              Your weekly dose of JavaScript news. Delivered every monday to{" "}
+              <b>{subcount.toLocaleString()}</b> devs, for free.
             </p>
             <br />
 
