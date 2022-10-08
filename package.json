@@ -4,7 +4,7 @@
   "author": "ui.dev",
   "dependencies": {
     "babel-plugin-styled-components": "^1.11.0",
-    "gatsby": "^2.24.14",
+    "gatsby": "^4.24.3",
     "gatsby-paginate": "^1.1.1",
     "gatsby-plugin-catch-links": "^2.3.11",
     "gatsby-plugin-facebook-pixel": "^1.0.8",
