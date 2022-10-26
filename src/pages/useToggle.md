@@ -55,7 +55,7 @@ function App() {
 
 // Hook
 // Parameter is the boolean, with default "false" value
-const useToggle = (initialState = false)=> {
+const useToggle = (initialState = false) => {
     // Initialize the state
     const [state, setState] = useState<boolean>(initialState);
 
