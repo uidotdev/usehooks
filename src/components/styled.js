@@ -41,7 +41,7 @@ export const Content = styled.div`
 `;
 
 export const Links = styled.div`
-  background-color: #f3f9f8;
+  background-color: var(--links-background);
   padding: 25px;
   margin-top: 15px;
   border-radius: 10px;

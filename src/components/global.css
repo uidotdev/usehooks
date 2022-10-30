@@ -1,3 +1,47 @@
+/* CSS Variables to use with Light & Dark Modes */
+:root {
+  --info-section-background: #e9fffc;
+  --info-font-color: #372f2f;
+  --background: #ffffff;
+  --links-background: #f3f9f8;
+}
+
 code {
   color: inherit !important;
+}
+
+/* Media query for dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --info-font-color: #ffffff;
+    --info-section-background: #073a4c;
+    --background: #000000;
+    --links-background: rgb(40, 31, 31);
+  }
+
+  code {
+    background-color: rgb(40, 37, 37) !important;
+  }
+
+  .subtitle {
+    color: var(--info-font-color) !important;
+  }
+
+  .links-title {
+    color: var(--info-font-color);
+  }
+
+  .links-text {
+    color: var(--info-font-color);
+  }
+}
+
+/* Additional properties that have to be set after query */
+.section {
+  color: var(--info-font-color);
+  background-color: var(--background);
+}
+
+.title {
+  color: var(--info-font-color);
 }

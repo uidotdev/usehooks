@@ -81,6 +81,7 @@ const PostTemplate = ({ content, frontmatter, slug, permalink }) => {
                 </a>{" "}
                 -{" "}
                 <span
+                  className="links-text"
                   dangerouslySetInnerHTML={{
                     __html: link.description,
                   }}

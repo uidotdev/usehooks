@@ -177,7 +177,7 @@ const Logo = styled(Link)`
 `;
 
 const InfoSection = styled("section").attrs({ className: "section" })`
-  background-color: #e9fffc;
+  background-color: var(--info-section-background);
 `;
 
 const Container = styled("div").attrs({ className: "container" })`
