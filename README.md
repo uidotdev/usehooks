@@ -12,6 +12,7 @@ To run locally, `yarn`, then `yarn dev`, then open [localhost:8000](https://loca
 
 [useFirestoreQuery](https://usehooks.com/useFirestoreQuery/)<br/>
 [useMemoCompare](https://usehooks.com/useMemoCompare/)<br/>
+[useConditionalMemo](https://usehooks.com/useConditionalMemo/)<br/>
 [useAsync](https://usehooks.com/useAsync/)<br/>
 [useRequireAuth](https://usehooks.com/useRequireAuth/)<br/>
 [useRouter](https://usehooks.com/useRouter/)<br/>
