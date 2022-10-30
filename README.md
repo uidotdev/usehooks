@@ -34,6 +34,7 @@ To run locally, `yarn`, then `yarn dev`, then open [localhost:8000](https://loca
 [useAnimation](https://usehooks.com/useAnimation/)<br/>
 [useWindowSize](https://usehooks.com/useWindowSize/)<br/>
 [useHover](https://usehooks.com/useHover/)<br/>
+[useThrottle](https://usehooks.com/useThrottle/)<br/>
 [useLocalStorage](https://usehooks.com/useLocalStorage/)
 
 <p align="center">
