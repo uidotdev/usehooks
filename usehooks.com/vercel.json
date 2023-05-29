@@ -27,6 +27,42 @@
       "destination": "/usemeasure"
     },
     {
+      "source": "/useDebounce",
+      "destination": "/usedebounce"
+    },
+    {
+      "source": "/useThrottle",
+      "destination": "/usethrottle"
+    },
+    {
+      "source": "/usePrevious",
+      "destination": "/useprevious"
+    },
+    {
+      "source": "/useEventListener",
+      "destination": "/useeventlistener"
+    },
+    {
+      "source": "/useLockBodyScroll",
+      "destination": "/uselockbodyscroll"
+    },
+    {
+      "source": "/useThrottle",
+      "destination": "/usethrottle"
+    },
+    {
+      "source": "/useToggle",
+      "destination": "/usetoggle"
+    },
+    {
+      "source": "/useKeyPress",
+      "destination": "/usekeypress"
+    },
+    {
+      "source": "/useScript",
+      "destination": "/usescript"
+    },
+    {
       "source": "/useMemoCompare",
       "destination": "/"
     },
@@ -37,6 +73,18 @@
     {
       "source": "/useHistory",
       "destination": "/usehistorystate"
+    },
+    {
+      "source": "/useWindowSize",
+      "destination": "/usewindowsize"
+    },
+    {
+      "source": "/useHover",
+      "destination": "/usehover"
+    },
+    {
+      "source": "/useLocalStorage",
+      "destination": "/uselocalstorage"
     },
     {
       "source": "/useAnimation",
