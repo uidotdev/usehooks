@@ -1,0 +1,73 @@
+---
+name: useThrottle
+rank: 29
+tagline: Throttle computationally expensive operations with useThrottle.
+sandboxId: usethrottle-xzfoz7
+previewHeight: 300px
+relatedHooks:
+  - usefetch
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useThrottle hook offers a controlled way to manage execution frequency in
+  a React application. By accepting a value and an optional interval, it ensures
+  that the value is updated at most every interval milliseconds. This is
+  particularly helpful for limiting API calls, reducing UI updates, or
+  mitigating performance issues by throttling computationally expensive
+  operations.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name     | Type   | Description                                              |
+  | -------- | ------ | -------------------------------------------------------- |
+  | value    | any    | The value to throttle.                                   |
+  | interval | number | (Optional) The interval in milliseconds. Default: 500ms. |
+
+  ### Return Value
+
+  | Name           | Type | Description                                                    |
+  | -------------- | ---- | -------------------------------------------------------------- |
+  | throttledValue | any  | The throttled value that is updated at most once per interval. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useThrottle } from "@uidotdev/usehooks";
+
+export default function App() {
+  const [val, setVal] = React.useState("");
+  const throttledValue = useThrottle(val);
+
+  return (
+    <section>
+      <h1>useThrottle</h1>
+      <input
+        placeholder="Type some text"
+        style={{ background: "var(--charcoal)" }}
+        type="text"
+        value={val}
+        onChange={(e) => {
+          setVal(e.target.value);
+        }}
+      />
+      <p>Val: {val}</p>
+      <p>Throttled: {throttledValue}</p>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

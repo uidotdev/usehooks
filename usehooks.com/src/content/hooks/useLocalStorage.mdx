@@ -1,0 +1,87 @@
+---
+name: useLocalStorage
+experimental: true
+rank: 2
+tagline: Store, retrieve, and synchronize data from the browser's localStorage API with useLocalStorage
+sandboxId: uselocalstorage-e6v6ey
+previewHeight: 670px
+relatedHooks:
+  - usesessionstorage
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useLocalStorage hook provides a convenient way to synchronize the state of
+  a component with the data stored in local storage. It automatically reads the
+  initial value from local storage when the component mounts and updates the
+  local storage whenever the state changes. Additionally, it listens for changes
+  in local storage made by other tabs or windows and keeps the component's state
+  up to date.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name | Type | Description |
+  |------|------|-------------|
+  | key | String | The key used to access the local storage value. |
+  | initialValue | Any | The initial value to use if there is no item in the local storage with the provided key. |
+
+  ### Return Values
+
+  | Name | Type | Description |
+  |------|------|-------------|
+  | localState | Any | The current state of the value stored in local storage. |
+  | handleSetState | Function | A function to set the state of the value in the local storage. This function accepts a new value or a function that returns a new value. The value is also saved in the local storage under the provided key. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useLocalStorage } from "@uidotdev/usehooks";
+import createDrawing from "./createDrawing";
+
+export default function App() {
+  const [drawing, saveDrawing] = useLocalStorage("drawing", null);
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    createDrawing(ref.current, drawing, saveDrawing);
+  }, [drawing, saveDrawing]);
+
+  return (
+    <section>
+      <header>
+        <h1>useLocalStorage</h1>
+
+        <button className="link" onClick={() => window.location.reload()}>
+          Reload Window
+        </button>
+        <button
+          className="link"
+          onClick={() => {
+            window.localStorage.clear();
+            window.location.reload();
+          }}
+        >
+          Clear Local Storage
+        </button>
+      </header>
+      <figure>
+        <canvas ref={ref} width={800} height={800} />
+        <figcaption>(draw something)</figcaption>
+      </figure>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

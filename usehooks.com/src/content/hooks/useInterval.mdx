@@ -1,0 +1,81 @@
+---
+name: useInterval
+experimental: true
+rank: 19
+tagline: Schedule periodic actions like data polling or animations with useInterval.
+sandboxId: useinterval-81c43g
+previewHeight: 500px
+relatedHooks:
+  - useintervalwhen
+  - usecontinuousretry
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useInterval hook provides a convenient way to create and manage intervals.
+  The hook sets up an interval that repeatedly invokes the callback function at
+  the specified interval. The interval is automatically cleared when the
+  component unmounts or when the interval duration changes. This hook is useful
+  for scenarios where you need to perform a certain action or update the
+  component periodically, such as polling for data updates or implementing
+  animations.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name | Type     | Description                                                     |
+  | ---- | -------- | --------------------------------------------------------------- |
+  | cb   | Function | The callback function to be executed at the specified interval. |
+  | ms   | Number   | The interval duration in milliseconds.                          |
+
+  ### Return Value
+
+  | Name          | Type     | Description                                              |
+  | ------------- | -------- | -------------------------------------------------------- |
+  | clearInterval | Function | A function to clear the interval and stop the execution. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useInterval } from "@uidotdev/usehooks";
+
+const colors = ["green", "blue", "purple", "red", "pink", "beige", "yellow"];
+
+export default function App() {
+  const [running, setIsRunning] = React.useState(true);
+  const [index, setIndex] = React.useState(0);
+
+  const clear = useInterval(() => {
+    setIndex(index + 1);
+  }, 1000);
+
+  const handleStop = () => {
+    clear();
+    setIsRunning(false);
+  };
+
+  const color = colors[index % colors.length];
+  return (
+    <section>
+      <h1>useInterval</h1>
+      <button disabled={!running} className="link" onClick={handleStop}>
+        {running ? "Stop" : "Stopped"}
+      </button>
+      <div style={{ backgroundColor: `var(--${color})` }} />
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

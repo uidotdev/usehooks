@@ -1,0 +1,58 @@
+---
+---
+
+<footer class="main-footer">
+	<a href="/" class="logo image">
+		<img src="/img/logo-useHooks.svg" width="546" height="80" alt="useHooks" />
+	</a>
+	<a href="https://ui.dev" class="byline">by ui.dev</a>
+	<nav>
+		<a href="https://github.com/uidotdev/usehooks">Fork on GitHub</a>
+		<a href="https://www.npmjs.com/package/@uidotdev/usehooks">Install with npm</a>
+		<a href="https://react.gg">Learn with react.gg</a>
+	</nav>
+</footer>
+
+<style>
+	.main-footer {
+		width: 100%;
+		margin-top: 4rem;
+		padding: var(--body-padding);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem;
+		border-radius: .5rem;
+		border: var(--border-dark);
+		font-size: var(--font-sm);
+	}
+
+	nav {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 1rem 2rem;
+		text-align: center;
+	}
+
+	.logo {
+		width: 180px;
+	}
+
+	.byline {
+		margin-top: -.5rem;
+		padding: .3em .5em;
+		display: inline-block;
+		border-radius: .3em;
+		background-color: var(--charcoal);
+	}
+
+	.byline:hover {
+		background-color: var(--yellow);
+		color: var(--charcoal);
+	}
+
+	nav a:hover {
+		text-decoration: underline;
+	}
+</style>

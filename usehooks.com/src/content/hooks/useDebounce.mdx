@@ -1,0 +1,109 @@
+---
+name: useDebounce
+rank: 1
+tagline: Delay the execution of function or state update with useDebounce.
+sandboxId: usedebounce-hmo7m3
+previewHeight: 1000px
+relatedHooks:
+  - usethrottle
+  - usefetch
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useDebounce hook is useful for delaying the execution of functions or
+  state updates until a specified time period has passed without any further
+  changes to the input value. This is especially useful in scenarios such as
+  handling user input or triggering network requests, where it effectively
+  reduces unnecessary computations and ensures that resource-intensive
+  operations are only performed after a pause in the input activity.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name  | Type   | Description |
+  | ----- | ------ | ----------- |
+  | value | any    | The value that you want to debounce. This can be of any type. |
+  | delay | number | The delay time in milliseconds. After this amount of time, the latest value is used. |
+
+  ### Return Values
+
+  | Name          | Type | Description |
+  | ------------- | ---- | ----------- |
+  | debouncedValue| any  | The debounced value. After the delay time has passed without the `value` changing, this will be updated to the latest `value`. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useDebounce } from "@uidotdev/usehooks";
+import searchHackerNews from "./searchHackerNews";
+import SearchResults from "./SearchResults";
+
+export default function App() {
+  const [searchTerm, setSearchTerm] = React.useState("js");
+  const [results, setResults] = React.useState([]);
+  const [isSearching, setIsSearching] = React.useState(false);
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    setSearchTerm(formData.get("search"));
+    e.target.reset();
+    e.target.focus();
+  };
+
+  React.useEffect(() => {
+    const searchHN = async () => {
+      let results = [];
+      setIsSearching(true);
+      if (debouncedSearchTerm) {
+        const data = await searchHackerNews(debouncedSearchTerm);
+        results = data?.hits || [];
+      }
+
+      setIsSearching(false);
+      setResults(results);
+    };
+
+    searchHN();
+  }, [debouncedSearchTerm]);
+
+  return (
+    <section>
+      <header>
+        <h1>useDebounce</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="search"
+            placeholder="Search HN"
+            style={{ background: "var(--charcoal)" }}
+            onChange={handleChange}
+          />
+          <button className="primary" disabled={isSearching} type="submit">
+            {isSearching ? "..." : "Search"}
+          </button>
+        </form>
+      </header>
+      <SearchResults results={results} />
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

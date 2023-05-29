@@ -1,0 +1,106 @@
+---
+name: useQueue
+rank: 23
+tagline: Add, remove, and clear element from a queue data structure with useQueue.
+sandboxId: usequeue-s7x0yg
+previewHeight: 400px
+relatedHooks:
+  - usemap
+  - useset
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useQueue hook is a useful tool for managing a queue of elements within a
+  functional component. It allows you to easily add, remove, and clear elements
+  from the queue while maintaining the necessary state updates. The hook returns
+  an object that includes the functions for manipulating the queue (add, remove,
+  and clear), as well as additional properties such as first, last, size, and
+  queue.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name         | Type  | Description                                                            |
+  | ------------ | ----- | ---------------------------------------------------------------------- |
+  | initialValue | Array | (Optional) The initial value for the queue. Default is an empty array. |
+
+  ### Return Value
+
+  The `useQueue` hook returns an object with the following properties and methods:
+
+  | Name   | Type     | Description                                           |
+  | ------ | -------- | ----------------------------------------------------- |
+  | add    | Function | Adds an element to the end of the queue.              |
+  | remove | Function | Removes and returns the first element from the queue. |
+  | clear  | Function | Clears the queue, removing all elements.              |
+  | first  | Any      | The first element in the queue.                       |
+  | last   | Any      | The last element in the queue.                        |
+  | size   | Number   | The number of elements in the queue.                  |
+  | queue  | Array    | The current array representing the queue.             |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useQueue } from "@uidotdev/usehooks";
+
+function QueueDemo({ first, last, size, queue }) {
+  return (
+    <figure>
+      <article>
+        <p>Front</p>
+        <ul>
+          {queue.map((item, i) => {
+            const isFirst = first === item;
+            const isLast = last === item;
+            if (isFirst) {
+              return <li key={i}>First: {item}</li>;
+            }
+            if (isLast) {
+              return <li key={i}>Last: {item}</li>;
+            }
+            return <li key={i}>Item: {item}</li>;
+          })}
+        </ul>
+        <p>Back</p>
+      </article>
+      <figcaption>{size} items in the queue</figcaption>
+    </figure>
+  );
+}
+
+export default function App() {
+  const { add, remove, clear, first, last, size, queue } = useQueue([1, 2, 3]);
+
+  return (
+    <div>
+      <header>
+        <h1>UseQueue</h1>
+        <button className="link" onClick={() => add((last || 0) + 1)}>
+          Add
+        </button>
+        <button disabled={size === 0} className="link" onClick={() => remove()}>
+          Remove
+        </button>
+        <button disabled={size === 0} className="link" onClick={() => clear()}>
+          Clear
+        </button>
+      </header>
+      <QueueDemo queue={queue} size={size} first={first} last={last} />
+    </div>
+  );
+}
+```
+
+</StaticCodeContainer>

@@ -1,0 +1,80 @@
+---
+name: useRandomInterval
+experimental: true
+rank: 17
+tagline: Execute a callback function at a random interval with useRandomInterval.
+sandboxId: userandominterval-rh8q99
+previewHeight: 500px
+relatedHooks:
+  - usecontinuousretry
+  - useintervalwhen
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useRandomInterval hook is useful for executing a callback function at
+  random intervals within a specified range. It provides a way to create an
+  interval that varies dynamically based on minimum and maximum delay values. By
+  using this hook, you can easily implement features such as periodic data
+  updates, animations, or any other functionality that requires dynamic and
+  random timing. The hook manages the interval internally, ensuring that it is
+  cleared when the component unmounts or when the delay values change.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name             | Type     | Description                                                         |
+  | ---------------- | -------- | ------------------------------------------------------------------- |
+  | cb               | Function | The callback function to be executed at random intervals.           |
+  | options          | Object   | An object containing the following options.                         |
+  | options.minDelay | Number   | The minimum delay in milliseconds between each callback invocation. |
+  | options.maxDelay | Number   | The maximum delay in milliseconds between each callback invocation. |
+
+  ### Return Value
+
+  | Type     | Description                                                             |
+  | -------- | ----------------------------------------------------------------------- |
+  | Function | A function to clear the timeout and stop the random interval execution. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useRandomInterval } from "@uidotdev/usehooks";
+import HeartsDemo from "./Heart";
+
+export default function App() {
+  const demo = React.useRef(new HeartsDemo());
+  const clear = useRandomInterval(
+    () => {
+      demo.current.addHeart();
+    },
+    { minDelay: 50, maxDelay: 3000 }
+  );
+
+  React.useEffect(() => {
+    demo.current.loop();
+  }, []);
+
+  return (
+    <section>
+      <h1>useRandomInterval</h1>
+      <button className="link" onClick={clear}>
+        Stop
+      </button>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

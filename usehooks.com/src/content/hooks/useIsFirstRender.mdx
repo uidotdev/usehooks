@@ -1,0 +1,60 @@
+---
+name: useIsFirstRender
+rank: 41
+tagline: Differentiate between the first and subsequent renders with useIsFirstRender.
+sandboxId: useisfirstrender-rny2tm
+previewHeight: 300px
+relatedHooks:
+  - userendercount
+  - uselogger
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useIsFirstRender hook is a useful for determining whether the current
+  render is the first render of a component. This hook is particularly valuable
+  when you want to conditionally execute certain logic or render specific
+  components only on the initial render, providing an efficient way to
+  differentiate between the first and subsequent renders.
+</HookDescription>
+
+<div class="reference">
+  ### Return Value
+
+  | Name          | Type    | Description                                      |
+  | ------------- | ------- | ------------------------------------------------ |
+  | isFirstRender | boolean | `true` for the first render, `false` for others. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useIsFirstRender } from "@uidotdev/usehooks";
+
+export default function App() {
+  const isFirstRender = useIsFirstRender();
+  const [count, rerender] = React.useReducer((x) => x + 1, 1);
+
+  return (
+    <section>
+      <h1>useIsFirstRender</h1>
+      <h2>First Render? {isFirstRender ? "Yes" : "No"}</h2>
+      <button className="primary" onClick={rerender}>
+        re-render
+      </button>
+      <p>Render Count: {count}</p>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

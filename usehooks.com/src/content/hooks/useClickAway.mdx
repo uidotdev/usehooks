@@ -1,0 +1,89 @@
+---
+name: useClickAway
+rank: 47
+tagline: Detect clicks outside of specific component with useClickAway.
+sandboxId: useclickaway-p4hl4m
+previewHeight: 250px
+relatedHooks:
+  - uselongpress
+  - usehover
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useClickAway hook is a useful for detecting clicks outside a specific
+  component. It allows you to pass a callback function that will be triggered
+  whenever a click occurs outside the component's area. This hook is
+  particularly helpful when implementing dropdown menus, modals, or any other UI
+  elements that need to be closed when the user clicks outside of them. By
+  attaching event listeners to the document, the hook checks if the click target
+  is within the component's reference, and if not, it invokes the provided
+  callback function.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name | Type     | Description |
+  | ---- | -------- | ----------- |
+  | callback | function | The callback function that is provided as an argument to `useClickAway`. This function is invoked whenever a click event is detected outside of the referenced element. The event object from the click is passed to this callback function. |
+
+  ### Return Values
+
+  | Name | Type         | Description |
+  | ---- | ------------ | ----------- |
+  | ref  | React Ref    | This is a ref object returned by the hook. It should be attached to a React element to monitor click events. The ref provides a way to access the properties of the element it is attached to. |
+</div>
+
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useClickAway } from "@uidotdev/usehooks";
+import { closeIcon } from "./icons";
+
+export default function App() {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const ref = useClickAway(() => {
+    setIsOpen(false);
+  });
+
+  const handleOpenModal = () => {
+    if (isOpen === false) {
+      setIsOpen(true);
+    }
+  };
+
+  return (
+    <>
+      <section>
+        <h1>useClickAway</h1>
+        <button className="link" onClick={handleOpenModal}>
+          Open Modal
+        </button>
+      </section>
+      {isOpen && (
+        <dialog ref={ref}>
+          <button onClick={() => setIsOpen(false)}>{closeIcon}</button>
+          <h2>Modal</h2>
+          <p>
+            Click outside the modal to close (or use the button) whatever you
+            prefer.
+          </p>
+        </dialog>
+      )}
+    </>
+  );
+}
+```
+
+</StaticCodeContainer>

@@ -1,0 +1,85 @@
+---
+name: useLockBodyScroll
+rank: 20
+tagline: Temporarily disable scrolling on the document body with useLockBodyScroll.
+sandboxId: uselockbodyscroll-on17pi
+previewHeight: 500px
+relatedHooks:
+  - usescript
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useLockBodyScroll hook temporarily disables scrolling on the document
+  body. This can be beneficial in scenarios where you want to restrict scrolling
+  while displaying a modal, a dropdown menu, or any other component that
+  requires the user's focus. Once the component using this hook is unmounted or
+  no longer needed, the hook returns a cleanup function that restores the
+  original overflow style, ensuring that the scroll behavior is reverted to its
+  previous state.
+</HookDescription>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useLockBodyScroll } from "@uidotdev/usehooks";
+import { closeIcon } from "./icons";
+import DemoContent from "./DemoContent";
+
+function Modal({ handleClose }) {
+  useLockBodyScroll();
+
+  return (
+    <div>
+      <dialog>
+        <header>
+          <button onClick={handleClose}>{closeIcon}</button>
+          <h2>Modal</h2>
+        </header>
+        <section>
+          <DemoContent />
+        </section>
+      </dialog>
+    </div>
+  );
+}
+
+export default function App() {
+  const [isOpen, setIsOpen] = React.useState(false);
+  return (
+    <>
+      {isOpen && <Modal handleClose={() => setIsOpen(false)} />}
+      <main>
+        <header>
+          <h1>useLockBodyScroll</h1>
+        </header>
+        {["red", "blue", "green", "pink", "purple", "yellow"].map((color) => {
+          return (
+            <section
+              style={{
+                backgroundColor: `var(--${color})`,
+                width: "100%",
+                height: "50vh",
+              }}
+            />
+          );
+        })}
+        <button className="primary" onClick={() => setIsOpen(true)}>
+          openModal
+        </button>
+      </main>
+    </>
+  );
+}
+```
+
+</StaticCodeContainer>

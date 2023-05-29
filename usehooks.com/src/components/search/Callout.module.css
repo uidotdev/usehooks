@@ -1,0 +1,43 @@
+.callout :global(a) {
+  height: 100%;
+  padding: var(--body-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border: var(--border-dark);
+  border-radius: 0.5rem;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  text-align: center;
+  transition: all 200ms ease-in-out;
+}
+
+.callout :global(a:hover) {
+  transform: scale(1.03);
+}
+
+.callout :global(img:not(.logo)) {
+  max-width: 120px;
+  margin-top: calc(var(--body-padding) * -1.2);
+  margin-bottom: 0.5rem;
+}
+
+.callout :global(img.d20) {
+  width: 70px;
+}
+
+.callout :global(img.money) {
+  width: 110px;
+}
+
+.callout :global(img.spinner) {
+  width: 80px;
+}
+
+.callout :global(img.hot-sauce) {
+  width: 80px;
+}
+
+.callout :global(img.logo) {
+  max-width: 150px;
+}

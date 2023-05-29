@@ -1,0 +1,85 @@
+---
+name: useCountdown
+experimental: true
+rank: 21
+tagline: Create countdown timers using useCountdown.
+sandboxId: usecountdown-6gzbhg
+previewHeight: 340px
+relatedHooks:
+  - useinterval
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useCountdown hook is useful for creating a countdown timer. By specifying
+  an endTime and various options such as the interval between ticks and callback
+  functions for each tick and completion, the hook sets up an interval that
+  updates the count and triggers the appropriate callbacks until the countdown
+  reaches zero. The countdown value is returned, allowing you to easily
+  incorporate and display the countdown in your components.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name    | Type   | Description                                                                                                                                                                                                                                                                                                         |
+  | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | endTime | Number | The end time of the countdown in milliseconds since the Unix epoch.                                                                                                                                                                                                                                                 |
+  | options | Object | An object containing the following options:<ul><li>`interval`: The interval in milliseconds at which the countdown should tick.</li><li>`onComplete`: A callback function to be called when the countdown reaches zero.</li><li>`onTick`: A callback function to be called on each tick of the countdown.</li></ul> |
+
+  ### Return Value
+
+  | Name  | Type   | Description                         |
+  | ----- | ------ | ----------------------------------- |
+  | count | Number | The current count of the countdown. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useCountdown } from "@uidotdev/usehooks";
+
+export default function App() {
+  const [endTime, setEndTime] = React.useState(new Date(Date.now() + 10000));
+  const [complete, setComplete] = React.useState(false);
+
+  const count = useCountdown(endTime, {
+    interval: 1000,
+    onTick: () => console.log("tick"),
+    onComplete: (time) => setComplete(true),
+  });
+
+  const handleClick = (time) => {
+    if (complete === true) return;
+    const nextTime = endTime.getTime() + time;
+    setEndTime(new Date(nextTime));
+  };
+
+  return (
+    <section>
+      <header>
+        <h1>useCountdown</h1>
+      </header>
+      <span className="countdown">{count}</span>
+      {complete === false && (
+        <div className="button-row">
+          <button onClick={() => handleClick(5000)}>+5s</button>
+          <button onClick={() => handleClick(10000)}>+10s</button>
+          <button onClick={() => handleClick(15000)}>+15s</button>
+        </div>
+      )}
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

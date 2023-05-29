@@ -1,0 +1,18 @@
+---
+import Logo from '../components/Logo.astro';
+import LogoGithub from '../components/LogoGithub.astro';
+---
+
+<nav class="nav-main">
+	<Logo />
+	<LogoGithub />
+</nav>
+
+<style>
+	.nav-main {
+		height: var(--nav-height);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+</style>

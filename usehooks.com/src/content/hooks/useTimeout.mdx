@@ -1,0 +1,118 @@
+---
+name: useTimeout
+experimental: true
+rank: 25
+tagline: Create delayed actions or timed events using useTimeout.
+sandboxId: usetimeout-7fcfr1
+previewHeight: 450px
+relatedHooks:
+  - useinterval
+  - useintervalwhen
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useTimeout hook allows you to set up a timed callback in your components.
+  The hook returns a function (handleClearInterval) that can be used to manually
+  cancel or clear the timer if needed. This hook is beneficial for scenarios
+  where delayed actions or timed events are required, such as implementing
+  loading delays, animations, or auto-updating components.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name | Type     | Description                                                       |
+  | ---- | -------- | ----------------------------------------------------------------- |
+  | cb   | Function | The callback function to be executed after the specified timeout. |
+  | ms   | Number   | The duration of the timeout in milliseconds.                      |
+
+  ### Return Value
+
+  | Name         | Type     | Description                                                               |
+  | ------------ | -------- | ------------------------------------------------------------------------- |
+  | clearTimeout | Function | A function to clear the timeout and cancel the execution of the callback. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useTimeout } from "@uidotdev/usehooks";
+
+function Bomb({ hasExploded, hasDefused, handleClick }) {
+  if (hasExploded) {
+    return (
+      <figure>
+        <span role="img" aria-label="Explosion Emoji">
+          💥
+        </span>
+        <figcaption>You lose</figcaption>
+      </figure>
+    );
+  }
+
+  if (hasDefused) {
+    return (
+      <figure>
+        <span role="img" aria-label="Explosion Emoji">
+          🎉
+        </span>
+        <figcaption>You Win</figcaption>
+      </figure>
+    );
+  }
+
+  return (
+    <button className="bomb" onClick={handleClick}>
+      <span role="img" aria-label="Dynamite Emoji">
+        🧨
+      </span>
+    </button>
+  );
+}
+
+export default function App() {
+  const [hasDefused, setHasDefused] = React.useState(false);
+  const [hasExploded, setHasExploded] = React.useState(false);
+
+  const clear = useTimeout(() => {
+    setHasExploded(!hasExploded);
+  }, 1000);
+
+  const handleClick = () => {
+    clear();
+    setHasDefused(true);
+  };
+
+  return (
+    <section>
+      <h1>useTimeout</h1>
+      <p>You have 1s to defuse (click) the bomb or it will explode </p>
+      <button
+        className="link"
+        onClick={() => {
+          window.location.reload();
+        }}
+      >
+        Reload
+      </button>
+      <Bomb
+        hasDefused={hasDefused}
+        hasExploded={hasExploded}
+        handleClick={handleClick}
+      />
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

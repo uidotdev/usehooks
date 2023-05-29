@@ -1,0 +1,118 @@
+---
+name: useObjectState
+rank: 38
+tagline: Manage complex state objects with useObjectState.
+sandboxId: useobjectstate-75lmg2
+previewHeight: 350px
+relatedHooks:
+  - usevisibilitychange
+  - useset
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useObjectState hook is useful for managing complex state objects. It
+  provides a convenient way to initialize and update state values using a single
+  hook. By using this hook, you can easily create and maintain state objects
+  with initial values, and then update them through a flexible "handleUpdate"
+  function. This function accepts either a callback function or an object,
+  allowing you to merge new values into the existing state object.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name         | Type   | Description                         |
+  | ------------ | ------ | ----------------------------------- |
+  | initialValue | object | (Optional) The initial state value. |
+
+  ### Return Value
+
+  The `useObjectState` hook returns an array with the following elements:
+
+  | Index | Type     | Description                            |
+  | ----- | -------- | -------------------------------------- |
+  | 0     | object   | The current state object.              |
+  | 1     | function | A function to update the state object. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useObjectState } from "@uidotdev/usehooks";
+
+const initialState = {
+  team: "Utah Jazz",
+  wins: 2138,
+  losses: 1789,
+  championships: 0,
+};
+
+export default function App() {
+  const [stats, setStats] = useObjectState(initialState);
+
+  const addWin = () => {
+    setStats((s) => ({
+      wins: s.wins + 1,
+    }));
+  };
+
+  const addLoss = () => {
+    setStats((s) => ({
+      losses: s.losses + 1,
+    }));
+  };
+
+  const reset = () => {
+    setStats(initialState);
+  };
+
+  return (
+    <section>
+      <h1>useObjectState</h1>
+
+      <button className="link" onClick={addWin}>
+        Add Win
+      </button>
+      <button className="link" onClick={addLoss}>
+        Add Loss
+      </button>
+
+      <button className="link" onClick={() => alert("lol")}>
+        Add Championship
+      </button>
+      <button className="link" onClick={reset}>
+        Reset
+      </button>
+
+      <table>
+        <thead>
+          <tr>
+            {Object.keys(stats).map((key) => {
+              return <th>{key}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {Object.keys(stats).map((key) => {
+              return <td>{`${stats[key]}`}</td>;
+            })}
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

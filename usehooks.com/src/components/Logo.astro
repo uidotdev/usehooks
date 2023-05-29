@@ -1,0 +1,24 @@
+---
+const { class: className } = Astro.props;
+---
+
+<a href="https://ui.dev" class={`logo ui-logo image ${className}`}>
+	<img src="/img/ui-logo.svg" width="62" height="62" alt="ui.dev" />
+</a>
+
+<style>
+	.ui-logo {
+		display: inline-flex;
+		border-radius: 50%;
+	}
+
+	.ui-logo:hover {
+		transform: scale(1.1);
+	}
+
+	.ui-logo img {
+		width: clamp(3rem, 10vw, 4rem);
+		display: block;
+		height: auto;
+	}
+</style>

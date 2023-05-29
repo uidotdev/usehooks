@@ -1,0 +1,87 @@
+---
+name: useEventListener
+experimental: true
+rank: 26
+tagline: Listen for events on a target element with useEventListener.
+sandboxId: useeventlistener-51h645
+previewHeight: 250px
+relatedHooks:
+  - usescript
+  - usehover
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useEventListener hook enables you to add event listeners to a target
+  element within a React component. By using useEventListener, you can handle
+  various types of events, such as mouse events or keyboard events, and specify
+  the target element, event name, event handler function, and additional
+  options. applications.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name            | Type               | Description                                                                                                         |
+  | --------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------- |
+  | target          | Ref or DOM element | The target element to attach the event listener to. It can be either a ref object (`ref.current`) or a DOM element. |
+  | eventName       | String             | The name of the event to listen for.                                                                                |
+  | handler         | Function           | The event handler function to be executed when the event is triggered.                                              |
+  | options         | Object             | (Optional) Additional options for the event listener.                                                               |
+  | options.capture | Boolean            | Specifies whether the event should be captured during the capturing phase. Default is `false`.                      |
+  | options.passive | Boolean            | Specifies whether the event listener will not call `preventDefault()`. Default is `false`.                          |
+  | options.once    | Boolean            | Specifies whether the event listener should only be invoked once. Default is `false`.                               |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useEventListener } from "@uidotdev/usehooks";
+import { closeIcon } from "./icons";
+
+export default function App() {
+  const ref = React.useRef(null);
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleClick = (e) => {
+    const element = ref.current;
+    if (element && !element.contains(e.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEventListener(document, "mousedown", handleClick);
+
+  return (
+    <section>
+      <h1>useEventListener</h1>
+      <div style={{ minHeight: "200vh" }}>
+        <button className="link" onClick={() => setIsOpen(true)}>
+          Click me
+        </button>
+      </div>
+      {isOpen && (
+        <dialog ref={ref}>
+          <button onClick={() => setIsOpen(false)}>{closeIcon}</button>
+          <h2>Modal</h2>
+          <p>
+            Click outside the modal to close (or use the button) whatever you
+            prefer.
+          </p>
+        </dialog>
+      )}
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

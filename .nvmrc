@@ -1,1 +1,3 @@
 12.8.0
+engine-strict=true
+node-mirror:release=https://npmmirror.com/mirrors/node/

@@ -1,0 +1,57 @@
+---
+name: usePreferredLanguage
+rank: 10
+tagline: Adapt to user language preferences dynamically with usePreferredLanguage.
+sandboxId: usepreferredlanguage-v3dcoh
+previewHeight: 300px
+relatedHooks:
+  - usetoggle
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  Basically, what this hook does is that, it takes a parameter with value true
+  or false and toggles that value to opposite. It's useful when we want to take
+  some action into it's opposite action, for example: show and hide modal, show
+  more/show less text, open/close side menu.
+</HookDescription>
+
+<div class="reference">
+  ### Return Value
+
+  | Name          | Type   | Description                                                                                                   |
+  | ------------- | ------ | ------------------------------------------------------------------------------------------------------------- |
+  | preferredLang | string | The hook returns a string that represents the preferred language of the user, as set in the browser settings. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { usePreferredLanguage } from "@uidotdev/usehooks";
+
+export default function App() {
+  const language = usePreferredLanguage();
+
+  return (
+    <section>
+      <h1>usePreferredLanguage</h1>
+      <p>Change language here - chrome://settings/languages</p>
+      <h2>
+        The correct date format for <pre>{language}</pre> is{" "}
+        <time>{new Date(Date.now()).toLocaleDateString(language)}</time>
+      </h2>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

@@ -1,0 +1,80 @@
+---
+name: useFavicon
+rank: 43
+tagline: Dynamically update the favicon with useFavicon.
+sandboxId: usefavicon-xckn4k
+previewHeight: 200px
+relatedHooks:
+  - usedocumenttitle
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useFavicon hook is a useful for dynamically update the favicon (shortcut icon) of a web page. By using this hook, you can easily change the favicon by providing a new URL as a parameter. It creates a new link element with the specified URL, sets its type and relationship attributes appropriately, and appends it to the `<head>` section of the document.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name | Type   | Description                                        |
+  | ---- | ------ | -------------------------------------------------- |
+  | url  | string | The URL of the favicon to be set for the document. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useFavicon } from "@uidotdev/usehooks";
+
+export default function App() {
+  const [favicon, setFavicon] = React.useState(
+    "https://ui.dev/favicon/favicon-32x32.png"
+  );
+
+  useFavicon(favicon);
+
+  return (
+    <section>
+      <h1>useFavicon</h1>
+
+      <button
+        title="Set the favicon to Bytes' logo"
+        className="link"
+        onClick={() =>
+          setFavicon("https://bytes.dev/favicon/favicon-32x32.png")
+        }
+      >
+        Bytes
+      </button>
+      <button
+        title="Set the favicon to React Newsletter's logo"
+        className="link"
+        onClick={() =>
+          setFavicon("https://reactnewsletter.com/favicon/favicon-32x32.png")
+        }
+      >
+        React Newsletter
+      </button>
+
+      <button
+        title="Set the favicon to uidotdev's logo"
+        className="link"
+        onClick={() => setFavicon("https://ui.dev/favicon/favicon-32x32.png")}
+      >
+        ui.dev
+      </button>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

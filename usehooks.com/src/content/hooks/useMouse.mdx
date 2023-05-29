@@ -1,0 +1,86 @@
+---
+name: useMouse
+rank: 50
+tagline: Track and retrieve the position of the mouse cursor with useMouse.
+sandboxId: usemouse-8yu3mi
+previewHeight: 450px
+relatedHooks:
+  - usehover
+  - useeventlistener
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useMouse hook is useful for tracking and retrieving the position of the
+  mouse cursor within a component. By utilizing this hook, developers can easily
+  access information such as the current coordinates of the mouse cursor (x and
+  y), the position of the mouse cursor relative to an element within the
+  component (elementX and elementY), and the position of that element on the
+  page (elementPositionX and elementPositionY).
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  None.
+
+  ### Return Value
+
+  The `useMouse` hook returns an array with two elements:
+
+  | Name    | Type   | Description                                                                      |
+  | ------- | ------ | -------------------------------------------------------------------------------- |
+  | `state` | object | An object representing the current mouse position and element information.       |
+  | `ref`   | object | A ref object that can be used to track the mouse position on a specific element. |
+
+  The `state` object has the following properties:
+
+  | Name                     | Type   | Description                                                                             |
+  | ------------------------ | ------ | --------------------------------------------------------------------------------------- |
+  | `state.x`                | number | The current horizontal position of the mouse relative to the page.                      |
+  | `state.y`                | number | The current vertical position of the mouse relative to the page.                        |
+  | `state.elementX`         | number | The current horizontal position of the mouse relative to the element's top-left corner. |
+  | `state.elementY`         | number | The current vertical position of the mouse relative to the element's top-left corner.   |
+  | `state.elementPositionX` | number | The current horizontal position of the element relative to the page.                    |
+  | `state.elementPositionY` | number | The current vertical position of the element relative to the page.                      |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useMouse } from "@uidotdev/usehooks";
+import Demo from "./Demo";
+
+export default function App() {
+  const [mouse, ref] = useMouse();
+
+  const xIntersecting = mouse.elementX > 0 && mouse.elementX < 300;
+  const yIntersecting = mouse.elementY > 0 && mouse.elementY < 300;
+  const isIntersecting = xIntersecting && yIntersecting;
+
+  return (
+    <section>
+      <h1>useMouse</h1>
+      <article
+        ref={ref}
+        style={{ width: "300px", height: "300px" }}
+        className={isIntersecting ? "active" : ""}
+      >
+        Use a ref to add coords relative to the element
+      </article>
+      <Demo {...mouse} />
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

@@ -1,0 +1,14 @@
+---
+import CodePreview from "./codepreview/CodePreview";
+import { getFiles } from "./codepreview/utils";
+
+const { sandboxId, previewHeight } = Astro.props;
+const files = await getFiles({ id: sandboxId });
+---
+
+<div>
+  <h2>Demo:</h2>
+  <div style={{ height: previewHeight }}>
+    <CodePreview client:only files={files} previewHeight={previewHeight} />
+  </div>
+</div>

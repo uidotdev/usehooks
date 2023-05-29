@@ -1,0 +1,84 @@
+---
+name: useWindowScroll
+rank: 45
+tagline: Track and manipulate the scroll position of a web page with useWindowScroll.
+sandboxId: usewindowscroll-pdw6f9
+previewHeight: 600px
+relatedHooks:
+  - usemeasure
+  - usewindowsize
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useWindowScroll hook is useful for tracking and manipulating the scroll
+  position of a web page within a React component. It allows you to easily
+  access the current scroll coordinates (x and y) through the "state" object
+  returned by the hook. Additionally, the hook provides a "scrollTo" function
+  that can be used to programmatically scroll to a specific position on the
+  page. This hook is helpful when building components that require dynamic
+  behavior based on the scroll position, such as lazy-loading content, infinite
+  scrolling, or implementing smooth scrolling animations.
+</HookDescription>
+
+<div class="reference">
+  ### Return Value
+
+  The `useWindowScroll` hook returns an array with two elements:
+
+  | Name       | Type     | Description                                                              |
+  | ---------- | -------- | ------------------------------------------------------------------------ |
+  | `state`    | object   | An object representing the current window scroll position.               |
+  | `scrollTo` | function | A function that can be used to scroll the window to a specific position. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useWindowScroll } from "@uidotdev/usehooks";
+
+export default function App() {
+  const [{ x, y }, scrollTo] = useWindowScroll();
+  return (
+    <section>
+      <header>
+        <h1>useWindowScroll</h1>
+        <button className="link" onClick={() => scrollTo(0, 1000)}>
+          Scroll To (0, 1000)
+        </button>
+        <button
+          className="link"
+          onClick={() => scrollTo({ left: 0, top: 2000, behavior: "smooth" })}
+        >
+          Scroll To (0, 2000) (Smoothly)
+        </button>
+        <button
+          className="link"
+          onClick={() => scrollTo({ left: 0, top: 0, behavior: "smooth" })}
+        >
+          Back To The Top
+        </button>
+      </header>
+
+      {new Array(50).fill().map((_, index) => {
+        return <p key={index}>{index}</p>;
+      })}
+      <aside style={{ position: "fixed", bottom: 0, right: 0 }}>
+        Coordinates <span className="x">x: {x}</span>{" "}
+        <span className="y">y: {y}</span>{" "}
+      </aside>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

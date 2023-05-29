@@ -1,0 +1,100 @@
+---
+name: useSessionStorage
+experimental: true
+rank: 9
+tagline: Store, retrieve, and synchronize data from the browser's session storage with useSessionStorage.
+sandboxId: usesessionstorage-yoodu4
+previewHeight: 400px
+relatedHooks:
+  - uselocalstorage
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useSessionStorage hook allows you to store and retrieve data in the
+  browser's session storage, providing a way to persist data across multiple
+  page views or browser refreshes. The hook utilizes the window.sessionStorage
+  API to store and retrieve data in the session storage. It automatically
+  synchronizes the stored data with the local state of the component using the
+  hook. Additionally, it listens for changes in the session storage and updates
+  the local state accordingly, ensuring that the component reflects the latest
+  stored values.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name         | Type   | Description                                                                                |
+  | ------------ | ------ | ------------------------------------------------------------------------------------------ |
+  | key          | String | The key used to access the session storage value.                                          |
+  | initialValue | Any    | The initial value to use if there is no item in the session storage with the provided key. |
+
+  ### Return Values
+
+  | Name           | Type     | Description                                                                                                                                                                                                       |
+  | -------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | localState     | Any      | The current state of the value stored in session storage.                                                                                                                                                         |
+  | handleSetState | Function | A function to set the state of the value in the session storage. This function accepts a new value or a function that returns a new value. The value is also saved in the session storage under the provided key. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useSessionStorage } from "@uidotdev/usehooks";
+import { cart } from "./icons";
+
+export default function App() {
+  const [count, setCount] = useSessionStorage("woot", 0);
+
+  return (
+    <section>
+      <h1>useSessionStorage</h1>
+      <div>
+        <button className="link" onClick={() => setCount(0)}>
+          Clear Cart
+        </button>
+        <button
+          className="link"
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          Reload Window
+        </button>
+        <button
+          className="link"
+          onClick={() => {
+            window.sessionStorage.clear();
+            window.location.reload();
+          }}
+        >
+          Clear Session
+        </button>
+      </div>
+      <button className="primary" onClick={() => setCount(count + 1)}>
+        <span>{cart}</span> Add To Cart
+      </button>
+      <button className="cart">
+        <span>{cart}</span>{" "}
+        <span
+          key={count}
+          className={`cart-count ${count > 0 ? "animate" : ""}`}
+        >
+          {count}
+        </span>
+      </button>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

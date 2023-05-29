@@ -1,0 +1,88 @@
+---
+name: useKeyPress
+experimental: true
+rank: 27
+tagline: Detect and perform actions on key press events with useKeyPress.
+sandboxId: usekeypress-7vgzwf
+previewHeight: 350px
+relatedHooks:
+  - useeventlistener
+  - usehover
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useKeyPress hook is a useful for detecting key presses and performing
+  specific actions based on the pressed key. By calling useKeyPress with the
+  desired key and callback function, the hook sets up an event listener that
+  triggers the callback when the specified key is pressed.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name                 | Type                  | Description                                                                                            |
+  | -------------------- | --------------------- | ------------------------------------------------------------------------------------------------------ |
+  | key                  | String                | The key to listen for.                                                                                 |
+  | cb                   | Function              | The callback function to be executed when the key is pressed.                                          |
+  | options              | Object                | (Optional) Additional options for the key press event.                                                 |
+  | options.event        | String                | (Optional) The event type to listen for. Default is `"keydown"`.                                       |
+  | options.target       | DOM element or Window | (Optional) The target element or `window` object to attach the event listener to. Default is `window`. |
+  | options.eventOptions | Object                | (Optional) Additional options for the event listener.                                                  |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useKeyPress } from "@uidotdev/usehooks";
+
+export default function App() {
+  const [activeKey, setActiveKey] = React.useState("");
+
+  useKeyPress("ArrowRight", onKeyPress);
+  useKeyPress("ArrowLeft", onKeyPress);
+  useKeyPress("ArrowUp", onKeyPress);
+  useKeyPress("ArrowDown", onKeyPress);
+
+  function onKeyPress(e) {
+    e.preventDefault();
+    setActiveKey(e.key);
+    setTimeout(() => {
+      setActiveKey("");
+    }, 600);
+  }
+
+  return (
+    <section>
+      <h1>useKeyPress</h1>
+      <p>Press one of the arrow keys on your keyboard</p>
+      <article>
+        <button className={activeKey === "ArrowUp" ? "pressed" : ""}>
+          <span>&uarr;</span>
+        </button>
+        <button className={activeKey === "ArrowLeft" ? "pressed" : ""}>
+          <span>&larr;</span>
+        </button>
+        <button className={activeKey === "ArrowDown" ? "pressed" : ""}>
+          <span>&darr;</span>
+        </button>
+        <button className={activeKey === "ArrowRight" ? "pressed" : ""}>
+          <span>&rarr;</span>
+        </button>
+      </article>
+      {Boolean(activeKey) && <label>{activeKey} was pressed</label>}
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

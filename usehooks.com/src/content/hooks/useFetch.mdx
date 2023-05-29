@@ -1,0 +1,82 @@
+---
+name: useFetch
+experimental: true
+rank: 11
+tagline: Fetch data with accurate states, caching, and no stale responses using useFetch.
+sandboxId: usefetch-yky89o
+previewHeight: 670px
+relatedHooks:
+  - useintersectionobserver
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useFetch React hook is useful for handling data fetching and state
+  management in React components. It allows you to easily fetch data from a
+  specified URL using the fetch API and provides a consistent pattern for
+  handling loading, success, and error states. It also incorporates an internal
+  caching mechanism to store and retrieve previously fetched data, improving
+  performance by reducing redundant network requests. Additionally, it includes
+  a mechanism to ignore stale responses if the component unmounts or if a new
+  request is made before the previous one completes.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name    | Type   | Description                                                                              |
+  | ------- | ------ | ---------------------------------------------------------------------------------------- |
+  | url     | String | The URL to fetch data from.                                                              |
+  | options | Object | (Optional) Additional options for the fetch request, such as headers or request methods. |
+
+  ### Return Values
+
+  | Name        | Type               | Description                                                                    |
+  | ----------- | ------------------ | ------------------------------------------------------------------------------ |
+  | state       | Object             | The state object containing the fetched data and error status.                 |
+  | state.error | Error \| undefined | The error object if an error occurred during the fetch, otherwise `undefined`. |
+  | state.data  | Any \| undefined   | The fetched data if the fetch was successful, otherwise `undefined`.           |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useFetch } from "@uidotdev/usehooks";
+import Card from "./Card";
+
+export default function App() {
+  const [count, setCount] = React.useState(1);
+
+  const { error, data } = useFetch(
+    `https://pokeapi.co/api/v2/pokemon/${count}`
+  );
+
+  return (
+    <section>
+      <h1>useFetch</h1>
+      <button
+        disabled={count < 2}
+        className="link"
+        onClick={() => setCount((c) => c - 1)}
+      >
+        Prev
+      </button>
+      <button className="link" onClick={() => setCount((c) => c + 1)}>
+        Next
+      </button>
+      <Card loading={!data} error={error} data={data} />
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

@@ -1,0 +1,91 @@
+---
+name: useCopyToClipboard
+rank: 31
+tagline: Copy text to the clipboard using useCopyToClipboard.
+sandboxId: usecopytoclipboard-y22r6w
+previewHeight: 300px
+relatedHooks:
+  - usemap
+  - usequeue
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useCopyToClipboard hook is useful because it abstracts the complexity of
+  copying text to the clipboard in a cross-browser compatible manner. It
+  utilizes the modern navigator.clipboard.writeText method if available, which
+  provides a more efficient and secure way to copy text. In case the writeText
+  method is not supported by the browser, it falls back to a traditional method
+  using the document.execCommand("copy") approach.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name  | Type   | Description                              |
+  | ----- | ------ | ---------------------------------------- |
+  | value | string | The value to be copied to the clipboard. |
+
+  ### Return Value
+
+  The `useCopyToClipboard` hook returns an array with the following elements:
+
+  | Index | Type     | Description                                            |
+  | ----- | -------- | ------------------------------------------------------ |
+  | 0     | string   | The value that was last copied to the clipboard.       |
+  | 1     | function | A function to copy a specified value to the clipboard. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { copyIcon, checkIcon } from "./icons";
+
+const randomHash = crypto.randomUUID();
+
+export default function App() {
+  const [copiedText, copyToClipboard] = useCopyToClipboard();
+  const hasCopiedText = Boolean(copiedText);
+  return (
+    <section>
+      <h1>useCopyToClipboard</h1>
+      <article>
+        <label>Fake API Key</label>
+        <pre>
+          <code>{randomHash}</code>
+          <button
+            disabled={hasCopiedText}
+            className="link"
+            onClick={() => copyToClipboard(randomHash)}
+          >
+            {hasCopiedText ? checkIcon : copyIcon}
+          </button>
+        </pre>
+      </article>
+      {hasCopiedText && (
+        <dialog open={hasCopiedText}>
+          <h4>
+            Copied{" "}
+            <span role="img" aria-label="Celebrate Emoji">
+              🎉
+            </span>
+          </h4>
+          <textarea placeholder="Paste your copied text" />
+        </dialog>
+      )}
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

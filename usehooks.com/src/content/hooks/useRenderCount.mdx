@@ -1,0 +1,64 @@
+---
+name: useRenderCount
+rank: 16
+tagline: Identify unnecessary re-renders and monitor update frequency with useRenderCount.
+sandboxId: userendercount-ghn1dg
+previewHeight: 320px
+relatedHooks:
+  - userenderinfo
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useRenderCount hook is a useful tool for tracking the number of times a
+  component renders or re-renders. Each time the component renders, the count
+  value is incremented, allowing you to keep track of the render count. This can
+  be helpful in optimizing performance, identifying unnecessary re-renders, or
+  monitoring how frequently a component is being updated. The hook provides a
+  simple and efficient way to gain insights into the rendering behavior of your
+  components.
+</HookDescription>
+
+<div class="reference">
+  ### Return Value
+
+  | Name        | Type   | Description                                     |
+  | ----------- | ------ | ----------------------------------------------- |
+  | renderCount | Number | The number of times the component has rendered. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useRenderCount } from "@uidotdev/usehooks";
+
+export default function App() {
+  const renderCount = useRenderCount();
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <section>
+      <header>
+        <h1>useRenderCount</h1>
+        <h6>(strict mode on)</h6>
+      </header>
+      <button className="primary" onClick={() => setCount((c) => c + 1)}>
+        Increment
+      </button>
+      <p>Count: {count}</p>
+      <p>Render Count: {renderCount}</p>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

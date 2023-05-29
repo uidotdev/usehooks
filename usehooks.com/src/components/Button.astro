@@ -1,0 +1,69 @@
+---
+export interface Props {
+	text: string;
+	size: string;
+	href?: string;
+	type: "link" | "button" | "submit" | "reset";
+	color: string;
+	class?: string;
+}
+
+const { type, href, text, size, color } = Astro.props;
+const { class: className } = Astro.props;
+---
+
+{ type === "link" ? <a class={`button ${size} ${color} ${className}`} href={href}>{text}</a> : <button type={type} class={`button ${size} ${color} ${className}`}>{text}</button> }
+
+<style>
+	.button {
+		padding: 1em 2em;
+		background-color: var(--yellow);
+		border-radius: 9999px;
+		border: var(--border-dark);
+	 	font-family: var(--font-outfit);
+		font-size: clamp(.8rem, 1.5vw, 1rem);
+		font-weight: 700;
+		text-transform: uppercase;
+		text-decoration: none;
+		color: var(--charcoal);
+		cursor: pointer;
+		box-shadow: 1px 1px 0 var(--charcoal);
+		transition: box-shadow 150ms ease-in-out;
+	}
+
+	.button.large {
+		padding: 1em 2em;
+	}
+
+	.button.small {
+		padding: .5em 1em;
+	}
+
+	.button.yellow {
+		background-color: var(--yellow);
+	}
+
+	.button.green {
+		background-color: var(--green);
+	}
+
+	.button.pink {
+		background-color: var(--pink);
+	}
+
+	.button::selection {
+		background-color: var(--purple);
+	}
+
+	.button:not(:disabled):focus-visible,
+	.button:not(:disabled):hover {
+		outline: none;
+		box-shadow: var(--focus-object);
+	}
+
+	.button:disabled {
+		opacity: .5;
+		cursor: not-allowed;
+	}
+	
+</style>

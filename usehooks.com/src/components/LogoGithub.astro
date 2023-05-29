@@ -1,0 +1,28 @@
+---
+const { class: className } = Astro.props;
+---
+
+<a href="https://github.com/uidotdev/usehooks" class={`logo image github ${className}`}>
+	<img src="/img/icon-github.svg" alt="GitHub" width="48" height="48" />
+</a>
+
+<style>
+	.github {
+		display: inline-flex;
+		border-radius: 50%;
+	}
+
+	.github:focus-visible {
+		background-color: transparent;
+	}
+
+	.github:hover {
+		transform: scale(1.1);
+	}
+
+	.github img {
+		width: clamp(1.8rem, 7vw, 2.8rem);
+		display: block;
+		height: auto;
+	}
+</style>

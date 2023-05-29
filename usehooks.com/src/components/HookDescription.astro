@@ -1,0 +1,81 @@
+---
+import Button from "./Button.astro";
+const { name } = Astro.props;
+---
+
+<div class="description">
+  <div>
+    <h2>Description:</h2>
+    <slot />
+  </div>
+  <aside class="callout">
+    <img
+      src="/img/react-gg-logo.svg"
+      width="464"
+      height="85"
+      class="logo"
+      alt="React.gg"
+    />
+    <p>Want to learn how to build {name} yourself? Check out <a href="https://react.gg">react.gg</a> – the interactive way to master modern React.</p>
+    <Button
+      text="Learn More"
+      size="small"
+      href="https://react.gg"
+      type="link"
+      color="green"
+      class="get-started"
+    />
+  </aside>
+</div>
+
+<style>
+  .description {
+    --callout-width: 300px;
+    display: grid;
+    gap: 1.5rem 2rem;
+    font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+  }
+
+  @media screen and (min-width: 811px) {
+    .description {
+      grid-template-columns: 1fr var(--callout-width);
+    }
+  }
+
+  .callout {
+    margin-top: 1rem;
+    align-self: start;
+    padding: 1.5rem;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border: var(--border-dark);
+    border-color: var(--coal);
+    border-radius: 0.5rem;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: var(--white);
+    text-decoration: none;
+    text-align: center;
+    transition: all 200ms ease-in-out;
+  }
+
+  .callout img.logo {
+    max-width: 150px;
+  }
+
+  .callout .button {
+    transform: translateY(50%);
+  }
+
+  .callout p {
+    max-width: 40ch;
+  }
+
+  @media screen and (min-width: 811px) {
+    .callout {
+      max-width: var(--callout-width);
+    }
+  }
+</style>

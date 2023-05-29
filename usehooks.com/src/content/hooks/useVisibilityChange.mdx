@@ -1,0 +1,64 @@
+---
+name: useVisibilityChange
+rank: 13
+tagline: Track document visibility and respond to changes with useVisibilityChange.
+sandboxId: usevisibilitychange-8yxnwy
+previewHeight: 200px
+relatedHooks:
+  - useorientation
+  - usenetworkstate
+  - usemediaquery
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useVisibilityChange hook is useful for tracking the visibility state of a
+  document or web page. It allows you to easily detect when the document is
+  visible or hidden, and perform certain actions based on that information. The
+  hook returns a boolean value indicating whether the document is currently
+  visible or not, allowing components to react accordingly and update their
+  rendering or behavior based on the visibility state.
+</HookDescription>
+
+<div class="reference">
+  ### Return Value
+
+  | Name            | Type    | Description                                                     |
+  | --------------- | ------- | --------------------------------------------------------------- |
+  | documentVisible | Boolean | `true` if the document is currently visible, `false` otherwise. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useVisibilityChange } from "@uidotdev/usehooks";
+
+export default function App() {
+  const documentVisible = useVisibilityChange();
+  const [tabAwayCount, setTabAwayCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (documentVisible === false) {
+      setTabAwayCount((c) => c + 1);
+    }
+  }, [documentVisible]);
+
+  return (
+    <section>
+      <h1>useVisibilityChange</h1>
+      <div>Tab Away Count: {tabAwayCount}</div>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

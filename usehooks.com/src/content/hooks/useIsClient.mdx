@@ -1,0 +1,59 @@
+---
+name: useIsClient
+rank: 22
+tagline: Determine whether the code is running on the client-side or server-side with useIsClient.
+sandboxId: useisclient-4edyux
+previewHeight: 240px
+relatedHooks:
+  - userenderinfo
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useIsClient hook is useful for determining whether the code is running on
+  the client-side or server-side. The hook initializes a state variable called
+  "isClient" and sets its initial value to false. This information can be
+  utilized in conditional rendering, handling browser-specific behavior, or
+  making API calls that should only be executed on the client-side.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  The `useIsClient` hook does not accept any parameters.
+
+  ### Return Value
+
+  | Name     | Type    | Description                                                        |
+  | -------- | ------- | ------------------------------------------------------------------ |
+  | isClient | Boolean | `true` if running in a client-side environment, `false` otherwise. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useIsClient } from "@uidotdev/usehooks";
+
+export default function App() {
+  const isClient = useIsClient();
+
+  return (
+    <section>
+      <h1>useIsClient</h1>
+      <h6>Is Client? </h6>
+      <p>{isClient ? "If you can see this ... you already know" : "No"}</p>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

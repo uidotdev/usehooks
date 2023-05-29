@@ -1,0 +1,91 @@
+---
+name: useLongPress
+rank: 42
+tagline: Enable precise control of long-press interactions for both touch and mouse events with useLongPress.
+sandboxId: uselongpress-0fpxj6
+previewHeight: 240px
+relatedHooks:
+  - usemeasure
+  - usetoggle
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useLongPress hook enhances React applications by managing long-press
+  interactions for both mouse and touch events, thereby ensuring a consistent
+  user experience across devices. This hook not only broadens user interactivity
+  but also allows for customization, providing developers the flexibility to
+  adjust the long-press functionality according to their application needs.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name                 | Type     | Description |
+  | -------------------- | -------- | ----------- |
+  | callback             | function | This is the function to be executed when a long press event is detected. |
+  | options              | object   | This is an optional configuration object provided when calling `useLongPress`. |
+  | options.threshold    | number   | This is the time (in milliseconds) the user must press and hold to trigger a long press event. Default value is `400`. |
+  | options.onStart      | function | This function is called when the user starts pressing. |
+  | options.onFinish     | function | This function is called when a long press event finishes successfully (the user releases after the threshold). |
+  | options.onCancel     | function | This function is called when a press event is cancelled (the user releases before the threshold). |
+
+  ### Return Values
+
+  | Name         | Type     | Description |
+  | ------------ | -------- | ----------- |
+  | onMouseDown  | function | This is the mouse down event handler. |
+  | onMouseUp    | function | This is the mouse up event handler. |
+  | onMouseLeave | function | This is the mouse leave event handler. |
+  | onTouchStart | function | This is the touch start event handler. |
+  | onTouchEnd   | function | This is the touch end event handler. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useLongPress } from "@uidotdev/usehooks";
+import { closeIcon } from "./icons";
+
+export default function App() {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const attrs = useLongPress(
+    () => {
+      setIsOpen(true);
+    },
+    {
+      onStart: (event) => console.log("Press started"),
+      onFinish: (event) => console.log("Press Finished"),
+      onCancel: (event) => console.log("Press cancelled"),
+      threshold: 500,
+    }
+  );
+
+  return (
+    <section>
+      <h1>useLongPress</h1>
+      <button {...attrs} className="primary">
+        Press Me
+      </button>
+      {isOpen && (
+        <dialog>
+          <button onClick={() => setIsOpen(false)}>{closeIcon}</button>
+          <h2>Modal</h2>
+          <p>This is a modal triggered by a long press.</p>
+        </dialog>
+      )}
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

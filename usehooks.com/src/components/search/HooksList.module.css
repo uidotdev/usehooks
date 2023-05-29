@@ -1,0 +1,17 @@
+.hooks-grid {
+  max-width: 980px;
+  margin: 2rem auto;
+}
+
+.hooks-controls {
+  padding: 1rem var(--body-padding);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hooks-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: stretch;
+  gap: 1.6rem;
+}

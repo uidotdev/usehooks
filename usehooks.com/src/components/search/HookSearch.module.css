@@ -1,0 +1,37 @@
+.hooks-search {
+  position: relative;
+  align-self: flex-start;
+}
+
+.input {
+  padding: 0.4rem 1rem;
+  padding-right: 2rem;
+  background-color: var(--coal);
+  border: var(--border-light);
+  border-radius: 1.5rem;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  color: var(--white);
+  transition: all 150ms ease-in-out;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--charcoal);
+  box-shadow: var(--focus-object);
+}
+
+.input + :global(button) {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  transition: all 150ms ease-in-out;
+}
+
+:global(input[type="search"]::-webkit-search-decoration),
+:global(input[type="search"]::-webkit-search-cancel-button),
+:global(input[type="search"]::-webkit-search-results-button),
+:global(input[type="search"]::-webkit-search-results-decoration) {
+  display: none;
+}

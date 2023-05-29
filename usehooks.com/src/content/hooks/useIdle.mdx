@@ -1,0 +1,64 @@
+---
+name: useIdle
+rank: 33
+tagline: Detect user inactivity with useIdle.
+sandboxId: useidle-myg19f
+previewHeight: 200px
+relatedHooks:
+  - usevisibilitychange
+  - usebattery
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useIdle hook is a useful tool for detecting user inactivity within a web
+  application. It tracks user interaction and determines if a specified duration
+  of time has passed without any activity. This hook is particularly handy for
+  implementing features like automatic logout, displaying notifications after a
+  period of inactivity, or adjusting UI elements based on user engagement.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name | Type   | Description |
+  | ---- | ------ | ----------- |
+  | ms   | number | This is the duration of idle time (in milliseconds) after which the `idle` state will be set to `true`. The default value is `20 * 1000` (20 seconds). |
+
+  ### Return Values
+
+  | Name | Type    | Description |
+  | ---- | ------- | ----------- |
+  | idle | boolean | A boolean indicating if the user is idle. It is `true` if the user has been idle for at least `ms` milliseconds. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useIdle } from "@uidotdev/usehooks";
+
+export default function App() {
+  const idle = useIdle(5000);
+  return (
+    <section>
+      <h1>useIdle</h1>
+      <div>
+        <span className={idle ? "idle" : ""} />
+        <label>Status: {idle ? "Idle" : "Active"}</label>
+      </div>
+      {idle ? <p>Time to move your mouse</p> : <p>Hold still and wait</p>}
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

@@ -1,0 +1,78 @@
+---
+name: useOrientation
+rank: 8
+tagline: Manage and respond to changes in device orientation with useOrientation.
+sandboxId: useorientation-f04nej
+previewHeight: 400px
+relatedHooks:
+  - usenetworkstate
+  - usemediaquery
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useOrientation React Hook simplifies the management of a device's
+  orientation within a React application. It wraps the complexity of listening
+  for, handling, and cleaning up after orientation changes into a reusable hook.
+  By abstracting this logic, the hook allows you to easily track device
+  orientation, resulting in cleaner and more readable code. It adapts to both
+  the Screen Orientation API and the deprecated window.orientation property,
+  providing flexibility across different browser capabilities.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  This hook doesn't accept any parameters.
+
+  ### Return Value
+
+  | Name  | Type   | Description                                                                                                                                                                                 |
+  | ----- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | angle | number | The current orientation angle of the device in degrees.                                                                                                                                     |
+  | type  | string | The current orientation type of the device (e.g., 'portrait-primary', 'landscape-primary', 'portrait-secondary', 'landscape-secondary'). If the type cannot be determined, it is 'UNKNOWN'. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useOrientation } from "@uidotdev/usehooks";
+
+export default function App() {
+  const orientation = useOrientation();
+
+  return (
+    <section>
+      <h1>useOrientation</h1>
+
+      <article
+        style={{ "--angle": `${orientation.angle}deg` }}
+        className={orientation.type.toLocaleLowerCase()}
+      />
+      <table>
+        <tbody>
+          {Object.keys(orientation).map((key) => {
+            return (
+              <tr key={key}>
+                <th>{key}</th>
+                <td>{orientation[key]}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

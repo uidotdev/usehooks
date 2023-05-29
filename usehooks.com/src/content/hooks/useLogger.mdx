@@ -1,0 +1,85 @@
+---
+name: useLogger
+experimental: true
+rank: 39
+tagline: Debug lifecycle events with useLogger.
+sandboxId: uselogger-o2e03i
+previewHeight: 500px
+relatedHooks:
+  - userendercount
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useLogger hook is useful for logging various lifecycle events in a React
+  component. This custom hook accepts a name parameter and additional arguments,
+  and it logs the lifecycle events (mounted, updated, and unmounted) along with
+  the provided name and arguments. This useLogger hook can be employed to
+  facilitate debugging, monitoring, or performance optimization by providing
+  insights into when and how a component's lifecycle events occur.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name    | Type   | Description                            |
+  | ------- | ------ | -------------------------------------- |
+  | name    | string | The name or identifier for the logger. |
+  | ...rest | any    | Additional arguments to be logged.     |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useLogger } from "@uidotdev/usehooks";
+
+function FirstChild(props) {
+  useLogger(props.name, props);
+  return (
+    <li className={props.isActive ? "active" : ""}>
+      <h5>{props.name}</h5>
+      <p>{props.count}</p>
+    </li>
+  );
+}
+
+export default function App() {
+  const [count, setCount] = React.useState(0);
+
+  const handleClick = () => setCount(count + 1);
+
+  return (
+    <section>
+      <h1>useLogger</h1>
+      <h6>(Check the console)</h6>
+      <button className="primary" onClick={handleClick}>
+        Increment Count
+      </button>
+      <ul>
+        {["First", "Second", "Third"].map((item, index) => {
+          const isActive = count % 3 === index;
+          return (
+            <FirstChild
+              key={index}
+              name={item}
+              isActive={isActive}
+              count={count}
+            />
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import NavMain from "../sections/NavMain.astro";
+import HomeHero from "../sections/HomeHero.astro";
+import HooksList from "../components/search/HooksList";
+import Footer from "../sections/Footer.astro";
+
+const hooks = await getCollection("hooks");
+---
+
+<Layout
+  title="Easy to understand React Hook recipes – useHooks"
+  description="A collection of 50 React Server Componenet safe React hooks"
+>
+  <NavMain />
+  <HomeHero />
+  <HooksList client:load hooks={hooks} />
+  <Footer />
+</Layout>

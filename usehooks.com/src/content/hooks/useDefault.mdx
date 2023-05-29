@@ -1,0 +1,92 @@
+---
+name: useDefault
+rank: 44
+tagline: Manage state with default values using useDefault.
+sandboxId: usedefault-5c0pyt
+previewHeight: 250px
+relatedHooks:
+  - useprevious
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useDefault hook is useful for managing state in functional components with
+  default values. The hook then checks if the "state" is undefined or null. If
+  it is, it returns an array containing the "defaultValue" and the "setState"
+  function, allowing the component to set a default value and update the state
+  accordingly. On the other hand, if the "state" is defined, it returns an array
+  with the current "state" value and the "setState" function, enabling normal
+  state management.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name         | Type     | Description |
+  | ------------ | -------- | ----------- |
+  | initialValue | any      | This is the initial state value provided when calling `useDefault`. |
+  | defaultValue | any      | The default value to be used if the state is `undefined` or `null`. |
+
+  ### Return Values
+
+  | Name     | Type            | Description |
+  | -------- | --------------- | ----------- |
+  | state    | any             | The current state. If the state is `undefined` or `null`, `defaultValue` is returned instead. |
+  | setState | function        | The state setter function returned from `React.useState()`. This can be called to update the state. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useDefault } from "@uidotdev/usehooks";
+
+export default function App() {
+  const initialState = { name: "Tyler" };
+  const defaultState = { name: "Ben" };
+
+  const [user, setUser] = useDefault(initialState, defaultState);
+
+  return (
+    <section>
+      <h1>useDefault</h1>
+
+      <button
+        title="Sets the value to Lynn"
+        className="link"
+        onClick={() => setUser({ name: "Lynn" })}
+      >
+        Lynn
+      </button>
+      <button
+        title="Sets the value to Tyler"
+        className="link"
+        onClick={() => setUser({ name: "Tyler" })}
+      >
+        Tyler
+      </button>
+      <button
+        title="Sets the value to null causing it to use the default value"
+        className="link"
+        onClick={() => setUser(null)}
+      >
+        Null
+      </button>
+      <pre>
+        <code>{JSON.stringify(user)}</code>
+      </pre>
+    </section>
+  );
+}
+
+```
+
+</StaticCodeContainer>
