@@ -30,8 +30,8 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   <div class="table-container">
   | Name    | Type   | Description                                                                              |
   | ------- | ------ | ---------------------------------------------------------------------------------------- |
-  | url     | String | The URL to fetch data from.                                                              |
-  | options | Object | (Optional) Additional options for the fetch request, such as headers or request methods. |
+  | url     | string | The URL to fetch data from.                                                              |
+  | options | object | (Optional) Additional options for the fetch request, such as headers or request methods. |
   </div>
 
   ### Return Values
@@ -39,9 +39,9 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   <div class="table-container">
   | Name        | Type               | Description                                                                    |
   | ----------- | ------------------ | ------------------------------------------------------------------------------ |
-  | state       | Object             | The state object containing the fetched data and error status.                 |
-  | state.error | Error \| undefined | The error object if an error occurred during the fetch, otherwise `undefined`. |
-  | state.data  | Any \| undefined   | The fetched data if the fetch was successful, otherwise `undefined`.           |
+  | state       | object             | The state object containing the fetched data and error status.                 |
+  | state.error | error \| undefined | The error object if an error occurred during the fetch, otherwise `undefined`. |
+  | state.data  | any \| undefined   | The fetched data if the fetch was successful, otherwise `undefined`.           |
   </div>
 </div>
 

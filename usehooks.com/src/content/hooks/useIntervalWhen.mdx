@@ -29,11 +29,11 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   <div class="table-container">
   | Name                     | Type     | Description                                                                                         |
   | ------------------------ | -------- | --------------------------------------------------------------------------------------------------- |
-  | cb                       | Function | The callback function to be executed at the specified interval when the condition is met.           |
-  | options                  | Object   | An object containing the following options.                                                         |
-  | options.ms               | Number   | The interval duration in milliseconds.                                                              |
-  | options.when             | Boolean  | The condition that determines whether the interval should be active (`true`) or paused (`false`).   |
-  | options.startImmediately | Boolean  | (Optional) Whether to start the interval immediately when the condition is met. Default is `false`. |
+  | cb                       | function | The callback function to be executed at the specified interval when the condition is met.           |
+  | options                  | object   | An object containing the following options.                                                         |
+  | options.ms               | number   | The interval duration in milliseconds.                                                              |
+  | options.when             | boolean  | The condition that determines whether the interval should be active (`true`) or paused (`false`).   |
+  | options.startImmediately | boolean  | (Optional) Whether to start the interval immediately when the condition is met. Default is `false`. |
   </div>
 
   ### Return Value
@@ -41,7 +41,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   <div class="table-container">
   | Type     | Description                                               |
   | -------- | --------------------------------------------------------- |
-  | Function | A function to clear the interval and pause the execution. |
+  | function | A function to clear the interval and pause the execution. |
   </div>
 </div>
 
