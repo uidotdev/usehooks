@@ -1,12 +1,12 @@
 {
   "name": "@uidotdev/usehooks",
-  "version": "0.0.4",
-  "description": "A collection of 50 RSC safe React hooks",
+  "version": "0.0.4-experimental.1",
+  "description": "A collection of RSC safe React hooks",
   "type": "module",
   "repository": "uidotdev/usehooks",
   "devDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "0.0.0-experimental-bfb9cbd8c-20230223",
+    "react-dom": "0.0.0-experimental-bfb9cbd8c-20230223"
   },
   "exports": {
     "default": "./index.js"
@@ -18,8 +18,8 @@
     "index.js"
   ],
   "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react": "0.0.0-experimental-bfb9cbd8c-20230223",
+    "react-dom": "0.0.0-experimental-bfb9cbd8c-20230223"
   },
   "author": "Tyler McGinnis, Ben Adam",
   "license": "MIT"

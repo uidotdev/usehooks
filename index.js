@@ -1,5 +1,7 @@
 import * as React from "react";
 
+React.useEffectEvent = React.experimental_useEffectEvent;
+
 function isShallowEqual(object1, object2) {
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);
@@ -38,6 +40,15 @@ function throttle(cb, ms) {
   };
 }
 
+function getEnvironment() {
+  const isDOM =
+    typeof window !== "undefined" &&
+    window.document &&
+    window.document.documentElement;
+
+  return isDOM ? "browser" : "server";
+}
+
 export function useBattery() {
   const [state, setState] = React.useState({
     supported: true,
@@ -45,7 +56,7 @@ export function useBattery() {
     level: null,
     charging: null,
     chargingTime: null,
-    dischargingTime: null
+    dischargingTime: null,
   });
 
   React.useEffect(() => {
@@ -53,9 +64,9 @@ export function useBattery() {
       setState((s) => ({
         ...s,
         supported: false,
-        loading: false
+        loading: false,
       }));
-      return
+      return;
     }
 
     let battery = null;
@@ -67,7 +78,7 @@ export function useBattery() {
         level: battery.level,
         charging: battery.charging,
         chargingTime: battery.chargingTime,
-        discharingTime: battery.dischargingTime
+        discharingTime: battery.dischargingTime,
       });
     };
 
@@ -121,28 +132,28 @@ export function useClickAway(cb) {
 export function useCopyToClipboard() {
   const [state, setState] = React.useState({
     error: null,
-    text: null
+    text: null,
   });
 
   const copyToClipboard = React.useCallback(async (value) => {
     if (!navigator?.clipboard) {
       return setState({
         error: new Error("Clipboard not supported"),
-        text: null
+        text: null,
       });
     }
 
     const handleSuccess = () => {
       setState({
         error: null,
-        text: value
+        text: value,
       });
     };
 
     const handleFailure = (e) => {
       setState({
         error: e,
-        text: null
+        text: null,
       });
     };
 
@@ -150,6 +161,57 @@ export function useCopyToClipboard() {
   }, []);
 
   return [state, copyToClipboard];
+}
+
+export function useContinuousRetry(callback, interval = 100) {
+  const [hasResolved, setHasResolved] = React.useState(false);
+  const onInterval = React.useEffectEvent(callback);
+
+  React.useEffect(() => {
+    const id = window.setInterval(() => {
+      if (onInterval()) {
+        setHasResolved(true);
+        window.clearInterval(id);
+      }
+    }, interval);
+
+    return () => window.clearInterval(id);
+  }, [interval]);
+
+  return hasResolved;
+}
+
+export function useCountdown(endTime, options) {
+  const [count, setCount] = React.useState(null);
+  const intervalIdRef = React.useRef(null);
+
+  const handleClearInterval = () => {
+    window.clearInterval(intervalIdRef.current);
+  };
+
+  const onTick = React.useEffectEvent(() => {
+    if (count === 0) {
+      handleClearInterval();
+      options.onComplete();
+    } else {
+      setCount(count - 1);
+      options.onTick();
+    }
+  });
+
+  React.useEffect(() => {
+    intervalIdRef.current = window.setInterval(() => {
+      onTick();
+    }, options.interval);
+
+    return () => handleClearInterval();
+  }, [options.interval]);
+
+  React.useEffect(() => {
+    setCount(Math.round((endTime - Date.now()) / options.interval));
+  }, [endTime, options.interval]);
+
+  return count;
 }
 
 export function useCounter(startingValue = 0, options = {}) {
@@ -217,8 +279,8 @@ export function useCounter(startingValue = 0, options = {}) {
       increment,
       decrement,
       set,
-      reset
-    }
+      reset,
+    },
   ];
 }
 
@@ -254,6 +316,22 @@ export function useDocumentTitle(title) {
   }, [title]);
 }
 
+export function useEventListener(target, eventName, handler, options) {
+  const onEvent = React.useEffectEvent(handler);
+
+  React.useEffect(() => {
+    const targetElement = target.current ?? target;
+
+    if (!targetElement?.addEventListener) return;
+
+    targetElement.addEventListener(eventName, onEvent, options);
+
+    return () => {
+      targetElement.removeEventListener(eventName, onEvent);
+    };
+  }, [target, eventName, options]);
+}
+
 export function useFavicon(url) {
   React.useEffect(() => {
     const link =
@@ -264,6 +342,77 @@ export function useFavicon(url) {
     link.href = url;
     document.getElementsByTagName("head")[0].appendChild(link);
   }, [url]);
+}
+
+export function useFetch(url, options) {
+  const cacheRef = React.useRef({});
+  const ignoreRef = React.useRef(false);
+
+  const initialState = {
+    error: undefined,
+    data: undefined,
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "loading":
+        return { ...initialState };
+      case "fetched":
+        return { ...initialState, data: action.payload };
+      case "error":
+        return { ...initialState, error: action.payload };
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+
+  const onFetch = React.useEffectEvent(() => {
+    return fetch(url, options);
+  });
+
+  React.useEffect(() => {
+    if (typeof url !== "string") return;
+
+    const fetchData = async () => {
+      dispatch({ type: "loading" });
+      const cachedResponse = cacheRef.current[url];
+
+      if (cachedResponse) {
+        dispatch({ type: "fetched", payload: cachedResponse });
+        return;
+      }
+
+      try {
+        const res = await onFetch();
+
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        }
+
+        const json = await res.json();
+        cacheRef.current[url] = json;
+
+        if (ignoreRef.current === false) {
+          dispatch({ type: "fetched", payload: json });
+        }
+      } catch (e) {
+        if (ignoreRef.current === false) {
+          dispatch({ type: "error", payload: e });
+        }
+      }
+    };
+
+    ignoreRef.current = false;
+    fetchData();
+
+    return () => {
+      ignoreRef.current = true;
+    };
+  }, [url]);
+
+  return state;
 }
 
 export function useGeolocation(options = {}) {
@@ -368,7 +517,7 @@ const useHistoryStateReducer = (state, action) => {
   }
 };
 
-export function useHistoryState (initialPresent = {}) {
+export function useHistoryState(initialPresent = {}) {
   const initialPresentRef = React.useRef(initialPresent);
 
   const [state, dispatch] = React.useReducer(useHistoryStateReducer, {
@@ -403,7 +552,7 @@ export function useHistoryState (initialPresent = {}) {
   );
 
   return { state: state.present, set, undo, redo, clear, canUndo, canRedo };
-};
+}
 
 export function useHover() {
   const [hovering, setHovering] = React.useState(false);
@@ -513,6 +662,55 @@ export function useIntersectionObserver(options = {}) {
   return [ref, entry];
 }
 
+export function useInterval(cb, ms) {
+  const id = React.useRef(null);
+  const onInterval = React.useEffectEvent(cb);
+
+  const handleClearInterval = () => {
+    window.clearInterval(id.current);
+  };
+
+  React.useEffect(() => {
+    id.current = window.setInterval(onInterval, ms);
+    return handleClearInterval;
+  }, [ms]);
+
+  return handleClearInterval;
+}
+
+export function useIntervalWhen(cb, { ms, when, startImmediately }) {
+  const id = React.useRef(null);
+  const onTick = React.useEffectEvent(cb);
+  const immediatelyCalled = React.useRef(
+    startImmediately === true ? false : null
+  );
+
+  const handleClearInterval = () => {
+    window.clearInterval(id.current);
+    immediatelyCalled.current = false;
+  };
+
+  React.useEffect(() => {
+    if (
+      when === true &&
+      startImmediately === true &&
+      immediatelyCalled.current === false
+    ) {
+      onTick();
+      immediatelyCalled.current = true;
+    }
+  }, [startImmediately, when]);
+
+  React.useEffect(() => {
+    if (when === true) {
+      id.current = window.setInterval(onTick, ms);
+      return handleClearInterval;
+    }
+  }, [ms, when]);
+
+  return handleClearInterval;
+}
+
 export function useIsClient() {
   const [isClient, setIsClient] = React.useState(false);
 
@@ -532,6 +730,25 @@ export function useIsFirstRender() {
   }
 
   return renderRef.current;
+}
+
+export function useKeyPress(key, cb, options = {}) {
+  const { event = "keydown", target = window ?? null, eventOptions } = options;
+  const eventOptionsRef = React.useRef(eventOptions);
+
+  const onEvent = React.useEffectEvent((event) => {
+    if (event.key === key) {
+      cb(event);
+    }
+  });
+
+  React.useEffect(() => {
+    target.addEventListener(event, onEvent, eventOptionsRef.current);
+
+    return () => {
+      target.removeEventListener(event, onEvent);
+    };
+  }, [target, event]);
 }
 
 export function useList(defaultList = []) {
@@ -573,6 +790,58 @@ export function useList(defaultList = []) {
   return [list, methods];
 }
 
+export function useLocalStorage(key, initialValue) {
+  if (getEnvironment() === "server") {
+    throw Error("useLocalStorage is a client-side only hook.");
+  }
+
+  const readValue = React.useCallback(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.warn(error);
+      return initialValue;
+    }
+  }, [key, initialValue]);
+
+  const [localState, setLocalState] = React.useState(readValue);
+  const handleSetState = React.useCallback(
+    (value) => {
+      try {
+        const nextState =
+          typeof value === "function" ? value(localState) : value;
+        window.localStorage.setItem(key, JSON.stringify(nextState));
+        setLocalState(nextState);
+        window.dispatchEvent(new Event("local-storage"));
+      } catch (e) {
+        console.warn(e);
+      }
+    },
+    [key, localState]
+  );
+
+  const onStorageChange = React.useEffectEvent((event) => {
+    if (event?.key && event.key !== key) {
+      return;
+    }
+
+    setLocalState(readValue());
+  });
+
+  React.useEffect(() => {
+    window.addEventListener("storage", onStorageChange);
+    window.addEventListener("local-storage", onStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", onStorageChange);
+      window.removeEventListener("local-storage", onStorageChange);
+    };
+  }, []);
+
+  return [localState, handleSetState];
+}
+
 export function useLockBodyScroll() {
   React.useEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -582,6 +851,31 @@ export function useLockBodyScroll() {
     };
   }, []);
 }
+
+export function useLogger(name, ...rest) {
+  const initialRenderRef = React.useRef(true);
+
+  const handleLog = React.useEffectEvent((event) => {
+    console.log(`${name} ${event}:`, rest);
+  });
+
+  React.useEffect(() => {
+    if (initialRenderRef.current === false) {
+      handleLog("updated");
+    }
+  });
+
+  React.useEffect(() => {
+    handleLog("mounted");
+    initialRenderRef.current = false;
+
+    return () => {
+      handleLog("unmounted");
+      initialRenderRef.current = true;
+    };
+  }, []);
+}
+
 
 export function useLongPress(
   callback,
@@ -742,7 +1036,7 @@ export function useMouse() {
     elementX: 0,
     elementY: 0,
     elementPositionX: 0,
-    elementPositionY: 0
+    elementPositionY: 0,
   });
 
   const ref = React.useRef(null);
@@ -751,7 +1045,7 @@ export function useMouse() {
     const handleMouseMove = (event) => {
       let newState = {
         x: event.pageX,
-        y: event.pageY
+        y: event.pageY,
       };
 
       if (ref.current instanceof HTMLElement) {
@@ -772,7 +1066,7 @@ export function useMouse() {
       setState((s) => {
         return {
           ...s,
-          ...newState
+          ...newState,
         };
       });
     };
@@ -788,6 +1082,8 @@ export function useMouse() {
 
   return [state, ref];
 }
+
+
 
 export function useNetworkState() {
   const connection =
@@ -895,7 +1191,7 @@ export function useOrientation() {
       handleChange();
       window.screen.orientation.addEventListener("change", handleChange);
     } else {
-      handle_orientationchange()
+      handle_orientationchange();
       window.addEventListener("orientationchange", handle_orientationchange);
     }
 
@@ -914,6 +1210,23 @@ export function useOrientation() {
   return orientation;
 }
 
+export function usePageLeave(cb) {
+  const onLeave = React.useEffectEvent((event) => {
+    const from = event.relatedTarget || event.toElement;
+    if (!from || from.nodeName === "HTML") {
+      cb();
+    }
+  });
+
+  React.useEffect(() => {
+    document.addEventListener("mouseout", onLeave);
+
+    return () => {
+      document.removeEventListener("mouseout", onLeave);
+    };
+  }, []);
+}
+
 const usePreferredLanguageSubscribe = (cb) => {
   window.addEventListener("languagechange", cb);
   return () => window.removeEventListener("languagechange", cb);
@@ -928,7 +1241,11 @@ const getPreferredLanguageServerSnapshot = () => {
 };
 
 export function usePreferredLanguage() {
-  return React.useSyncExternalStore(usePreferredLanguageSubscribe, getPreferredLanguageSnapshot, getPreferredLanguageServerSnapshot);
+  return React.useSyncExternalStore(
+    usePreferredLanguageSubscribe,
+    getPreferredLanguageSnapshot,
+    getPreferredLanguageServerSnapshot
+  );
 }
 
 export function usePrevious(newValue) {
@@ -939,6 +1256,35 @@ export function usePrevious(newValue) {
   });
 
   return previousRef.current;
+}
+
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function useRandomInterval(cb, { minDelay, maxDelay }) {
+  const timeoutId = React.useRef(null);
+  const onInterval = React.useEffectEvent(cb);
+
+  const handleClearTimeout = () => {
+    window.clearTimeout(timeoutId.current);
+  };
+
+  React.useEffect(() => {
+    const tick = () => {
+      const interval = getRandomNumber(minDelay, maxDelay);
+      timeoutId.current = window.setTimeout(() => {
+        onInterval();
+        tick();
+      }, interval);
+    };
+
+    tick();
+
+    return handleClearTimeout;
+  }, [minDelay, maxDelay]);
+
+  return handleClearTimeout;
 }
 
 export function useQueue(initialValue = []) {
@@ -1006,6 +1352,57 @@ export function useRenderInfo(name = "Unknown") {
 
     return info;
   }
+}
+
+export function useSessionStorage(key, initialValue) {
+  if (getEnvironment() === "server") {
+    throw Error("useSessionStorage is a client-side only hook.");
+  }
+
+  const readValue = React.useCallback(() => {
+    try {
+      const item = window.sessionStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.warn(error);
+      return initialValue;
+    }
+  }, [key, initialValue]);
+
+  const [localState, setLocalState] = React.useState(readValue);
+
+  const handleSetState = React.useCallback(
+    (value) => {
+      try {
+        const nextState =
+          typeof value === "function" ? value(localState) : value;
+        window.sessionStorage.setItem(key, JSON.stringify(nextState));
+        setLocalState(nextState);
+        window.dispatchEvent(new Event("session-storage"));
+      } catch (e) {
+        console.warn(e);
+      }
+    },
+    [key, localState]
+  );
+
+  const onStorageChange = React.useEffectEvent((event) => {
+    if (event?.key && event.key !== key) {
+      return;
+    }
+
+    setLocalState(readValue());
+  });
+
+  React.useEffect(() => {
+    window.addEventListener("session-storage", onStorageChange);
+
+    return () => {
+      window.removeEventListener("session-storage", onStorageChange);
+    };
+  }, []);
+
+  return [localState, handleSetState];
 }
 
 const cachedScriptStatuses = {};
@@ -1178,6 +1575,23 @@ export function useThrottle(value, interval = 500) {
   }, [value, interval]);
 
   return throttledValue;
+}
+
+export function useTimeout(cb, ms) {
+  const intervalRef = React.useRef(null);
+  const onTimeout = React.useEffectEvent(cb);
+
+  const handleClearInterval = () => {
+    window.clearInterval(intervalRef.current);
+  };
+
+  React.useEffect(() => {
+    intervalRef.current = window.setTimeout(onTimeout, ms);
+
+    return handleClearInterval;
+  }, [ms]);
+
+  return handleClearInterval;
 }
 
 export function useToggle(initialValue) {
