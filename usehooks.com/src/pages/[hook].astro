@@ -1,0 +1,218 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import NavInternal from "../sections/NavInternal.astro";
+import Footer from "../sections/Footer.astro";
+import RelatedHook from "../components/RelatedHook.astro";
+import Install from '../components/Install.astro';
+
+export async function getStaticPaths() {
+  const hooks = await getCollection("hooks");
+
+  return hooks.map((hook) => {
+    return {
+      params: {
+        hook: hook.slug,
+      },
+      props: {
+        hook,
+      },
+    };
+  });
+}
+
+interface Props {
+  hook: CollectionEntry<"hooks">;
+}
+
+const { hook } = Astro.props;
+const { Content } = await hook.render();
+const { name, tagline, relatedHooks, experimental } = hook.data;
+const ogImage = new URL(`/meta/${name.toLowerCase()}.png`, Astro.url);
+const installSnippet = experimental
+  ? `npm i @uidotdev/usehooks@experimental react@experimental react-dom@experimental`
+  : `npm i @uidotdev/usehooks`;
+---
+
+<Layout title={name} description={tagline} ogImage={ogImage}>
+  <NavInternal />
+  <main>
+    <section>
+      <a href="/" class="logo-useHooks logo image">
+        <img
+          src="/img/logo-useHooks.svg"
+          width="546"
+          height="80"
+          alt="useHooks"
+          class="logo-useHooks"
+        />
+      </a>
+      <header>
+        <h1 class="title">{name}</h1>
+        <p class="tagline">{tagline}</p>
+      </header>
+      <div>
+        <h2>Install:</h2>
+        {
+          experimental && (
+            <p class="experimental">
+              Note: This hook depends on React’s experimental useEffectEvent.
+            </p>
+          )
+        }
+        <Install text={installSnippet} />
+        
+      </div>
+      <Content />
+    </section>
+    <div class="mt-12">
+      <h2>Related Hooks:</h2>
+      <ul class="related-hooks">
+        {
+          relatedHooks.map((hook) => {
+            return <RelatedHook {...hook} />;
+          })
+        }
+      </ul>
+    </div>
+  </main>
+  <Footer />
+
+  <style>
+    body {
+      min-height: 100lvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      width: 100%;
+      max-width: 980px;
+      margin: 4rem auto;
+    }
+
+    section {
+      padding: calc(var(--body-padding) * 1.6);
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.2rem, 6vw, 3rem);
+      background-color: var(--charcoal);
+      border-radius: 0.8rem;
+    }
+
+    header {
+      display: grid;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem 1rem;
+    }
+
+    .tagline {
+      max-width: 42ch;
+    }
+
+    .logo-useHooks {
+      width: 180px;
+      height: auto;
+      transform: translateY(-30%);
+    }
+
+    .title {
+      color: var(--blue);
+      text-transform: none;
+      font-family: var(--font-outfit);
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 600;
+    }
+
+    .install,
+    .install code {
+      background-color: var(--coal);
+    }
+
+    .install .copy-btn:hover,
+    .install .copy-btn:focus-visible {
+      background-color: var(--charcoal);
+    }
+
+    main :global(h2) {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      margin-bottom: 1rem;
+    }
+
+    main :global(code) {
+      background-color: var(--coal);
+    }
+
+    .experimental {
+      font-size: 1.1rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    :global(.reference) {
+      font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+    }
+
+    :global(.reference > * + *) {
+      margin-top: 1.5rem;
+    }
+
+    :global(.reference h3) {
+      font-size: clamp(.9rem, 2vw, 1.1rem);
+    }
+
+    :global(.reference table) {
+      width: 100%;
+      border: 0.07rem solid rgba(249, 244, 218, 0.1);
+      border-radius: .9rem;
+      font-size: clamp(1rem, 2.1vw, 1.2rem);
+    }
+
+    :global(.reference h3:not(:first-child)) {
+      margin-top: 2rem;
+    }
+
+    :global(.reference thead) {
+      border-bottom: 0.07rem solid rgba(249, 244, 218, 0.1);
+      font-size: var(--font-sm);
+      text-align: left;
+    }
+
+    :global(.reference td),
+    :global(.reference th) {
+      padding: .5rem .75rem;
+    }
+
+    :global(.reference td:not(:last-of-type)) {
+      width: 20%;
+    }
+
+    .related-hooks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: clamp(1.2rem, 2.5vw, 2rem);
+      margin-top: 0;
+    }
+
+    :global(.sp-preview-container),
+    :global(.sp-preview-container iframe) {
+      background: var(--coal) !important;
+    }
+
+    :global(pre) {
+      overflow: auto;
+      width: 100%;
+      background-color: transparent !important;
+      padding: 2rem;
+      border-radius: 0.5rem;
+    }
+
+    :global(pre code) {
+      font-size: 1rem;
+      display: block;
+      font-family: "Fira Code", monospace;
+    }
+  </style>
+</Layout>

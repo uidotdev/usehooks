@@ -1,0 +1,36 @@
+---
+import LogoGithub from '../components/LogoGithub.astro';
+---
+
+<nav class="nav-internal">
+	<a href="/" class="back image">
+		<svg xmlns="http://www.w3.org/2000/svg" id="b" viewBox="0 0 36 24"><path fill="none" stroke="#f6f1d7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M34.14 12H3.96M14.69 22.85 1.86 12 14.69 1.15"/></svg>
+		All hooks
+	</a>
+	<LogoGithub />
+</nav>
+
+<style>
+	.nav-internal {
+		width: 100%;
+		height: var(--nav-height);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.back {
+		display: flex;
+		gap: .6rem;
+		font-size: clamp(1rem, 3vw, 1.3rem);
+	}
+
+	.back:hover {
+		text-decoration: underline;
+	}
+
+	.back svg {
+		width: 1.5rem;
+		height: auto;
+	}
+</style>

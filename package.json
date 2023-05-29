@@ -1,58 +1,26 @@
 {
-  "name": "usehooks",
-  "version": "1.0.0",
-  "author": "ui.dev",
-  "dependencies": {
-    "babel-plugin-styled-components": "^1.11.0",
-    "gatsby": "^2.24.14",
-    "gatsby-paginate": "^1.1.1",
-    "gatsby-plugin-catch-links": "^2.3.11",
-    "gatsby-plugin-facebook-pixel": "^1.0.8",
-    "gatsby-plugin-feed": "^2.5.11",
-    "gatsby-plugin-manifest": "^2.12.1",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-plugin-styled-components": "^3.3.10",
-    "gatsby-remark-external-links": "0.0.4",
-    "gatsby-remark-vscode": "^3.0.1",
-    "gatsby-source-filesystem": "^2.3.23",
-    "gatsby-transformer-remark": "^2.8.28",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-helmet": "^6.1.0",
-    "react-hot-toast": "^2.2.0",
-    "react-syntax-highlighter": "^13.0.0",
-    "serve": "^11.3.2",
-    "styled-components": "^5.1.1",
-    "unfetch": "^4.1.0"
-  },
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "dev": "gatsby develop",
-    "start": "serve public/",
-    "format": "prettier --write '{gatsby-*.js,src/**/*.{js,jsx,json,css}}'",
-    "now-build": "npm run build",
-    "deploy": "vercel",
-    "deploy:prod": "vercel --prod"
-  },
+  "name": "@uidotdev/usehooks",
+  "version": "0.0.4",
+  "description": "A collection of 50 RSC safe React hooks",
+  "type": "module",
+  "repository": "uidotdev/usehooks",
   "devDependencies": {
-    "eslint": "^7.5.0",
-    "gh-pages": "^3.1.0",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "{gatsby-*.js,src/**/*.{js,jsx,json,css}}": [
-      "npm run format"
-    ]
+  "exports": {
+    "default": "./index.js"
   },
   "engines": {
-    "node": "12.x"
-  }
+    "node": ">=16"
+  },
+  "files": [
+    "index.js"
+  ],
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "author": "Tyler McGinnis, Ben Adam",
+  "license": "MIT"
 }

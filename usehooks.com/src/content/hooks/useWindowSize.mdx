@@ -1,0 +1,83 @@
+---
+name: useWindowSize
+rank: 3
+tagline: Track the dimensions of the browser window with useWindowSize.
+sandboxId: usewindowsize-vxk6xf
+previewHeight: 500px
+relatedHooks:
+  - usemeasure
+  - usewindowscroll
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useWindowSize hook is a useful for retrieving and tracking the dimensions
+  of the browser window within a React component. It attaches an event listener
+  to the "resize" event, ensuring that the size is updated dynamically whenever
+  the window is resized. The hook returns the "size" object, enabling components
+  to access and utilize the window dimensions for various purposes, such as
+  responsive layout adjustments, conditional rendering, or calculations based on
+  the available space.
+</HookDescription>
+
+<div class="reference">
+  ### Return Value
+
+  The `useWindowSize` hook returns an object with the following properties:
+
+  | Name   | Type   | Description                                  |
+  | ------ | ------ | -------------------------------------------- |
+  | width  | number | The current width of the window, in pixels.  |
+  | height | number | The current height of the window, in pixels. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useWindowSize } from "@uidotdev/usehooks";
+
+function Browser({ size }) {
+  return (
+    <div
+      data-testid="browser"
+      className="browser"
+      style={{ width: size.width / 4, height: size.height / 4 }}
+    />
+  );
+}
+
+export default function App() {
+  const size = useWindowSize();
+
+  return (
+    <section>
+      <h1>useWindowSize</h1>
+      <p>Resize the window</p>
+      <table>
+        <tbody>
+          <tr>
+            <th>width</th>
+            <td>{size.width}</td>
+          </tr>
+          <tr>
+            <th>height</th>
+            <td>{size.height}</td>
+          </tr>
+        </tbody>
+      </table>
+      <Browser size={size} />
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

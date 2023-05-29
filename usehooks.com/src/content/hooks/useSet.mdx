@@ -1,0 +1,121 @@
+---
+name: useSet
+rank: 30
+tagline: Synchonize and update state based on the Set data structure with useSet.
+sandboxId: useset-2jx1ou
+previewHeight: 500px
+relatedHooks:
+  - usemap
+  - usequeue
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useSet hook is useful for managing and manipulating the Set data structure
+  within a React component. It provides a way to create and maintain a set of
+  values, offering additional functionality through custom methods like "add,"
+  "clear," and "delete." By utilizing this hook, developers can easily update
+  and track changes to the set, triggering re-renders of the component whenever
+  modifications occur.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name   | Type  | Description                            |
+  | ------ | ----- | -------------------------------------- |
+  | values | Array | (Optional) Initial values for the set. |
+
+  ### Return Value
+
+  | Name | Type | Description                                            |
+  | ---- | ---- | ------------------------------------------------------ |
+  | set  | Set  | An instance of the `Set` object with enhanced methods. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useSet } from "@uidotdev/usehooks";
+
+function format(val) {
+  return val.toLocaleLowerCase().replace(/\s/g, "");
+}
+
+export default function App() {
+  const [value, setValue] = React.useState("");
+  const set = useSet([
+    "benadam11",
+    "tylermcginnis",
+    "lynnandtonic",
+    "alexbrown40",
+    "uidotdev",
+    "bytesdotdev",
+    "reactnewsletter",
+  ]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const username = formData.get("username");
+    set.add(format(username));
+    setValue("");
+    e.target.reset();
+    e.target.focus();
+  };
+
+  const hasError = set.has(value);
+
+  return (
+    <section>
+      <h1>useSet</h1>
+      <p>Check if your username is available</p>
+      <article>
+        <form className={hasError ? "error" : ""} onSubmit={handleSubmit}>
+          <span>@</span>
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter a username"
+            onChange={(e) => {
+              setValue(format(e.target.value));
+            }}
+          />
+        </form>
+        {hasError && <label>Woops that user is taken</label>}
+      </article>
+
+      <table>
+        <tbody>
+          {Array.from(set.values()).map((username) => {
+            const match = username === value;
+            return (
+              <tr key={username}>
+                <th>username</th>
+                <td
+                  style={{
+                    borderColor: match ? "var(--red)" : "var(--charcoal)",
+                  }}
+                >
+                  {username}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

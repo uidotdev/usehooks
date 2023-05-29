@@ -1,0 +1,81 @@
+---
+name: useIntervalWhen
+experimental: true
+rank: 18
+tagline: Create dynamic timers that can be started, paused, or resumed with useIntervalWhen.
+sandboxId: useintervalwhen-cp7e31
+previewHeight: 400px
+relatedHooks:
+  - userandominterval
+  - usecontinuousretry
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useIntervalWhen hook is useful for creating an interval timer that can be
+  controlled based on certain conditions. It allows you to specify a callback
+  function to be executed at a regular interval specified by the ms parameter.
+  Additionally, you can choose whether the interval should start immediately or
+  wait for a trigger by setting the startImmediately parameter. This hook is
+  particularly handy when you need to create dynamic timers that can be started,
+  paused, or resumed based on specific conditions.
+</HookDescription>
+<div class="reference">
+  ### Parameters
+
+  | Name                     | Type     | Description                                                                                         |
+  | ------------------------ | -------- | --------------------------------------------------------------------------------------------------- |
+  | cb                       | Function | The callback function to be executed at the specified interval when the condition is met.           |
+  | options                  | Object   | An object containing the following options.                                                         |
+  | options.ms               | Number   | The interval duration in milliseconds.                                                              |
+  | options.when             | Boolean  | The condition that determines whether the interval should be active (`true`) or paused (`false`).   |
+  | options.startImmediately | Boolean  | (Optional) Whether to start the interval immediately when the condition is met. Default is `false`. |
+
+  ### Return Value
+
+  | Type     | Description                                               |
+  | -------- | --------------------------------------------------------- |
+  | Function | A function to clear the interval and pause the execution. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useIntervalWhen } from "@uidotdev/usehooks";
+
+export default function App() {
+  const [count, setCount] = React.useState(0);
+  const [when, setWhen] = React.useState(false);
+
+  useIntervalWhen(
+    () => {
+      setCount((c) => c + 0.1);
+    },
+    { ms: 100, when, startImmediately: true }
+  );
+
+  return (
+    <section>
+      <h1>useIntervalWhen</h1>
+      <button title="Click to toggle the timer" onClick={() => setWhen(!when)}>
+        {count.toLocaleString("en-US", {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 2,
+        })}
+        <span className="btn link">{when ? "stop" : "start"}</span>
+      </button>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

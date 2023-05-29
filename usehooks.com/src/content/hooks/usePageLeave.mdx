@@ -1,0 +1,66 @@
+---
+name: usePageLeave
+experimental: true
+rank: 37
+tagline: Track when a user navigates away from a webpage with usePageLeave.
+sandboxId: usepageleave-p8hjp3
+previewHeight: 300px
+relatedHooks:
+  - usevisibilitychange
+  - useset
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The usePageLeave hook is useful for tracking when a user leaves a webpage or
+  navigates away from it. When the mouseout event is triggered, the callback
+  function is executed only if the user's cursor moves outside the webpage or
+  onto an element outside the webpage (e.g., the browser's address bar). This
+  hook is beneficial for scenarios where you need to perform specific actions
+  when a user leaves your webpage, such as saving user progress, displaying a
+  confirmation prompt, or triggering analytics events.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name | Type     | Description                          |
+  | ---- | -------- | ------------------------------------ |
+  | cb   | function | The callback function to be invoked. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { usePageLeave } from "@uidotdev/usehooks";
+
+export default function App() {
+  const [distractions, setDistractions] = React.useState(0);
+
+  usePageLeave(() => {
+    setDistractions((d) => d + 1);
+  });
+
+  return (
+    <section>
+      <h1>usePageLeave</h1>
+      <p>(Mouse out of the page)</p>
+      <h3>
+        You've been distracted {distractions}{" "}
+        {distractions === 1 ? "time" : "times"}.
+      </h3>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

@@ -1,0 +1,303 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+::selection {
+  background-color: var(--pink);
+  color: var(--coal);
+}
+
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""), url("/fonts/outfit-v4-latin-regular.woff2") format("woff2");
+}
+/* outfit-500 - latin */
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 500;
+  src: local(""), url("/fonts/outfit-v4-latin-500.woff2") format("woff2");
+}
+/* outfit-700 - latin */
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""), url("/fonts/outfit-v4-latin-700.woff2") format("woff2");
+}
+/* outfit-900 - latin */
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 900;
+  src: local(""), url("/fonts/outfit-v4-latin-900.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Paytone One";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+    url("/fonts/paytone-one-v16-latin-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""), url("/fonts/firacode-regular.woff2") format("woff2");
+}
+
+:root {
+  --gray-light: #1b1d23;
+  --gray-dark: #131519;
+  --gray-darkest: #0d0f11;
+  --brand-coal: #0f0d0e;
+  --brand-charcoal: #231f20;
+  --brand-gray: #262522;
+  --brand-yellow: #fcba28;
+  --brand-pink: #f38ba3;
+  --brand-green: #0ba95b;
+  --brand-purple: #7b5ea7;
+  --brand-biege: #f9f4da;
+  --brand-blue: #12b5e5;
+  --brand-orange: #fc7428;
+  --brand-red: #ed203d;
+  --brand-white: #ffffff;
+  --gentlePeachLol: #f99157;
+  --magesticPurple: #9d7dce;
+
+  --red: var(--brand-red);
+  --white: var(--brand-biege);
+  --purple: var(--brand-purple);
+  --black: var(--brand-coal);
+  --blue: var(--brand-blue);
+  --pink: var(--brand-pink);
+  --gold: var(--brand-yellow);
+  --aqua: var(--brand-blue);
+  --gray: var(--brand-gray);
+  --yellow: var(--brand-yellow);
+  --green: var(--brand-green);
+  --orange: var(--brand-orange);
+  --charcoal: var(--brand-charcoal);
+  --coal: var(--brand-coal);
+
+  --border-dark: 0.12rem solid var(--charcoal);
+  --border-dark-shadow: 0 0 0 0.1rem var(--charcoal);
+  --border-light: 0.07rem solid rgba(249, 244, 218, 0.5);
+
+  --body-padding: 2rem;
+  --body-border: 1.3rem;
+
+  --font-outfit: Outfit, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+  --font-paytone: "Paytone One", Outfit, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+
+  --font-lg: clamp(2rem, 8vw, 4rem);
+  --font-md: clamp(1.6rem, 4vw, 2.1rem);
+  --font-base: clamp(1.2rem, 2.5vw, 1.5rem);
+  --font-sm: clamp(0.8rem, 2vw, 1rem);
+
+  --focus-object: 0 0 0 0.2rem var(--blue), 0 0 0 0.27rem var(--white);
+  --focus-text: 0 0 0 0.2rem var(--charcoal), 0 0 0 0.27rem var(--blue);
+
+  --nav-height: 4rem;
+}
+
+html {
+  font-size: 1em;
+  scroll-behavior: smooth;
+}
+
+body {
+  padding: var(--body-padding);
+  background-color: var(--coal);
+  border: var(--body-border) solid var(--charcoal);
+  font-size: var(--font-base);
+  font-family: var(--font-outfit);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.4;
+  color: var(--white);
+}
+
+@media screen and (max-width: 700px) {
+  :root {
+    --body-padding: 1rem;
+    --body-border: 0.7rem;
+  }
+}
+
+:not(pre) > code {
+  padding: .3rem .4rem;
+  background-color: var(--brand-charcoal);
+  border-radius: 3px;
+  font-size: var(--font-sm);
+  font-family: Fira Code;
+  letter-spacing: -0.2px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-paytone);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--font-lg);
+}
+
+h2 {
+  font-size: var(--font-md);
+}
+
+
+small {
+  font-size: var(--font-sm);
+}
+
+img {
+  height: auto;
+  display: block;
+}
+
+
+a {
+  transition: all 150ms ease-in-out;
+}
+
+p a {
+  color: var(--yellow);
+  text-decoration: underline;
+}
+
+p a:not(.logo):hover {
+  background-color: var(--yellow);
+  color: var(--coal);
+}
+
+a:focus-visible {
+  outline: none;
+}
+
+a:not(.image):focus-visible {
+  color: var(--coal);
+  background-color: var(--yellow);
+  box-shadow: var(--focus-text);
+}
+
+a.image:focus-visible {
+  box-shadow: var(--focus-object);
+}
+
+button:focus-visible {
+  outline: none;
+  background-color: var(--yellow);
+  color: var(--coal);
+  box-shadow: var(--focus-object);
+}
+
+ul {
+  list-style: none;
+}
+
+p + p {
+  margin-top: 1.5em;
+}

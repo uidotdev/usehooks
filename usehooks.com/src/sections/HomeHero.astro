@@ -1,0 +1,133 @@
+---
+import Install from '../components/Install.astro';
+import { getCollection } from 'astro:content';
+const hooksMarquee1 = (await getCollection('hooks')).slice(0,25);
+const hooksMarquee2 = (await getCollection('hooks')).slice(25,50);
+---
+
+<header class="hero">
+	<img src="/img/logo-useHooks.svg" width="546" height="80" alt="useHooks" />
+	<h1>A collection of 50 RSC safe React hooks</h1>
+	<Install text="npm i @uidotdev/usehooks" />
+
+	<div class="marquee marquee-left">
+		<ul class="marquee-content">
+			{hooksMarquee1.map(hook => (
+				<li>
+					<a href={`/${hook.slug}/`} tabindex="-1">{hook.data.name}</a>
+				</li>
+			))}
+		</ul>
+		<ul class="marquee-content">
+			{hooksMarquee1.map(hook => (
+				<li>
+					<a href={`/${hook.slug}/`} tabindex="-1">{hook.data.name}</a>
+				</li>
+			))}
+		</ul>
+	</div>
+	<div class="marquee marquee-right">
+		<ul class="marquee-content">
+			{hooksMarquee2.map(hook => (
+				<li>
+					<a href={`/${hook.slug}/`} tabindex="-1">{hook.data.name}</a>
+				</li>
+			))}
+		</ul>
+		<ul class="marquee-content">
+			{hooksMarquee2.map(hook => (
+				<li>
+					<a href={`/${hook.slug}/`} tabindex="-1">{hook.data.name}</a>
+				</li>
+			))}
+		</ul>
+	</div>
+</header>
+
+<style>
+	.hero {
+		padding: 2em 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.hero h1 {
+		margin: 1.2em 0;
+		max-width: 27ch;
+		text-align: center;
+		font-family: outfit;
+		font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+		font-weight: 400;
+		text-transform: none;
+	}
+
+	.hero p {
+		font-size: 20px;
+		margin-top: .5rem;
+		margin-bottom: .75rem;
+	}
+
+	.hero img {
+		width: clamp(20rem, 50vw, 30rem);
+	}
+
+	.hero .install {
+		max-width: 40rem;
+		margin: 2.5rem 0 4rem;
+	}
+
+	.marquee {
+		--gap: 1rem;
+		width: calc(100% + var(--body-padding) * 2);
+		padding: .7rem 0;
+		display: flex;
+		overflow: hidden;
+		user-select: none;
+		gap: var(--gap);
+	}
+
+	.marquee-content {
+		flex-shrink: 0;
+		display: flex;
+		justify-content: space-around;
+		min-width: 100%;
+		gap: var(--gap);
+		animation: scroll 200s linear infinite;
+	}
+
+	@media (prefers-reduced-motion) {
+		.marquee-content {
+			animation: none;
+		}
+	}
+
+	.marquee-right .marquee-content {
+		animation-direction: reverse;
+	}
+
+	.marquee-content li a {
+		padding: .3rem .6rem;
+		background-color: var(--white);
+		border-radius: .3rem;
+		border: var(--border-dark);
+		box-shadow: 0 .5rem 0 -.1rem var(--yellow),
+					0 .55rem 0 var(--charcoal);
+		color: var(--charcoal);
+		font-size: .9rem;
+	}
+
+	.marquee:hover .marquee-content {
+		animation-play-state: paused;
+	}
+
+	@keyframes scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(calc(-100% - var(--gap)));
+		}
+	}
+</style>

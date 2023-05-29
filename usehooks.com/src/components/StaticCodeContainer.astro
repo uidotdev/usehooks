@@ -1,0 +1,15 @@
+---
+import CodeWrapper from './codepreview/CodeWrapper'
+---
+<div>
+  <h2>Example:</h2>
+  <div class="min-h-[500px]">
+    <CodeWrapper client:only>
+      <slot />
+    </CodeWrapper>
+  </div>
+</div>
+
+<noscript>
+  <slot />
+</noscript>

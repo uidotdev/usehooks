@@ -1,0 +1,84 @@
+---
+name: useMeasure
+rank: 46
+tagline: Effortlessly measure and track your component's dimensions with useMeasure.
+sandboxId: usemeasure-3kyegb
+previewHeight: 300px
+relatedHooks:
+  - usepreferredlanguage
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useMeasure hook provides a convenient and efficient way to monitor and
+  respond to changes in the size of a React component. This custom hook uses the
+  ResizeObserver API to actively track changes in the component's dimensions,
+  such as width and height, and keeps them available as state. The returned ref
+  is used on the element whose dimensions you want to measure, making it a
+  valuable tool for responsive design and dynamic layout adjustments.
+</HookDescription>
+
+<div class="reference">
+  ### Return Value
+
+  | Name | Type | Description |
+  | --- | --- | --- |
+  | ref | React Ref Object | A React reference that can be attached to a DOM element to observe. |
+  | rect | object | An object containing the width and height of the observed element. |
+
+  ### rect Object Properties
+
+  | Property | Type | Description |
+  | --- | --- | --- |
+  | width | number | Width of the observed element. |
+  | height | number | Height of the observed element. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useLongPress } from "@uidotdev/usehooks";
+import { closeIcon } from "./icons";
+
+export default function App() {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const attrs = useLongPress(
+    () => {
+      setIsOpen(true);
+    },
+    {
+      onStart: (event) => console.log("Press started"),
+      onFinish: (event) => console.log("Press Finished"),
+      onCancel: (event) => console.log("Press cancelled"),
+      threshold: 500,
+    }
+  );
+
+  return (
+    <section>
+      <h1>useLongPress</h1>
+      <button {...attrs} className="primary">
+        Press Me
+      </button>
+      {isOpen && (
+        <dialog>
+          <button onClick={() => setIsOpen(false)}>{closeIcon}</button>
+          <h2>Modal</h2>
+          <p>This is a modal triggered by a long press.</p>
+        </dialog>
+      )}
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

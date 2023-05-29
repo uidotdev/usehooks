@@ -1,0 +1,90 @@
+{
+  "rewrites": [
+    {
+      "source": "/stats/js/script.js",
+      "destination": "https://plausible.io/js/script.js"
+    },
+    {
+      "source": "/stats/api/event",
+      "destination": "https://plausible.io/api/event"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/useOnClickOutside",
+      "destination": "/useclickaway"
+    },
+    {
+      "source": "/useOnScreen",
+      "destination": "/usetntersectionobserver"
+    },
+    {
+      "source": "/useWhyDidYouUpdate",
+      "destination": "/userenderinfo"
+    },
+    {
+      "source": "/useSize",
+      "destination": "/usemeasure"
+    },
+    {
+      "source": "/useMemoCompare",
+      "destination": "/"
+    },
+    {
+      "source": "/useMedia",
+      "destination": "/usemediaquery"
+    },
+    {
+      "source": "/useHistory",
+      "destination": "/usehistorystate"
+    },
+    {
+      "source": "/useAnimation",
+      "destination": "/"
+    },
+    {
+      "source": "/useSpring",
+      "destination": "/"
+    },
+    {
+      "source": "/useAuth",
+      "destination": "/"
+    },
+    {
+      "source": "/useRequireAuth",
+      "destination": "/"
+    },
+    {
+      "source": "/useFirestoreQuery",
+      "destination": "/"
+    },
+    {
+      "source": "/useRouter",
+      "destination": "/"
+    },
+    {
+      "source": "/useMemo",
+      "destination": "/"
+    },
+    {
+      "source": "/useTheme",
+      "destination": "/"
+    },
+    {
+      "source": "/useDarkMode",
+      "destination": "/"
+    },
+    {
+      "source": "/useRouter",
+      "destination": "/"
+    },
+    {
+      "source": "/useAsync",
+      "destination": "/"
+    },
+    {
+      "source": "/useAuth",
+      "destination": "/"
+    }
+  ]
+}

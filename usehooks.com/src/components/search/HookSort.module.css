@@ -1,0 +1,19 @@
+.toggle {
+  padding: 0.2rem 0.4rem;
+  border: var(--border-light);
+  border-radius: 0.3rem;
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
+  font-weight: 500;
+  transition: all 200ms ease-in-out;
+}
+
+.toggle.active {
+  background-color: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--charcoal);
+  cursor: default;
+}
+
+.toggle:not(.active):hover {
+  background-color: var(--charcoal);
+}

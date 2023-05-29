@@ -1,0 +1,67 @@
+---
+name: useDocumentTitle
+rank: 40
+tagline: Dynamically update the title of a webpage with useDocumentTitle.
+sandboxId: usedocumenttitle-6vmc1n
+previewHeight: 300px
+relatedHooks:
+  - usefavicon
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useDocumentTitle hook is useful for dynamically updating the title of a
+  webpage based on the current state or data. This hook proves beneficial in
+  scenarios where the title needs to be dynamically updated, such as displaying
+  the name of the currently selected item or reflecting changes in application
+  state.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name  | Type   | Description                           |
+  | ----- | ------ | ------------------------------------- |
+  | title | string | The title to be set for the document. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useDocumentTitle } from "@uidotdev/usehooks";
+
+export default function App() {
+  const [count, setCount] = React.useState(0);
+
+  useDocumentTitle(`Clicked ${count} times.`);
+  return (
+    <section>
+      <h1>useDocumentTitle</h1>
+      <h6>
+        <a
+          className="link"
+          href="https://6vmc1n.csb.app/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Try in a new tab
+        </a>
+      </h6>
+      <button className="primary" onClick={() => setCount(count + 1)}>
+        Increment Count: {count}
+      </button>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

@@ -1,0 +1,91 @@
+---
+name: useToggle
+rank: 34
+tagline: A hook to toggle a boolean value with useToggle.
+sandboxId: usetoggle-tcj48q
+previewHeight: 300px
+relatedHooks:
+  - uselongpress
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  Basically, what this hook does is that, it takes a parameter with value true
+  or false and toggles that value to opposite. It's useful when we want to take
+  some action into it's opposite action, for example: show and hide modal, show
+  more/show less text, open/close side menu.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name         | Type    | Description                                       |
+  | ------------ | ------- | ------------------------------------------------- |
+  | initialValue | boolean | (Optional) The initial value of the toggle state. |
+
+  ### Return Value
+
+  The `useToggle` hook returns an array with the following elements:
+
+  | Index | Type     | Description                                   |
+  | ----- | -------- | --------------------------------------------- |
+  | 0     | boolean  | The current state of the toggle.              |
+  | 1     | function | A function to toggle the state of the toggle. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useToggle } from "@uidotdev/usehooks";
+
+function ToggleDemo({ on, toggle }) {
+  return (
+    <div>
+      <label className="toggle">
+        <input
+          onChange={toggle}
+          className="toggle-checkbox"
+          type="checkbox"
+          checked={on}
+        />
+        <div className="toggle-switch"></div>
+        <span className="toggle-label">{on ? "On" : "Off"}</span>
+      </label>
+    </div>
+  );
+}
+
+export default function App() {
+  const [on, toggle] = useToggle(true);
+
+  return (
+    <section>
+      <h1>UseToggle</h1>
+      <button disabled={on} className="link" onClick={() => toggle(true)}>
+        Turn On
+      </button>
+      <button disabled={!on} className="link" onClick={() => toggle(false)}>
+        Turn Off
+      </button>
+      <button className="link" onClick={toggle}>
+        Toggle
+      </button>
+      <button className="link" onClick={() => toggle("nope")}>
+        (Also toggles)
+      </button>
+      <ToggleDemo toggle={toggle} on={on} />
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

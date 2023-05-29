@@ -1,0 +1,116 @@
+---
+name: useHistoryState
+rank: 35
+tagline: Add undo / redo functionality with useHistoryState.
+sandboxId: usehistorystate-tubwyj
+previewHeight: 400px
+relatedHooks:
+  - usemap
+  - useset
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useHistoryState hook is useful for managing state with undo and redo
+  capabilities in React components. The hook offers functions like undo, redo,
+  set, and clear to interact with the state as well as other state related
+  values like canUndo and canRedo.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name           | Type   | Description                                        |
+  | -------------- | ------ | -------------------------------------------------- |
+  | initialPresent | object | (Optional) The initial state value. Default: `{}`. |
+
+  ### Return Value
+
+  The `useHistoryState` hook returns an object with the following properties and functions:
+
+  | Name    | Type     | Description                                                |
+  | ------- | -------- | ---------------------------------------------------------- |
+  | state   | any      | The current state value.                                   |
+  | set     | function | A function to set the state value.                         |
+  | undo    | function | A function to undo the previous state.                     |
+  | redo    | function | A function to redo the next state.                         |
+  | clear   | function | A function to clear the state history and reset the state. |
+  | canUndo | boolean  | Indicates whether an undo action is available.             |
+  | canRedo | boolean  | Indicates whether a redo action is available.              |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import Form from "./Form";
+import { useHistoryState } from "@uidotdev/usehooks";
+
+export default function App() {
+  const { state, set, undo, redo, clear, canUndo, canRedo } = useHistoryState({
+    items: [],
+  });
+
+  const addTodo = (val) => {
+    set({
+      ...state,
+      items: state.items.concat({ id: crypto.randomUUID(), name: val }),
+    });
+  };
+
+  const removeTodo = (id) => {
+    set({
+      ...state,
+      items: state.items.filter((item) => item.id !== id),
+    });
+  };
+
+  return (
+    <section>
+      <header>
+        <h1>useHistoryState</h1>
+        <div>
+          <button disabled={!canUndo} className="link" onClick={undo}>
+            Undo
+          </button>
+          <button disabled={!canRedo} className="link" onClick={redo}>
+            Redo
+          </button>
+
+          <button
+            disabled={!state.items.length}
+            className="link"
+            onClick={clear}
+          >
+            Clear
+          </button>
+        </div>
+        <Form addItem={addTodo} />
+      </header>
+
+      <ul>
+        {state.items.map((item, index) => {
+          return (
+            <li key={index}>
+              <span>{item.name}</span>
+              <button className="link" onClick={() => removeTodo(item.id)}>
+                Delete
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

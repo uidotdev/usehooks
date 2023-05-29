@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NavInternal from '../sections/NavInternal.astro';
+import Footer from '../sections/Footer.astro';
+---
+
+<Layout
+	title="Page not found."
+	description="An open source library of easy to understand React Hook recipes, from the team at ui.dev."
+>
+	<NavInternal />
+	<main>
+		<h1>404</h1>
+		<p>If you think this page should exist, email <a href="mailto:hi@ui.dev">hi@ui.dev</a>.</p>
+	</main>
+	<Footer />
+</Layout> 
+
+<style>
+	body {
+		min-height: 100lvh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+	}
+	main {
+		width: 100%;
+		max-width: 960px;
+		margin-top: 1rem;
+		padding: 1rem 0;
+		text-align: center;
+	}
+	main h1 {
+		width: 100%;
+		margin-bottom: 2rem;
+		font-size: var(--font-lg);
+	}
+</style>

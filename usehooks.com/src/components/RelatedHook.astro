@@ -1,0 +1,10 @@
+---
+import { getEntry } from "astro:content";
+import HookCard from "./search/HookCard";
+
+const { slug } = Astro.props;
+const relatedHook = await getEntry("hooks", slug);
+const { name, tagline } = relatedHook.data;
+---
+
+<HookCard name={name} tagline={tagline} />

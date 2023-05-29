@@ -1,0 +1,89 @@
+---
+name: usePrevious
+rank: 4
+tagline: Track the previous value of a variable with usePrevious.
+sandboxId: useprevious-diev3s
+previewHeight: 600px
+relatedHooks:
+  - usehistorystate
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The usePrevious hook is a useful tool for tracking the previous value of a
+  variable in a functional component. This can be particularly handy in
+  scenarios where it is necessary to compare the current value with the previous
+  one, such as triggering actions or rendering based on changes.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name     | Type | Description                                        |
+  | -------- | ---- | -------------------------------------------------- |
+  | newValue | any  | The new value to track and return the previous of. |
+
+  ### Return Value
+
+  | Name          | Type | Description                                    |
+  | ------------- | ---- | ---------------------------------------------- |
+  | previousValue | any  | The previous value of the provided `newValue`. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { usePrevious } from "@uidotdev/usehooks";
+
+function getRandomColor() {
+  const colors = ["green", "blue", "purple", "red", "pink"];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+export default function App() {
+  const [color, setColor] = React.useState(getRandomColor());
+  const previousColor = usePrevious(color);
+
+  const handleClick = () => {
+    function getNewColor() {
+      const newColor = getRandomColor();
+      if (color === newColor) {
+        getNewColor();
+      } else {
+        setColor(newColor);
+      }
+    }
+    getNewColor();
+  };
+
+  return (
+    <section>
+      <h1>usePrevious</h1>
+      <button className="link" onClick={handleClick}>
+        Next
+      </button>
+      <article>
+        <figure>
+          <p style={{ background: `var(--${previousColor})` }} />
+          <figcaption>Previous: {previousColor}</figcaption>
+        </figure>
+        <figure>
+          <p style={{ background: `var(--${color})` }} />
+          <figcaption>Current: {color}</figcaption>
+        </figure>
+      </article>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

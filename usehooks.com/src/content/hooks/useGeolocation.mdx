@@ -1,0 +1,85 @@
+---
+name: useGeolocation
+rank: 36
+tagline: Add undo / redo functionality with useHistoryState.
+sandboxId: usegeolocation-3f1d0f
+previewHeight: 900px
+relatedHooks:
+  - usemap
+  - useset
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useHistoryState hook is useful for managing state with undo and redo
+  capabilities in React components. The hook offers functions like undo, redo,
+  set, and clear to interact with the state as well as other state related
+  values like canUndo and canRedo.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name    | Type   | Description |
+  | ------- | ------ | ----------- |
+  | options | object | This is an optional configuration object provided when calling `useGeolocation`. It is used when calling `navigator.geolocation.getCurrentPosition()` and `navigator.geolocation.watchPosition()`. Some of the attributes it accepts are `enableHighAccuracy`, `timeout`, and `maximumAge`. |
+
+  ### Return Values
+
+  The hook returns an object containing the following properties:
+
+  | Name              | Type    | Description |
+  | ----------------- | ------- | ----------- |
+  | loading           | boolean | A boolean indicating if the geolocation data is currently being fetched. |
+  | accuracy          | number  | The accuracy of the latitude and longitude properties in meters. |
+  | altitude          | number  | The altitude in meters above the mean sea level. |
+  | altitudeAccuracy  | number  | The accuracy of altitude in meters. |
+  | heading           | number  | The direction in which the device is traveling. This value, specified in degrees, indicates how far off from heading true north the device is. |
+  | latitude          | number  | The latitude in decimal degrees. |
+  | longitude         | number  | The longitude in decimal degrees. |
+  | speed             | number  | The current ground speed of the device, specified in meters per second. |
+  | timestamp         | number  | The timestamp at which the geolocation data was retrieved. |
+  | error             | object  | An error object, if an error occurred while retrieving the geolocation data. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useGeolocation } from "@uidotdev/usehooks";
+import Demo from "./Demo";
+
+export default function App() {
+  return (
+    <section>
+      <h1>useGeolocation</h1>
+      <Location />
+    </section>
+  );
+}
+
+function Location() {
+  const state = useGeolocation();
+
+  if (state.loading) {
+    return <p>loading... (you may need to enable permissions)</p>;
+  }
+
+  if (state.error) {
+    return <p>Enable permissions to access your location data</p>;
+  }
+
+  return <Demo state={state} />;
+}
+
+```
+
+</StaticCodeContainer>

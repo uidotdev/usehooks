@@ -1,0 +1,39 @@
+.hook > :global(a) {
+  height: 100%;
+  padding: var(--body-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background-color: var(--charcoal);
+  border-radius: 0.5rem;
+  transition: transform 200ms ease-in-out;
+}
+
+.hook > :global(a:hover) {
+  transform: scale(1.03);
+}
+
+.card-title {
+  color: var(--blue);
+  text-transform: none;
+  font-family: var(--font-outfit);
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 600;
+}
+
+.card-description {
+  margin-bottom: 0.5rem;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+}
+
+.arrow {
+  width: 28px;
+  aspect-ratio: 3 / 2;
+  margin-top: auto;
+  align-self: flex-end;
+  transition: all 200ms ease-in-out;
+}
+
+:global(a:hover) .arrow {
+  transform: translateX(0.6rem);
+}

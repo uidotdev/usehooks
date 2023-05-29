@@ -1,0 +1,80 @@
+---
+name: useRenderInfo
+rank: 15
+tagline: Debug renders and improve performance with useRenderInfo.
+sandboxId: userenderinfo-njhqlg
+previewHeight: 400px
+relatedHooks:
+  - userendercount
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useRenderInfo hook is useful for tracking and logging rendering
+  information in a component. It keeps track of the number of renders, the time
+  elapsed since the last render, and the timestamp of the current render. This
+  hook is particularly helpful during development as it provides insights into
+  the rendering behavior of a component, allowing developers to optimize
+  performance and identify potential issues.
+</HookDescription>
+
+<div class="reference">
+  ### Return Value
+
+  | Name                 | Type   | Description                                                       |
+  | -------------------- | ------ | ----------------------------------------------------------------- |
+  | info                 | Object | An object containing information about the component's rendering. |
+  | info.name            | String | The name of the component.                                        |
+  | info.renders         | Number | The number of times the component has rendered.                   |
+  | info.sinceLastRender | Number | The time elapsed in milliseconds since the last render.           |
+  | info.timestamp       | Number | The timestamp of the current render.                              |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useRenderInfo } from "@uidotdev/usehooks";
+
+export default function App() {
+  const info = useRenderInfo("App");
+
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <section>
+      <h1>useRenderInfo</h1>
+      <button className="primary" onClick={() => setCount(count + 1)}>
+        Re-Render
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th colSpan={2}>Render Info</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(info).map((key) => {
+            return (
+              <tr key={key}>
+                <th>{key}</th>
+                <td>{info[key]}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

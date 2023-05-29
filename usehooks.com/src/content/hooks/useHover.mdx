@@ -1,0 +1,67 @@
+---
+name: useHover
+rank: 24
+tagline: Track whether an element is being hovered over with useHover.
+sandboxId: usehover-9lxxmo
+previewHeight: 420px
+relatedHooks:
+  - uselockbodyscroll
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useHover hook allows you to track whether an element is being hovered over
+  or not. The hook returns a reference to attach to the target element and the
+  current hovering status, enabling you to apply conditional rendering or
+  perform any desired actions based on the hover state.
+</HookDescription>
+
+<div class="reference">
+  ### Return Value
+
+  The `useHover` hook returns an array with the following elements:
+
+  | Index | Type    | Description                                                                |
+  | ----- | ------- | -------------------------------------------------------------------------- |
+  | 0     | Ref     | A ref object that can be attached to the element intended to be hovered.   |
+  | 1     | Boolean | A boolean value indicating whether the element is currently being hovered. |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useHover } from "@uidotdev/usehooks";
+
+function getRandomColor() {
+  const colors = ["green", "blue", "purple", "red", "pink"];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+export default function App() {
+  const [ref, hovering] = useHover();
+
+  const backgroundColor = hovering
+    ? `var(--${getRandomColor()})`
+    : "var(--charcoal)";
+
+  return (
+    <section>
+      <h1>useHover</h1>
+      <article ref={ref} style={{ backgroundColor }}>
+        Hovering? {hovering ? "Yes" : "No"}
+      </article>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>

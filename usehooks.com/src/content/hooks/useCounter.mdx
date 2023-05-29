@@ -1,0 +1,88 @@
+---
+name: useCounter
+rank: 49
+tagline: Manage a counter value with minimum and maximum limits with useCounter.
+sandboxId: usecounter-ddeo74
+previewHeight: 450px
+relatedHooks:
+  - usecountdown
+  - useprevious
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useCounter hook is useful for managing a counter value with additional
+  options for minimum and maximum limits. The hook takes a starting value and
+  options object as parameters, which can specify minimum and maximum limits for
+  the counter. If the starting value falls outside the specified limits, an
+  error is thrown. The hook returns the current count value and an object
+  containing functions to increment, decrement, set a specific count, and reset
+  the counter.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  | Name          | Type   | Description                                        |
+  | ------------- | ------ | -------------------------------------------------- |
+  | startingValue | number | The initial value for the counter. Default is `0`. |
+  | options       | object | Additional options for the counter.                |
+  | options.min   | number | The minimum value allowed for the counter.         |
+  | options.max   | number | The maximum value allowed for the counter.         |
+
+  ### Return Value
+
+  The `useCounter` hook returns an array with two elements:
+
+  | Name            | Parameters        | Description                                          |
+  | --------------- | ----------------- | ---------------------------------------------------- |
+  | `[0]`           |                   | The current value of the counter.                    |
+  | `[1].increment` |                   | Increments the counter by 1.                         |
+  | `[1].decrement` |                   | Decrements the counter by 1.                         |
+  | `[1].set`       | nextCount: number | Sets the counter to the specified `nextCount` value. |
+  | `[1].reset`     |                   | Resets the counter to the initial `startingValue`.   |
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import * as React from "react";
+import { useCounter } from "@uidotdev/usehooks";
+
+export default function App() {
+  const [count, { increment, decrement, set, reset }] = useCounter(5, {
+    min: 5,
+    max: 10,
+  });
+
+  return (
+    <section>
+      <h1>UseCounter</h1>
+      <h6>with optional min / max</h6>
+      <button disabled={count >= 10} className="link" onClick={increment}>
+        Increment
+      </button>
+      <button disabled={count <= 5} className="link" onClick={decrement}>
+        Decrement
+      </button>
+      <button className="link" onClick={() => set(6)}>
+        Set to 6
+      </button>
+      <button className="link" onClick={reset}>
+        Reset
+      </button>
+      <p>{count}</p>
+    </section>
+  );
+}
+```
+
+</StaticCodeContainer>
