@@ -25,18 +25,22 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name  | Type   | Description                              |
   | ----- | ------ | ---------------------------------------- |
   | value | string | The value to be copied to the clipboard. |
+  </div>
 
   ### Return Value
 
+  <div class="table-container">
   The `useCopyToClipboard` hook returns an array with the following elements:
 
   | Index | Type     | Description                                            |
   | ----- | -------- | ------------------------------------------------------ |
   | 0     | string   | The value that was last copied to the clipboard.       |
   | 1     | function | A function to copy a specified value to the clipboard. |
+  </div>
 </div>
 
 <CodePreview

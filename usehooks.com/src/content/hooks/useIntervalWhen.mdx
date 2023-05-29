@@ -26,6 +26,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name                     | Type     | Description                                                                                         |
   | ------------------------ | -------- | --------------------------------------------------------------------------------------------------- |
   | cb                       | Function | The callback function to be executed at the specified interval when the condition is met.           |
@@ -33,12 +34,15 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | options.ms               | Number   | The interval duration in milliseconds.                                                              |
   | options.when             | Boolean  | The condition that determines whether the interval should be active (`true`) or paused (`false`).   |
   | options.startImmediately | Boolean  | (Optional) Whether to start the interval immediately when the condition is met. Default is `false`. |
+  </div>
 
   ### Return Value
 
+  <div class="table-container">
   | Type     | Description                                               |
   | -------- | --------------------------------------------------------- |
   | Function | A function to clear the interval and pause the execution. |
+  </div>
 </div>
 
 <CodePreview

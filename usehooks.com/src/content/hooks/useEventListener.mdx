@@ -25,6 +25,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name            | Type               | Description                                                                                                         |
   | --------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------- |
   | target          | Ref or DOM element | The target element to attach the event listener to. It can be either a ref object (`ref.current`) or a DOM element. |
@@ -34,6 +35,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | options.capture | Boolean            | Specifies whether the event should be captured during the capturing phase. Default is `false`.                      |
   | options.passive | Boolean            | Specifies whether the event listener will not call `preventDefault()`. Default is `false`.                          |
   | options.once    | Boolean            | Specifies whether the event listener should only be invoked once. Default is `false`.                               |
+  </div>
 </div>
 
 <CodePreview

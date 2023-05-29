@@ -163,9 +163,13 @@ const installSnippet = experimental
       font-size: clamp(.9rem, 2vw, 1.1rem);
     }
 
-    :global(.reference table) {
+    :global(.reference .table-container) {
       width: 100%;
+      overflow-x: auto;
       border: 0.07rem solid rgba(249, 244, 218, 0.1);
+    }
+
+    :global(.reference table) {
       border-radius: .9rem;
       font-size: clamp(1rem, 2.1vw, 1.2rem);
     }
@@ -175,9 +179,14 @@ const installSnippet = experimental
     }
 
     :global(.reference thead) {
-      border-bottom: 0.07rem solid rgba(249, 244, 218, 0.1);
+      /* border-bottom: 0.07rem solid rgba(249, 244, 218, 0.1); */
+      background-color: rgba(249, 244, 218, 0.1);
       font-size: var(--font-sm);
       text-align: left;
+    }
+
+    :global(.reference tr:not(:last-of-type)) {
+      border-bottom: 0.07rem solid rgba(249, 244, 218, 0.1);
     }
 
     :global(.reference td),
@@ -185,8 +194,15 @@ const installSnippet = experimental
       padding: .5rem .75rem;
     }
 
-    :global(.reference td:not(:last-of-type)) {
-      width: 20%;
+    :global(.reference td:not(:last-of-type)),
+    :global(.reference th:not(:last-of-type)) {
+      min-width: 110px;
+    }
+
+    :global(.reference td:last-of-type),
+    :global(.reference th:last-of-type) {
+      width: 100%;
+      min-width: 300px;
     }
 
     .related-hooks {
