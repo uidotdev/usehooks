@@ -24,6 +24,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name                 | Type     | Description |
   | -------------------- | -------- | ----------- |
   | callback             | function | This is the function to be executed when a long press event is detected. |
@@ -32,9 +33,11 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | options.onStart      | function | This function is called when the user starts pressing. |
   | options.onFinish     | function | This function is called when a long press event finishes successfully (the user releases after the threshold). |
   | options.onCancel     | function | This function is called when a press event is cancelled (the user releases before the threshold). |
+  </div>
 
   ### Return Values
 
+  <div class="table-container">
   | Name         | Type     | Description |
   | ------------ | -------- | ----------- |
   | onMouseDown  | function | This is the mouse down event handler. |
@@ -42,6 +45,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | onMouseLeave | function | This is the mouse leave event handler. |
   | onTouchStart | function | This is the touch start event handler. |
   | onTouchEnd   | function | This is the touch end event handler. |
+  </div>
 </div>
 
 <CodePreview

@@ -23,14 +23,17 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name           | Type   | Description                                        |
   | -------------- | ------ | -------------------------------------------------- |
   | initialPresent | object | (Optional) The initial state value. Default: `{}`. |
+  </div>
 
   ### Return Value
 
   The `useHistoryState` hook returns an object with the following properties and functions:
 
+  <div class="table-container">
   | Name    | Type     | Description                                                |
   | ------- | -------- | ---------------------------------------------------------- |
   | state   | any      | The current state value.                                   |
@@ -40,6 +43,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | clear   | function | A function to clear the state history and reset the state. |
   | canUndo | boolean  | Indicates whether an undo action is available.             |
   | canRedo | boolean  | Indicates whether a redo action is available.              |
+  </div>
 </div>
 
 <CodePreview

@@ -25,16 +25,20 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name  | Type   | Description |
   | ----- | ------ | ----------- |
   | value | any    | The value that you want to debounce. This can be of any type. |
   | delay | number | The delay time in milliseconds. After this amount of time, the latest value is used. |
+  </div>
 
   ### Return Values
 
+  <div class="table-container">
   | Name          | Type | Description |
   | ------------- | ---- | ----------- |
   | debouncedValue| any  | The debounced value. After the delay time has passed without the `value` changing, this will be updated to the latest `value`. |
+  </div>
 </div>
 
 <CodePreview

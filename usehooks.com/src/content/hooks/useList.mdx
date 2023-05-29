@@ -24,23 +24,27 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name        | Type  | Description                                              |
   | ----------- | ----- | -------------------------------------------------------- |
-  | defaultList | Array | The initial list of elements. Default is an empty array. |
+  | defaultList | array | The initial list of elements. Default is an empty array. |
+  </div>
 
   ### Return Value
 
   The `useList` hook returns an array with two elements:
 
+  <div class="table-container">
   | Name           | Parameters                  | Description                                                       |
   | -------------- | --------------------------- | ----------------------------------------------------------------- |
   | `[0]`          |                             | The current list of elements.                                     |
-  | `[1].set`      | l: Array                    | Replaces the entire list with a new array `l`.                    |
+  | `[1].set`      | l: array                    | Replaces the entire list with a new array `l`.                    |
   | `[1].push`     | element: any                | Appends the `element` to the end of the list.                     |
   | `[1].removeAt` | index: number               | Removes the element at the specified `index` from the list.       |
   | `[1].insertAt` | index: number, element: any | Inserts the `element` at the specified `index` in the list.       |
   | `[1].updateAt` | index: number, element: any | Replaces the element at the specified `index` with the `element`. |
   | `[1].clear`    |                             | Removes all elements from the list.                               |
+  </div>
 </div>
 
 <CodePreview

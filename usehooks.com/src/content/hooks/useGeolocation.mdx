@@ -23,14 +23,17 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name    | Type   | Description |
   | ------- | ------ | ----------- |
   | options | object | This is an optional configuration object provided when calling `useGeolocation`. It is used when calling `navigator.geolocation.getCurrentPosition()` and `navigator.geolocation.watchPosition()`. Some of the attributes it accepts are `enableHighAccuracy`, `timeout`, and `maximumAge`. |
+  </div>
 
   ### Return Values
 
   The hook returns an object containing the following properties:
 
+  <div class="table-container">
   | Name              | Type    | Description |
   | ----------------- | ------- | ----------- |
   | loading           | boolean | A boolean indicating if the geolocation data is currently being fetched. |
@@ -43,6 +46,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | speed             | number  | The current ground speed of the device, specified in meters per second. |
   | timestamp         | number  | The timestamp at which the geolocation data was retrieved. |
   | error             | object  | An error object, if an error occurred while retrieving the geolocation data. |
+  </div>
 </div>
 
 <CodePreview
