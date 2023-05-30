@@ -1,7 +1,7 @@
 ---
 name: useBattery
 rank: 32
-tagline: Track the battery status of a user's device with useBattery.
+tagline: Track the battery status of a user’s device with useBattery.
 sandboxId: usebattery-o8js1p
 previewHeight: 320px
 relatedHooks:
@@ -15,7 +15,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 
 <HookDescription name={frontmatter.name}>
   The useBattery hook is useful for accessing and monitoring the battery status
-  of the user's device in a React application. By using this hook, you can
+  of the user’s device in a React application. By using this hook, you can
   easily retrieve information such as the battery level, charging status, and
   estimated charging and discharging times. It provides a state object that
   includes properties like supported, loading, level, charging, chargingTime,
@@ -30,12 +30,12 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   <div class="table-container">
   | Name             | Type    | Description |
   | ---------------- | ------- | ----------- |
-  | supported        | boolean | Indicates whether the Battery Status API is supported in the user's browser. |
+  | supported        | boolean | Indicates whether the Battery Status API is supported in the user’s browser. |
   | loading          | boolean | Indicates if the battery information is still loading. |
-  | level            | number  | Represents the level of the system's battery. 0.0 means that the system's battery is completely discharged, and 1.0 means the battery is completely charged. |
-  | charging         | boolean | Represents whether the system's battery is charging. `true` means the battery is charging, `false` means it's not. |
-  | chargingTime     | number  | Represents the time remaining in seconds until the system's battery is fully charged. |
-  | dischargingTime  | number  | Represents the time remaining in seconds until the system's battery is completely discharged and the system is about to be suspended. |
+  | level            | number  | Represents the level of the system’s battery. 0.0 means that the system’s battery is completely discharged, and 1.0 means the battery is completely charged. |
+  | charging         | boolean | Represents whether the system’s battery is charging. `true` means the battery is charging, `false` means it’s not. |
+  | chargingTime     | number  | Represents the time remaining in seconds until the system’s battery is fully charged. |
+  | dischargingTime  | number  | Represents the time remaining in seconds until the system’s battery is completely discharged and the system is about to be suspended. |
   </div>
 </div>
 
