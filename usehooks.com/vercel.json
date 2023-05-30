@@ -1,4 +1,5 @@
 {
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/stats/js/script.js",
@@ -16,7 +17,7 @@
     },
     {
       "source": "/useOnScreen",
-      "destination": "/usetntersectionobserver"
+      "destination": "/useintersectionobserver"
     },
     {
       "source": "/useWhyDidYouUpdate",
@@ -45,10 +46,6 @@
     {
       "source": "/useLockBodyScroll",
       "destination": "/uselockbodyscroll"
-    },
-    {
-      "source": "/useThrottle",
-      "destination": "/usethrottle"
     },
     {
       "source": "/useToggle",
@@ -123,15 +120,7 @@
       "destination": "/"
     },
     {
-      "source": "/useRouter",
-      "destination": "/"
-    },
-    {
       "source": "/useAsync",
-      "destination": "/"
-    },
-    {
-      "source": "/useAuth",
       "destination": "/"
     }
   ]
