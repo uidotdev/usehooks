@@ -122,6 +122,6 @@
     {
       "source": "/useAsync",
       "destination": "/"
-    },
+    }
   ]
 }
