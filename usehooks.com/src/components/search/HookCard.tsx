@@ -9,7 +9,7 @@ export default function HookCard({
 }) {
   return (
     <li className={styles.hook}>
-      <a href={`/${name.toLowerCase()}/`}>
+      <a href={`/${name.toLowerCase()}`}>
         <h3 className={styles["card-title"]}>{name}</h3>
         <p className={styles["card-description"]}>{tagline}</p>
         <svg
