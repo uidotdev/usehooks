@@ -11,8 +11,14 @@ const {
   title,
   description,
   ogImage = new URL("/meta/og.jpg", Astro.url),
-  url = new URL(Astro.url.pathname, Astro.site),
 } = Astro.props;
+
+const pathname = Astro.url.pathname
+
+const url = pathname[pathname.length - 1] === "/"
+  ? new URL(pathname.slice(0, pathname.length -1), Astro.site)
+  : new URL(Astro.url.pathname, Astro.site)
+
 ---
 
 <!DOCTYPE html>

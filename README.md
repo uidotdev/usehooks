@@ -1,6 +1,6 @@
 # useHooks
 
-A collection of 50 RSC safe React hooks
+A collection of Server Component safe React Hooks – from the ui.dev team
 
 ## Standard
 
