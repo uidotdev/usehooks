@@ -1,6 +1,6 @@
 {
   "name": "@uidotdev/usehooks",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A collection of 50 RSC safe React hooks",
   "type": "module",
   "repository": "uidotdev/usehooks",
