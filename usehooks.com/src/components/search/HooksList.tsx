@@ -56,7 +56,7 @@ export default function HooksList({ hooks }) {
       imageHeight: "206",
       imageAlt: "20-sided die",
       pitch:
-        "It's dangerous to go alone! Master React by learning how to build useHooks yourself.",
+        "It’s dangerous to go alone! Master React by learning how to build useHooks yourself.",
     },
     {
       id: "Callout 2",
@@ -65,7 +65,7 @@ export default function HooksList({ hooks }) {
       imageHeight: "180",
       imageAlt: "board game spinner and all options are React",
       pitch:
-        "There's no better way to learn useHooks than by building it yourself.",
+        "There’s no better way to learn useHooks than by building it yourself.",
     },
     {
       id: "Callout 3",
