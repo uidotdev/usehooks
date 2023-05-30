@@ -1005,8 +1005,6 @@ export function useRenderInfo(name = "Unknown") {
   }
 }
 
-const cachedScriptStatuses = {};
-
 export function useScript(src, options = {}) {
   const [status, setStatus] = React.useState(() => {
     if (!src) {
@@ -1016,12 +1014,14 @@ export function useScript(src, options = {}) {
     return "loading";
   });
 
+  const cachedScriptStatuses = React.useRef({});
+
   React.useEffect(() => {
     if (!src) {
       return;
     }
 
-    const cachedScriptStatus = cachedScriptStatuses[src];
+    const cachedScriptStatus = cachedScriptStatuses.current[src];
     if (cachedScriptStatus === "ready" || cachedScriptStatus === "error") {
       setStatus(cachedScriptStatus);
       return;
@@ -1055,7 +1055,7 @@ export function useScript(src, options = {}) {
     const setStateFromEvent = (event) => {
       const newStatus = event.type === "load" ? "ready" : "error";
       setStatus(newStatus);
-      cachedScriptStatuses[src] = newStatus;
+      cachedScriptStatuses.current[src] = newStatus;
     };
 
     script.addEventListener("load", setStateFromEvent);
