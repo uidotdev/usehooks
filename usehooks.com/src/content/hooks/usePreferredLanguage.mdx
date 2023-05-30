@@ -13,10 +13,9 @@ import HookDescription from "../../components/HookDescription.astro";
 import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 
 <HookDescription name={frontmatter.name}>
-  Basically, what this hook does is that, it takes a parameter with value true
-  or false and toggles that value to opposite. It's useful when we want to take
-  some action into it's opposite action, for example: show and hide modal, show
-  more/show less text, open/close side menu.
+  The usePreferredLanguage hook automatically adapts to the preferred language
+  of the user. The hook reactively returns a string that represents the
+  preferred language of the user, as set in the browser settings.
 </HookDescription>
 
 <div class="reference">
@@ -25,7 +24,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   <div class="table-container">
   | Name          | Type   | Description                                                                                                   |
   | ------------- | ------ | ------------------------------------------------------------------------------------------------------------- |
-  | preferredLang | string | The hook returns a string that represents the preferred language of the user, as set in the browser settings. |
+  | language | string | The hook returns a string that represents the preferred language of the user, as set in the browser settings. |
   </div>
 </div>
 
