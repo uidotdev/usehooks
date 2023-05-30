@@ -445,7 +445,6 @@ export function useIdle(ms = 1000 * 60) {
     };
 
     const handleEvent = throttle((e) => {
-      console.log("EVENT");
       setIdle(false);
 
       window.clearTimeout(timeoutId);
@@ -783,8 +782,6 @@ export function useMouse() {
       document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
-
-  console.log({ state });
 
   return [state, ref];
 }
@@ -1150,7 +1147,6 @@ export function useSpeech(text, options) {
     utterance.onpause = handlePause;
     utterance.onresume = handlePlay;
     utterance.onend = handleEnd;
-    console.log("ayy", text);
     window.speechSynthesis.speak(utterance);
   }, [text]);
 
