@@ -25,16 +25,20 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name    | Type   | Description                                                                                                                                                                                                                                                                                                         |
   | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | endTime | Number | The end time of the countdown in milliseconds since the Unix epoch.                                                                                                                                                                                                                                                 |
-  | options | Object | An object containing the following options:<ul><li>`interval`: The interval in milliseconds at which the countdown should tick.</li><li>`onComplete`: A callback function to be called when the countdown reaches zero.</li><li>`onTick`: A callback function to be called on each tick of the countdown.</li></ul> |
+  | endTime | number | The end time of the countdown in milliseconds since the Unix epoch.                                                                                                                                                                                                                                                 |
+  | options | object | An object containing the following options:<ul><li>`interval`: The interval in milliseconds at which the countdown should tick.</li><li>`onComplete`: A callback function to be called when the countdown reaches zero.</li><li>`onTick`: A callback function to be called on each tick of the countdown.</li></ul> |
+  </div>
 
   ### Return Value
 
+  <div class="table-container">
   | Name  | Type   | Description                         |
   | ----- | ------ | ----------------------------------- |
-  | count | Number | The current count of the countdown. |
+  | count | number | The current count of the countdown. |
+  </div>
 </div>
 
 <CodePreview

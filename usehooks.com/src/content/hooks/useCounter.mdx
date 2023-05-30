@@ -26,17 +26,20 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 <div class="reference">
   ### Parameters
 
+  <div class="table-container">
   | Name          | Type   | Description                                        |
   | ------------- | ------ | -------------------------------------------------- |
   | startingValue | number | The initial value for the counter. Default is `0`. |
   | options       | object | Additional options for the counter.                |
   | options.min   | number | The minimum value allowed for the counter.         |
   | options.max   | number | The maximum value allowed for the counter.         |
+  </div>
 
   ### Return Value
 
   The `useCounter` hook returns an array with two elements:
 
+  <div class="table-container">
   | Name            | Parameters        | Description                                          |
   | --------------- | ----------------- | ---------------------------------------------------- |
   | `[0]`           |                   | The current value of the counter.                    |
@@ -44,6 +47,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | `[1].decrement` |                   | Decrements the counter by 1.                         |
   | `[1].set`       | nextCount: number | Sets the counter to the specified `nextCount` value. |
   | `[1].reset`     |                   | Resets the counter to the initial `startingValue`.   |
+  </div>
 </div>
 
 <CodePreview

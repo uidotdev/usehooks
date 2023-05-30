@@ -7,21 +7,21 @@ const hooksMarquee2 = (await getCollection('hooks')).slice(25,50);
 
 <header class="hero">
 	<img src="/img/logo-useHooks.svg" width="546" height="80" alt="useHooks" />
-	<h1>A collection of 50 RSC safe React hooks</h1>
+	<h1>A collection of Server Component safe React Hooks – from the ui.dev team</h1>
 	<Install text="npm i @uidotdev/usehooks" />
 
 	<div class="marquee marquee-left">
 		<ul class="marquee-content">
 			{hooksMarquee1.map(hook => (
 				<li>
-					<a href={`/${hook.slug}/`} tabindex="-1">{hook.data.name}</a>
+					<a href={`/${hook.slug}`} tabindex="-1">{hook.data.name}</a>
 				</li>
 			))}
 		</ul>
 		<ul class="marquee-content">
 			{hooksMarquee1.map(hook => (
 				<li>
-					<a href={`/${hook.slug}/`} tabindex="-1">{hook.data.name}</a>
+					<a href={`/${hook.slug}`} tabindex="-1">{hook.data.name}</a>
 				</li>
 			))}
 		</ul>
@@ -30,14 +30,14 @@ const hooksMarquee2 = (await getCollection('hooks')).slice(25,50);
 		<ul class="marquee-content">
 			{hooksMarquee2.map(hook => (
 				<li>
-					<a href={`/${hook.slug}/`} tabindex="-1">{hook.data.name}</a>
+					<a href={`/${hook.slug}`} tabindex="-1">{hook.data.name}</a>
 				</li>
 			))}
 		</ul>
 		<ul class="marquee-content">
 			{hooksMarquee2.map(hook => (
 				<li>
-					<a href={`/${hook.slug}/`} tabindex="-1">{hook.data.name}</a>
+					<a href={`/${hook.slug}`} tabindex="-1">{hook.data.name}</a>
 				</li>
 			))}
 		</ul>

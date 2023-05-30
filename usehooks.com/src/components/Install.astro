@@ -45,14 +45,15 @@ const { class: className } = Astro.props;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    gap: clamp(.7rem, 3vw, 2rem);
     background-color: var(--charcoal);
-    padding: 1.3rem 1.5rem;
+    padding: clamp(1rem, 4vw, 1.3rem) clamp(1rem, 4vw, 1.5rem);
     border-radius: 0.5rem;
   }
 
   .install code {
     margin-top: 0.3rem;
+    padding: 0;
     font-size: clamp(0.8rem, 3vw, 1.2rem) !important;
   }
 

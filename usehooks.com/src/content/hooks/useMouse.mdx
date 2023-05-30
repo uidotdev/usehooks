@@ -31,13 +31,16 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 
   The `useMouse` hook returns an array with two elements:
 
+  <div class="table-container">
   | Name    | Type   | Description                                                                      |
   | ------- | ------ | -------------------------------------------------------------------------------- |
   | `state` | object | An object representing the current mouse position and element information.       |
   | `ref`   | object | A ref object that can be used to track the mouse position on a specific element. |
+  </div>
 
   The `state` object has the following properties:
 
+  <div class="table-container">
   | Name                     | Type   | Description                                                                             |
   | ------------------------ | ------ | --------------------------------------------------------------------------------------- |
   | `state.x`                | number | The current horizontal position of the mouse relative to the page.                      |
@@ -46,6 +49,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | `state.elementY`         | number | The current vertical position of the mouse relative to the element's top-left corner.   |
   | `state.elementPositionX` | number | The current horizontal position of the element relative to the page.                    |
   | `state.elementPositionY` | number | The current vertical position of the element relative to the page.                      |
+  </div>
 </div>
 
 <CodePreview

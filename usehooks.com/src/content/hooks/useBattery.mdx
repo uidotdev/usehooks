@@ -25,9 +25,9 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 
 <div class="reference">
   ### Return Values
-
   The hook returns an object containing the following properties:
 
+  <div class="table-container">
   | Name             | Type    | Description |
   | ---------------- | ------- | ----------- |
   | supported        | boolean | Indicates whether the Battery Status API is supported in the user's browser. |
@@ -36,6 +36,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | charging         | boolean | Represents whether the system's battery is charging. `true` means the battery is charging, `false` means it's not. |
   | chargingTime     | number  | Represents the time remaining in seconds until the system's battery is fully charged. |
   | dischargingTime  | number  | Represents the time remaining in seconds until the system's battery is completely discharged and the system is about to be suspended. |
+  </div>
 </div>
 
 

@@ -27,6 +27,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 
   The `useNetworkState` hook returns an object representing the current network state with the following properties:
 
+  <div class="table-container">
   | Name          | Type    | Description                                                                                                                                                                                          |
   | ------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | online        | boolean | Indicates whether the browser is online or offline.                                                                                                                                                  |
@@ -36,6 +37,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | rtt           | number  | The estimated round-trip latency of the connection, in milliseconds.                                                                                                                                 |
   | saveData      | boolean | Whether the user has requested a reduced data usage mode from the user agent.                                                                                                                        |
   | type          | string  | The type of connection a device is using to communicate with the network. It could be one of the following values: 'bluetooth', 'cellular', 'ethernet', 'none', 'wifi', 'wimax', 'other', 'unknown'. |
+  </div>
 </div>
 
 <CodePreview

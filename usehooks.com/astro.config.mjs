@@ -13,6 +13,7 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
   site: "https://usehooks.com",
+  trailingSlash: "never",
   integrations: [react(), tailwind(), mdx(), sitemap()],
   output: "static",
   // adapter: vercel(),
