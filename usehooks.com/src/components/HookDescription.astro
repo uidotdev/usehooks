@@ -43,7 +43,7 @@ const { name } = Astro.props;
   }
 
   .callout {
-    margin-top: 1rem;
+    margin: 1rem 0 1.5rem;
     align-self: start;
     padding: 1.5rem;
     padding-bottom: 0;
@@ -76,6 +76,7 @@ const { name } = Astro.props;
   @media screen and (min-width: 811px) {
     .callout {
       max-width: var(--callout-width);
+      margin-bottom: 0;
     }
   }
 </style>
