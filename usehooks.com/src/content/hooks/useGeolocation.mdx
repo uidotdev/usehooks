@@ -1,7 +1,7 @@
 ---
 name: useGeolocation
 rank: 36
-tagline: Add undo / redo functionality with useHistoryState.
+tagline: Access and monitor a user's geolocation (after they give permission) with useGeolocation.
 sandboxId: usegeolocation-3f1d0f
 previewHeight: 900px
 relatedHooks:
@@ -14,24 +14,30 @@ import HookDescription from "../../components/HookDescription.astro";
 import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 
 <HookDescription name={frontmatter.name}>
-  The useHistoryState hook is useful for managing state with undo and redo
-  capabilities in React components. The hook offers functions like undo, redo,
-  set, and clear to interact with the state as well as other state related
-  values like canUndo and canRedo.
+  The useGeolocation hook is useful for accessing and monitoring the user's
+  geolocation (after they give permission) in a React application. By utilizing
+  the hook, developers can easily retrieve the user's current position,
+  including latitude, longitude, altitude, accuracy, heading, speed, and
+  timestamp.
 </HookDescription>
 
 <div class="reference">
   ### Parameters
 
-  <div class="table-container">
-  | Name    | Type   | Description |
-  | ------- | ------ | ----------- |
-  | options | object | This is an optional configuration object provided when calling `useGeolocation`. It is used when calling `navigator.geolocation.getCurrentPosition()` and `navigator.geolocation.watchPosition()`. Some of the attributes it accepts are `enableHighAccuracy`, `timeout`, and `maximumAge`. |
-  </div>
+{" "}
 
-  ### Return Values
+<div class="table-container">
+  | Name | Type | Description | | ------- | ------ | ----------- | | options |
+  object | This is an optional configuration object provided when calling
+  `useGeolocation`. It is used when calling
+  `navigator.geolocation.getCurrentPosition()` and
+  `navigator.geolocation.watchPosition()`. Some of the attributes it accepts are
+  `enableHighAccuracy`, `timeout`, and `maximumAge`. |
+</div>
 
-  The hook returns an object containing the following properties:
+### Return Values
+
+The hook returns an object containing the following properties:
 
   <div class="table-container">
   | Name              | Type    | Description |
@@ -83,7 +89,6 @@ function Location() {
 
   return <Demo state={state} />;
 }
-
 ```
 
 </StaticCodeContainer>
