@@ -48,7 +48,7 @@ A collection of Server Component safe React Hooks – from the ui.dev team
 - [useToggle](https://usehooks.com/usetoggle)
 - [useVisibilityChange](https://usehooks.com/usevisibilitychange)
 - [useWindowScroll](https://usehooks.com/usewindowscroll)
-- [useWindowSize](https://usehooks.com/usewindowSize)
+- [useWindowSize](https://usehooks.com/usewindowsize)
 
 ## Experimental
 
