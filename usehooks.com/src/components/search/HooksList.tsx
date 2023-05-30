@@ -56,25 +56,25 @@ export default function HooksList({ hooks }) {
       imageHeight: "206",
       imageAlt: "20-sided die",
       pitch:
-        "Don’t go it alone. Learn how to implement useHooks in your React projects.",
+        "It's dangerous to go alone! Master React by learning how to build useHooks yourself.",
     },
     {
       id: "Callout 2",
-      image: "money",
+      image: "spinner",
       imageWidth: "284",
       imageHeight: "180",
-      imageAlt: "$100 Monopoly-style money",
+      imageAlt: "board game spinner and all options are React",
       pitch:
-        "Level up faster. Learn how to implement useHooks in your React projects.",
+        "There's no better way to learn useHooks than by building it yourself.",
     },
     {
       id: "Callout 3",
-      image: "spinner",
+      image: "money",
       imageWidth: "210",
       imageHeight: "210",
-      imageAlt: "board game spinner and all options are React",
+      imageAlt: "$100 Monopoly-style money",
       pitch:
-        "Want to learn how to build useHooks yourself? Check out react.gg – the interactive way to master modern React.",
+        "Please give us your money.",
     },
     {
       id: "Callout 4",
@@ -83,7 +83,7 @@ export default function HooksList({ hooks }) {
       imageHeight: "224",
       imageAlt: "travel-style postcard from React that says “Enjoy the views!",
       pitch:
-        "Check out 🔥 react.gg 🔥 – the interactive way to master modern React.",
+        "The all new interactive way to master modern React (for fun and profit).",
     }
   ]);
 
