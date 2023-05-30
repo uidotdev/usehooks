@@ -8,6 +8,8 @@ A collection of 50 RSC safe React hooks
 
 `npm i @uidotdev/usehooks`
 
+### Hooks
+
 - [useBattery](https://usehooks.com/usebattery)
 - [useClickAway](https://usehooks.com/useclickAway)
 - [useCopyToClipboard](https://usehooks.com/usecopytoclipboard)
@@ -51,6 +53,8 @@ A collection of 50 RSC safe React hooks
 ### Install
 
 `npm i @uidotdev/usehooks@experimental react@experimental react-dom@experimental`
+
+### Hooks
 
 - [useContinuousRetry](https://usehooks.com/usecontinuousretry)
 - [useCountdown](https://usehooks.com/usecountdown)
