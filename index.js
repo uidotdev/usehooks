@@ -67,7 +67,7 @@ export function useBattery() {
         level: battery.level,
         charging: battery.charging,
         chargingTime: battery.chargingTime,
-        discharingTime: battery.dischargingTime
+        dischargingTime: battery.dischargingTime
       });
     };
 
