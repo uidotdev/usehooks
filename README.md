@@ -2,7 +2,7 @@
 
 # useHooks
 
-A collection of Server Component safe React Hooks – from the ui.dev team
+A collection of modern, server-safe React hooks – from the ui.dev team
 
 ## Standard
 
