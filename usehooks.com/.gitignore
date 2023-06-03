@@ -8,3 +8,4 @@ dist/*
 /dist
 public/meta/*
 !public/meta/og.jpg
+package-lock.json
