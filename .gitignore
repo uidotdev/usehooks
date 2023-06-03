@@ -55,3 +55,6 @@ typings/
 # Mac files
 .DS_Store
 
+# dependencies history
+package-lock.json
+
