@@ -5,22 +5,19 @@
   "type": "module",
   "repository": "uidotdev/usehooks",
   "devDependencies": {
-    "react": "0.0.0-experimental-bfb9cbd8c-20230223",
-    "react-dom": "0.0.0-experimental-bfb9cbd8c-20230223"
+    "@types/node": "^20.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "exports": {
-    "default": "./index.js"
+    "default": "./index.ts"
   },
   "engines": {
     "node": ">=16"
   },
   "files": [
-    "index.js"
+    "index.ts"
   ],
-  "peerDependencies": {
-    "react": "0.0.0-experimental-bfb9cbd8c-20230223",
-    "react-dom": "0.0.0-experimental-bfb9cbd8c-20230223"
-  },
   "author": "Tyler McGinnis, Ben Adam",
   "license": "MIT"
 }
