@@ -3,8 +3,8 @@ import { CollectionEntry, getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import NavInternal from "../sections/NavInternal.astro";
 import Footer from "../sections/Footer.astro";
-import RelatedHook from "../components/RelatedHook.astro";
-import Install from '../components/Install.astro';
+import Install from "../components/Install.astro";
+import HooksList from "../components/search/HooksList";
 
 export async function getStaticPaths() {
   const hooks = await getCollection("hooks");
@@ -27,14 +27,24 @@ interface Props {
 
 const { hook } = Astro.props;
 const { Content } = await hook.render();
-const { name, tagline, relatedHooks, experimental } = hook.data;
+const { name, tagline, experimental } = hook.data;
 const ogImage = new URL(`/meta/${name.toLowerCase()}.png`, Astro.url);
 const installSnippet = experimental
   ? `npm i @uidotdev/usehooks@experimental react@experimental react-dom@experimental`
   : `npm i @uidotdev/usehooks`;
+
+const hooks = await getCollection("hooks").then((hooks) => {
+  return hooks.filter((h) => {
+    return h.slug !== hook.slug;
+  });
+});
 ---
 
-<Layout title={`${name} React Hook – useHooks`} description={tagline} ogImage={ogImage}>
+<Layout
+  title={`${name} React Hook – useHooks`}
+  description={tagline}
+  ogImage={ogImage}
+>
   <NavInternal />
   <main>
     <section>
@@ -61,19 +71,12 @@ const installSnippet = experimental
           )
         }
         <Install text={installSnippet} />
-
       </div>
       <Content />
     </section>
     <div class="mt-12">
-      <h2>Related Hooks:</h2>
-      <ul class="related-hooks">
-        {
-          relatedHooks.map((hook) => {
-            return <RelatedHook {...hook} />;
-          })
-        }
-      </ul>
+      <h2>More Hooks:</h2>
+      <HooksList client:load hooks={hooks} />
     </div>
   </main>
   <Footer />
@@ -92,7 +95,7 @@ const installSnippet = experimental
     }
 
     section {
-      padding: clamp(.5rem, 4vw, 3rem);
+      padding: clamp(0.5rem, 4vw, 3rem);
       padding-top: 0;
       display: flex;
       flex-direction: column;
@@ -167,7 +170,7 @@ const installSnippet = experimental
     }
 
     :global(.reference h3) {
-      font-size: clamp(.9rem, 2vw, 1.1rem);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
     }
 
     :global(.reference .table-container) {
@@ -178,7 +181,7 @@ const installSnippet = experimental
     }
 
     :global(.reference table) {
-      border-radius: .9rem;
+      border-radius: 0.9rem;
       font-size: clamp(1rem, 2.1vw, 1.2rem);
     }
 
@@ -199,7 +202,7 @@ const installSnippet = experimental
 
     :global(.reference td),
     :global(.reference th) {
-      padding: .5rem 1.2rem .5rem .75rem;
+      padding: 0.5rem 1.2rem 0.5rem 0.75rem;
     }
 
     :global(.reference td:not(:last-of-type)),
@@ -211,13 +214,6 @@ const installSnippet = experimental
     :global(.reference th:last-of-type) {
       width: 100%;
       min-width: 300px;
-    }
-
-    .related-hooks {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: clamp(1.2rem, 2.5vw, 2rem);
-      margin-top: 0;
     }
 
     :global(.sp-preview-container),
