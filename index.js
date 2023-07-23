@@ -483,7 +483,7 @@ export function useIdle(ms = 1000 * 60) {
 }
 
 export function useIntersectionObserver(options = {}) {
-  const { threshold = 1, root = null, rootMargin = "0%" } = options;
+  const { threshold = 1, root = null, rootMargin = "0px 0px 0px 0px" } = options;
   const ref = React.useRef(null);
   const [entry, setEntry] = React.useState(null);
 
