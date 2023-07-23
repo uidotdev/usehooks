@@ -967,6 +967,7 @@ export function useQueue(initialValue = []) {
     first: queue[0],
     last: queue[queue.length - 1],
     size: queue.length,
+    queue
   };
 }
 
