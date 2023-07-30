@@ -238,6 +238,30 @@ export function useDebounce(value, delay) {
   return debouncedValue;
 }
 
+export const useDebounceValue = useDebounce
+
+export function useDebounceFn(fn, delay){
+  const timerRef = React.useRef(undefined);
+
+  const debouncedFn = React.useCallback(
+    (...args) => {
+      clearTimeout(timerRef.current);
+      timerRef.current = window.setTimeout(() => {
+        fn(...args);
+      }, delay);
+    },
+    [fn, delay]
+  );
+
+  React.useEffect(() => {
+    return () => {
+      window.clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  return debouncedFn;
+};
+
 export function useDefault(initialValue, defaultValue) {
   const [state, setState] = React.useState(initialValue);
 
