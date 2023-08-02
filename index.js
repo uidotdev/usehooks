@@ -1201,6 +1201,7 @@ export function useVisibilityChange() {
         setDocumentVisibility(true);
       }
     };
+    handleChange()
 
     document.addEventListener("visibilitychange", handleChange);
 
