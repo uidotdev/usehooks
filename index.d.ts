@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 export type BatteryManager = {
   supported: boolean;
@@ -7,7 +7,7 @@ export type BatteryManager = {
   charging: boolean | null;
   chargingTime: number | null;
   dischargingTime: number | null;
-}
+};
 
 export type GeolocationState = {
   loading: boolean;
@@ -20,7 +20,7 @@ export type GeolocationState = {
   speed: number | null;
   timestamp: number | null;
   error: GeolocationPositionError | null;
-}
+};
 
 export type HistoryState<T> = {
   state: T;
@@ -30,14 +30,14 @@ export type HistoryState<T> = {
   clear: () => void;
   canUndo: boolean;
   canRedo: boolean;
-}
+};
 
 export type LongPressOptions = {
   threshold?: number;
   onStart?: (e: Event) => void;
   onFinish?: (e: Event) => void;
   onCancel?: (e: Event) => void;
-}
+};
 
 export type LongPressFns = {
   onMouseDown: (e: React.MouseEvent) => void;
@@ -45,7 +45,7 @@ export type LongPressFns = {
   onMouseLeave: (e: React.MouseEvent) => void;
   onTouchStart: (e: React.TouchEvent) => void;
   onTouchEnd: (e: React.TouchEvent) => void;
-}
+};
 
 export type MousePosition = {
   x: number;
@@ -54,7 +54,7 @@ export type MousePosition = {
   elementY: number;
   elementPositionX: number;
   elementPositionY: number;
-}
+};
 
 export type NetworkState = {
   online: boolean;
@@ -64,7 +64,7 @@ export type NetworkState = {
   rtt: number | null;
   saveData: boolean | null;
   type: string | null;
-}
+};
 
 export type CustomList<T> = {
   set: (l: T[]) => void;
@@ -73,7 +73,7 @@ export type CustomList<T> = {
   insertAt: (index: number, element: T) => void;
   updateAt: (index: number, element: T) => void;
   clear: () => void;
-}
+};
 
 export type CustomQueue<T> = {
   add: (element: T) => void;
@@ -82,14 +82,14 @@ export type CustomQueue<T> = {
   first: T | undefined;
   last: T | undefined;
   size: number;
-}
+};
 
 export type RenderInfo = {
   name: string;
   renders: number;
   sinceLastRender: number;
   timestamp: number;
-}
+};
 
 export type SpeechOptions = {
   lang?: string;
@@ -100,7 +100,7 @@ export type SpeechOptions = {
   rate?: number;
   pitch?: number;
   volume?: number;
-}
+};
 
 export type SpeechState = {
   isPlaying: boolean;
@@ -113,13 +113,14 @@ export type SpeechState = {
   rate: number;
   pitch: number;
   volume: number;
-}
+};
 
-declare module '@uidotdev/usehooks' {
-
+declare module "@uidotdev/usehooks" {
   export function useBattery(): BatteryManager;
 
-  export function useClickAway<T extends Element>(cb: (e: Event) => void): React.MutableRefObject<T>;
+  export function useClickAway<T extends Element>(
+    cb: (e: Event) => void
+  ): React.MutableRefObject<T>;
 
   export function useCopyToClipboard(): [
     {
@@ -147,7 +148,10 @@ declare module '@uidotdev/usehooks' {
 
   export function useDebounce<T>(value: T, delay: number): T;
 
-  export function useDefault<T>(initialValue: T, defaultValue: T): [T, React.Dispatch<React.SetStateAction<T>>];
+  export function useDefault<T>(
+    initialValue: T,
+    defaultValue: T
+  ): [T, React.Dispatch<React.SetStateAction<T>>];
 
   export function useDocumentTitle(title: string): void;
 
@@ -157,14 +161,16 @@ declare module '@uidotdev/usehooks' {
 
   export function useHistoryState<T>(initialPresent?: T): HistoryState<T>;
 
-  export function useHover<T extends Element>(): [React.MutableRefObject<T>, boolean];
+  export function useHover<T extends Element>(): [
+    React.MutableRefObject<T>,
+    boolean
+  ];
 
   export function useIdle(ms?: number): boolean;
 
-  export function useIntersectionObserver(options?: IntersectionObserverInit): [
-    React.MutableRefObject<Element>,
-    IntersectionObserverEntry | null
-  ];
+  export function useIntersectionObserver(
+    options?: IntersectionObserverInit
+  ): [React.MutableRefObject<Element>, IntersectionObserverEntry | null];
 
   export function useIsClient(): boolean;
 
@@ -174,9 +180,12 @@ declare module '@uidotdev/usehooks' {
 
   export function useLockBodyScroll(): void;
 
-  export function useLongPress(callback: (e: Event) => void, options?: LongPressOptions): LongPressFns;
+  export function useLongPress(
+    callback: (e: Event) => void,
+    options?: LongPressOptions
+  ): LongPressFns;
 
-  export function useMap<T>(initialState?: T): Map<T>;
+  export function useMap<T>(initialState?: T): Map<T, any>;
 
   export function useMeasure<T extends Element>(): [
     React.MutableRefObject<T>,
@@ -188,7 +197,10 @@ declare module '@uidotdev/usehooks' {
 
   export function useMediaQuery(query: string): boolean;
 
-  export function useMouse<T extends Element>(): [MousePosition, React.MutableRefObject<T>];
+  export function useMouse<T extends Element>(): [
+    MousePosition,
+    React.MutableRefObject<T>
+  ];
 
   export function useNetworkState(): NetworkState;
 
@@ -209,9 +221,12 @@ declare module '@uidotdev/usehooks' {
 
   export function useRenderInfo(name?: string): RenderInfo | undefined;
 
-  export function useScript(src: string, options?: {
-    removeOnUnmount?: boolean;
-  }): "idle" | "loading" | "ready" | "error";
+  export function useScript(
+    src: string,
+    options?: {
+      removeOnUnmount?: boolean;
+    }
+  ): "idle" | "loading" | "ready" | "error";
 
   export function useSet<T>(values?: T[]): Set<T>;
 
@@ -219,7 +234,9 @@ declare module '@uidotdev/usehooks' {
 
   export function useThrottle<T>(value: T, delay: number): T;
 
-  export function useToggle(initialValue?: boolean): [boolean, (newValue?: boolean) => void];
+  export function useToggle(
+    initialValue?: boolean
+  ): [boolean, (newValue?: boolean) => void];
 
   export function useVisibilityChange(): boolean;
 

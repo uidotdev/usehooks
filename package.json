@@ -5,6 +5,7 @@
   "type": "module",
   "repository": "uidotdev/usehooks",
   "devDependencies": {
+    "@types/react": "^18.2.20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.1.6"
@@ -16,8 +17,10 @@
     "node": ">=16"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
+  "types": "index.d.ts",
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"

@@ -45,7 +45,7 @@ export function useBattery() {
     level: null,
     charging: null,
     chargingTime: null,
-    dischargingTime: null
+    dischargingTime: null,
   });
 
   React.useEffect(() => {
@@ -53,9 +53,9 @@ export function useBattery() {
       setState((s) => ({
         ...s,
         supported: false,
-        loading: false
+        loading: false,
       }));
-      return
+      return;
     }
 
     let battery = null;
@@ -67,7 +67,7 @@ export function useBattery() {
         level: battery.level,
         charging: battery.charging,
         chargingTime: battery.chargingTime,
-        dischargingTime: battery.dischargingTime
+        dischargingTime: battery.dischargingTime,
       });
     };
 
@@ -125,28 +125,28 @@ export function useClickAway(cb) {
 export function useCopyToClipboard() {
   const [state, setState] = React.useState({
     error: null,
-    text: null
+    text: null,
   });
 
   const copyToClipboard = React.useCallback(async (value) => {
     if (!navigator?.clipboard) {
       return setState({
         error: new Error("Clipboard not supported"),
-        text: null
+        text: null,
       });
     }
 
     const handleSuccess = () => {
       setState({
         error: null,
-        text: value
+        text: value,
       });
     };
 
     const handleFailure = (e) => {
       setState({
         error: e,
-        text: null
+        text: null,
       });
     };
 
@@ -221,8 +221,8 @@ export function useCounter(startingValue = 0, options = {}) {
       increment,
       decrement,
       set,
-      reset
-    }
+      reset,
+    },
   ];
 }
 
@@ -372,7 +372,7 @@ const useHistoryStateReducer = (state, action) => {
   }
 };
 
-export function useHistoryState (initialPresent = {}) {
+export function useHistoryState(initialPresent = {}) {
   const initialPresentRef = React.useRef(initialPresent);
 
   const [state, dispatch] = React.useReducer(useHistoryStateReducer, {
@@ -407,7 +407,7 @@ export function useHistoryState (initialPresent = {}) {
   );
 
   return { state: state.present, set, undo, redo, clear, canUndo, canRedo };
-};
+}
 
 export function useHover() {
   const [hovering, setHovering] = React.useState(false);
@@ -749,7 +749,7 @@ export function useMouse() {
     elementX: 0,
     elementY: 0,
     elementPositionX: 0,
-    elementPositionY: 0
+    elementPositionY: 0,
   });
 
   const ref = React.useRef(null);
@@ -758,7 +758,7 @@ export function useMouse() {
     const handleMouseMove = (event) => {
       let newState = {
         x: event.pageX,
-        y: event.pageY
+        y: event.pageY,
       };
 
       if (ref.current instanceof HTMLElement) {
@@ -779,7 +779,7 @@ export function useMouse() {
       setState((s) => {
         return {
           ...s,
-          ...newState
+          ...newState,
         };
       });
     };
@@ -900,7 +900,7 @@ export function useOrientation() {
       handleChange();
       window.screen.orientation.addEventListener("change", handleChange);
     } else {
-      handle_orientationchange()
+      handle_orientationchange();
       window.addEventListener("orientationchange", handle_orientationchange);
     }
 
@@ -933,7 +933,11 @@ const getPreferredLanguageServerSnapshot = () => {
 };
 
 export function usePreferredLanguage() {
-  return React.useSyncExternalStore(usePreferredLanguageSubscribe, getPreferredLanguageSnapshot, getPreferredLanguageServerSnapshot);
+  return React.useSyncExternalStore(
+    usePreferredLanguageSubscribe,
+    getPreferredLanguageSnapshot,
+    getPreferredLanguageServerSnapshot
+  );
 }
 
 export function usePrevious(newValue) {
@@ -975,7 +979,7 @@ export function useQueue(initialValue = []) {
     first: queue[0],
     last: queue[queue.length - 1],
     size: queue.length,
-    queue
+    queue,
   };
 }
 
@@ -1210,7 +1214,7 @@ export function useVisibilityChange() {
         setDocumentVisibility(true);
       }
     };
-    handleChange()
+    handleChange();
 
     document.addEventListener("visibilitychange", handleChange);
 

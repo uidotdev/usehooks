@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "module": "ESNext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
-    "allowJs": true
+    "allowJs": true,
+    "outDir": "./irrelevant/unused"
   }
 }
