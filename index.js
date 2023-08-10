@@ -1384,25 +1384,12 @@ export function useSessionStorage(key, initialValue) {
           typeof value === "function" ? value(localState) : value;
         window.sessionStorage.setItem(key, JSON.stringify(nextState));
         setLocalState(nextState);
-        window.dispatchEvent(new Event("session-storage"));
       } catch (e) {
         console.warn(e);
       }
     },
     [key, localState]
   );
-
-  const onStorageChange = React.useEffectEvent(() => {
-    setLocalState(readValue());
-  });
-
-  React.useEffect(() => {
-    window.addEventListener("session-storage", onStorageChange);
-
-    return () => {
-      window.removeEventListener("session-storage", onStorageChange);
-    };
-  }, []);
 
   return [localState, handleSetState];
 }
