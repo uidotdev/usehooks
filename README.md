@@ -2,7 +2,9 @@
 
 # useHooks
 
-A collection of modern, server-safe React hooks – from the ui.dev team
+A collection of modern, server-safe React hooks – from the [ui.dev](https://ui.dev) team.
+
+Compatible with React v18.0.0+.
 
 ## Standard
 
@@ -13,12 +15,12 @@ A collection of modern, server-safe React hooks – from the ui.dev team
 ### Hooks
 
 - [useBattery](https://usehooks.com/usebattery)
-- [useClickAway](https://usehooks.com/useclickAway)
+- [useClickAway](https://usehooks.com/useclickaway)
 - [useCopyToClipboard](https://usehooks.com/usecopytoclipboard)
 - [useCounter](https://usehooks.com/usecounter)
 - [useDebounce](https://usehooks.com/usedebounce)
 - [useDefault](https://usehooks.com/usedefault)
-- [useDocumentTitle](https://usehooks.com/usedocumentTitle)
+- [useDocumentTitle](https://usehooks.com/usedocumenttitle)
 - [useFavicon](https://usehooks.com/usefavicon)
 - [useGeolocation](https://usehooks.com/usegeolocation)
 - [useHistoryState](https://usehooks.com/usehistoryState)

@@ -50,39 +50,43 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 
 ```jsx
 import * as React from "react";
-import { useLongPress } from "@uidotdev/usehooks";
-import { closeIcon } from "./icons";
+import { useMeasure } from "@uidotdev/usehooks";
 
-export default function App() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const attrs = useLongPress(
-    () => {
-      setIsOpen(true);
-    },
-    {
-      onStart: (event) => console.log("Press started"),
-      onFinish: (event) => console.log("Press Finished"),
-      onCancel: (event) => console.log("Press cancelled"),
-      threshold: 500,
-    }
-  );
+function Measure({ type = "horizontal" }) {
+  const [ref, { width, height }] = useMeasure();
 
   return (
+    <figure>
+      <figcaption>
+        <span>{type}</span>
+      </figcaption>
+      <article
+        ref={ref}
+        className={type}
+        style={{
+          resize: type
+        }}
+      >
+        {type === "horizontal" ? (
+          <label>width: {Math.floor(width)}</label>
+        ) : (
+          <label>height: {Math.floor(height)}</label>
+        )}
+      </article>
+    </figure>
+  );
+}
+
+export default function App() {
+  return (
     <section>
-      <h1>useLongPress</h1>
-      <button {...attrs} className="primary">
-        Press Me
-      </button>
-      {isOpen && (
-        <dialog>
-          <button onClick={() => setIsOpen(false)}>{closeIcon}</button>
-          <h2>Modal</h2>
-          <p>This is a modal triggered by a long press.</p>
-        </dialog>
-      )}
+      <h1>useMeasure</h1>
+      <p>(Resize the rulers)</p>
+      <Measure />
     </section>
   );
 }
+
 ```
 
 </StaticCodeContainer>

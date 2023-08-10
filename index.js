@@ -109,6 +109,10 @@ export function useClickAway(cb) {
   const ref = React.useRef(null);
   const refCb = React.useRef(cb);
 
+  React.useLayoutEffect(() => {
+    refCb.current = cb;
+  });
+
   React.useEffect(() => {
     const handler = (e) => {
       const element = ref.current;
@@ -163,20 +167,27 @@ export function useCopyToClipboard() {
   return [state, copyToClipboard];
 }
 
-export function useContinuousRetry(callback, interval = 100) {
+export function useContinuousRetry(callback, interval = 100, options = {}) {
+  const { maxRetries = Infinity } = options;
   const [hasResolved, setHasResolved] = React.useState(false);
   const onInterval = React.useEffectEvent(callback);
 
   React.useEffect(() => {
+    let retries = 0;
+
     const id = window.setInterval(() => {
       if (onInterval()) {
         setHasResolved(true);
         window.clearInterval(id);
+      } else if (retries >= maxRetries) {
+        window.clearInterval(id);
+      } else {
+        retries += 1;
       }
     }, interval);
 
     return () => window.clearInterval(id);
-  }, [interval]);
+  }, [interval, maxRetries]);
 
   return hasResolved;
 }
@@ -820,11 +831,7 @@ export function useLocalStorage(key, initialValue) {
     [key, localState]
   );
 
-  const onStorageChange = React.useEffectEvent((event) => {
-    if (event?.key && event.key !== key) {
-      return;
-    }
-
+  const onStorageChange = React.useEffectEvent(() => {
     setLocalState(readValue());
   });
 
@@ -875,7 +882,6 @@ export function useLogger(name, ...rest) {
   }, []);
 }
 
-
 export function useLongPress(
   callback,
   { threshold = 400, onStart, onFinish, onCancel } = {}
@@ -884,6 +890,10 @@ export function useLongPress(
   const isPressed = React.useRef(false);
   const timerId = React.useRef();
   const cbRef = React.useRef(callback);
+
+  React.useLayoutEffect(() => {
+    cbRef.current = callback;
+  });
 
   const start = React.useCallback(
     () => (event) => {
@@ -1079,8 +1089,6 @@ export function useMouse() {
 
   return [state, ref];
 }
-
-
 
 export function useNetworkState() {
   const connection =
@@ -1313,6 +1321,7 @@ export function useQueue(initialValue = []) {
     first: queue[0],
     last: queue[queue.length - 1],
     size: queue.length,
+    queue,
   };
 }
 
@@ -1383,11 +1392,7 @@ export function useSessionStorage(key, initialValue) {
     [key, localState]
   );
 
-  const onStorageChange = React.useEffectEvent((event) => {
-    if (event?.key && event.key !== key) {
-      return;
-    }
-
+  const onStorageChange = React.useEffectEvent(() => {
     setLocalState(readValue());
   });
 
@@ -1615,6 +1620,7 @@ export function useVisibilityChange() {
         setDocumentVisibility(true);
       }
     };
+    handleChange();
 
     document.addEventListener("visibilitychange", handleChange);
 

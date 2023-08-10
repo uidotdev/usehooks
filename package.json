@@ -6,7 +6,9 @@
   "repository": "uidotdev/usehooks",
   "devDependencies": {
     "react": "0.0.0-experimental-bfb9cbd8c-20230223",
-    "react-dom": "0.0.0-experimental-bfb9cbd8c-20230223"
+    "react-dom": "0.0.0-experimental-bfb9cbd8c-20230223",
+    "@types/react": "^18.2.20",
+    "typescript": "^5.1.6"
   },
   "exports": {
     "default": "./index.js"
@@ -15,8 +17,10 @@
     "node": ">=16"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
+  "types": "index.d.ts",
   "peerDependencies": {
     "react": "0.0.0-experimental-bfb9cbd8c-20230223",
     "react-dom": "0.0.0-experimental-bfb9cbd8c-20230223"
