@@ -98,6 +98,10 @@ export function useClickAway(cb) {
   const ref = React.useRef(null);
   const refCb = React.useRef(cb);
 
+  React.useLayoutEffect(() => {
+    refCb.current = cb;
+  });
+
   React.useEffect(() => {
     const handler = (e) => {
       const element = ref.current;
@@ -591,6 +595,10 @@ export function useLongPress(
   const timerId = React.useRef();
   const cbRef = React.useRef(callback);
 
+  React.useLayoutEffect(() => {
+    cbRef.current = callback;
+  });
+
   const start = React.useCallback(
     () => (event) => {
       if (isPressed.current) return;
@@ -967,6 +975,7 @@ export function useQueue(initialValue = []) {
     first: queue[0],
     last: queue[queue.length - 1],
     size: queue.length,
+    queue
   };
 }
 
@@ -1201,6 +1210,7 @@ export function useVisibilityChange() {
         setDocumentVisibility(true);
       }
     };
+    handleChange()
 
     document.addEventListener("visibilitychange", handleChange);
 
