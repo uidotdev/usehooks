@@ -2,9 +2,9 @@
 
 # useHooks
 
-A collection of modern, server-safe React hooks – from the ui.dev team. 
+A collection of modern, server-safe React hooks – from the ui.dev team.
 
-📝 Hooks compatible with React version 18+. 
+Compatible with React v18.0.0+.
 
 ## Standard
 
