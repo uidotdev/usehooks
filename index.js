@@ -86,7 +86,7 @@ export function useBattery() {
         battery.removeEventListener("levelchange", handleChange);
         battery.removeEventListener("chargingchange", handleChange);
         battery.removeEventListener("chargingtimechange", handleChange);
-        battery.removeEventListener("dischargingtimechange;", handleChange);
+        battery.removeEventListener("dischargingtimechange", handleChange);
       }
     };
   }, []);
