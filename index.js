@@ -440,25 +440,25 @@ export function useHover() {
 
 function setIdleCallback(callback, timeout) {
   if (window.requestIdleCallback) {
-    return window.requestIdleCallback(callback, { timeout });
+    const callback = window.requestIdleCallback(callback, { timeout });
+
+    return () => {
+      window.cancelIdleCallback(callback);
+    }
   }
 
-  return window.setTimeout(callback, timeout);
-}
+  const id = window.setTimeout(callback, timeout);
 
-function clearIdleCallback(id) {
-  if (window.cancelIdleCallback) {
-    window.cancelIdleCallback(id);
-  } else {
+  return () => {
     window.clearTimeout(id);
-  }
+  };
 }
 
 export function useIdle(ms = 1000 * 60) {
   const [idle, setIdle] = React.useState(false);
 
   React.useEffect(() => {
-    let timeoutId;
+    let clearIdleCallback = () => {};
 
     const handleTimeout = () => {
       setIdle(true);
@@ -467,8 +467,8 @@ export function useIdle(ms = 1000 * 60) {
     const handleEvent = throttle(() => {
       setIdle(false);
 
-      clearIdleCallback(timeoutId);
-      timeoutId = setIdleCallback(handleTimeout, ms);
+      clearIdleCallback();
+      clearIdleCallback = setIdleCallback(handleTimeout, ms);
     }, 500);
 
     const handleVisibilityChange = () => {
@@ -477,7 +477,7 @@ export function useIdle(ms = 1000 * 60) {
       }
     };
 
-    timeoutId = setIdleCallback(handleTimeout, ms);
+    clearIdleCallback = setIdleCallback(handleTimeout, ms);
 
     window.addEventListener("mousemove", handleEvent);
     window.addEventListener("mousedown", handleEvent);
@@ -495,7 +495,7 @@ export function useIdle(ms = 1000 * 60) {
       window.removeEventListener("touchstart", handleEvent);
       window.removeEventListener("wheel", handleEvent);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-      clearIdleCallback(timeoutId);
+      clearIdleCallback();
     };
   }, [ms]);
 
