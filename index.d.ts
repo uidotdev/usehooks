@@ -252,4 +252,14 @@ declare module "@uidotdev/usehooks" {
     width: number | null;
     height: number | null;
   };
+
+  export function useKeyPress(
+    key: string,
+    cb: (e: Event) => void,
+    options: {
+      event?: string;
+      target?: window | HTMLElement;
+      eventOptions?: React.AddEventListenerOptions;
+    }
+  ): void;
 }
