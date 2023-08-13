@@ -256,10 +256,10 @@ declare module "@uidotdev/usehooks" {
   export function useKeyPress(
     key: string,
     cb: (e: Event) => void,
-    options: {
-      event?: string;
-      target?: window | HTMLElement;
-      eventOptions?: React.AddEventListenerOptions;
+    options?: {
+      event?: keyof GlobalEventHandlersEventMap;
+      target?: Window | HTMLElement;
+      eventOptions?: AddEventListenerOptions;
     }
   ): void;
 }
