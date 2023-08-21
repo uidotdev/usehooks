@@ -122,35 +122,34 @@ export function useClickAway(cb) {
   return ref;
 }
 
+function oldSchoolCopy(text) {
+  const tempTextArea = document.createElement("textarea");
+  tempTextArea.value = text;
+  document.body.appendChild(tempTextArea);
+  tempTextArea.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempTextArea);
+}
+
 export function useCopyToClipboard() {
-  const [state, setState] = React.useState({
-    error: null,
-    text: null,
-  });
+  const [state, setState] = React.useState(null);
 
-  const copyToClipboard = React.useCallback(async (value) => {
-    if (!navigator?.clipboard) {
-      return setState({
-        error: new Error("Clipboard not supported"),
-        text: null,
-      });
-    }
-
-    const handleSuccess = () => {
-      setState({
-        error: null,
-        text: value,
-      });
+  const copyToClipboard = React.useCallback((value) => {
+    const handleCopy = async () => {
+      try {
+        if (navigator?.clipboard?.writeText) {
+          await navigator.clipboard.writeText(value);
+          setState(value);
+        } else {
+          throw new Error("writeText not supported");
+        }
+      } catch (e) {
+        oldSchoolCopy(value);
+        setState(value);
+      }
     };
 
-    const handleFailure = (e) => {
-      setState({
-        error: e,
-        text: null,
-      });
-    };
-
-    navigator.clipboard.writeText(value).then(handleSuccess, handleFailure);
+    handleCopy();
   }, []);
 
   return [state, copyToClipboard];
