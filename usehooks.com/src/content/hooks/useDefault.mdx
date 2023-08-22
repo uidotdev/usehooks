@@ -13,13 +13,7 @@ import HookDescription from "../../components/HookDescription.astro";
 import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 
 <HookDescription name={frontmatter.name}>
-  The useDefault hook is useful for managing state in functional components with
-  default values. The hook then checks if the "state" is undefined or null. If
-  it is, it returns an array containing the "defaultValue" and the "setState"
-  function, allowing the component to set a default value and update the state
-  accordingly. On the other hand, if the "state" is defined, it returns an array
-  with the current "state" value and the "setState" function, enabling normal
-  state management.
+  The `useDefault` hook behaves similar to `useState` but with one difference – if the state of the hook is `undefined` or `null`, `useDefault` will default the state to a provided default value.
 </HookDescription>
 
 <div class="reference">
@@ -28,7 +22,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   <div class="table-container">
   | Name         | Type     | Description |
   | ------------ | -------- | ----------- |
-  | initialValue | any      | This is the initial state value provided when calling `useDefault`. |
+  | initialValue | any      | The initial value of the state returned from `useDefault` |
   | defaultValue | any      | The default value to be used if the state is `undefined` or `null`. |
   </div>
 
