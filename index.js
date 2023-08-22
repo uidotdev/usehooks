@@ -336,38 +336,38 @@ const initialUseHistoryStateState = {
 
 const useHistoryStateReducer = (state, action) => {
   const { past, present, future } = state;
-  switch (action.type) {
-    case "UNDO":
-      return {
-        past: past.slice(0, past.length - 1),
-        present: past[past.length - 1],
-        future: [present, ...future],
-      };
-    case "REDO":
-      return {
-        past: [...past, present],
-        present: future[0],
-        future: future.slice(1),
-      };
-    case "SET":
-      const { newPresent } = action;
 
-      if (action.newPresent === present) {
-        return state;
-      }
+  if (action.type === "UNDO") {
+    return {
+      past: past.slice(0, past.length - 1),
+      present: past[past.length - 1],
+      future: [present, ...future],
+    };
+  } else if (action.type === "REDO") {
+    return {
+      past: [...past, present],
+      present: future[0],
+      future: future.slice(1),
+    };
+  } else if (action.type === "SET") {
+    const { newPresent } = action;
 
-      return {
-        past: [...past, present],
-        present: newPresent,
-        future: [],
-      };
-    case "CLEAR":
-      return {
-        ...initialUseHistoryStateState,
-        present: action.initialPresent,
-      };
-    default:
-      throw new Error("Unsupported action type");
+    if (action.newPresent === present) {
+      return state;
+    }
+
+    return {
+      past: [...past, present],
+      present: newPresent,
+      future: [],
+    };
+  } else if (action.type === "CLEAR") {
+    return {
+      ...initialState,
+      present: action.initialPresent,
+    };
+  } else {
+    throw new Error("Unsupported action type");
   }
 };
 
@@ -539,40 +539,29 @@ export function useIsFirstRender() {
 export function useList(defaultList = []) {
   const [list, setList] = React.useState(defaultList);
 
-  const methods = React.useMemo(() => {
-    const set = (l) => {
-      setList(l);
-    };
-
-    const push = (element) => {
-      setList((l) => [...l, element]);
-    };
-
-    const removeAt = (index) => {
-      setList((l) => [...l.slice(0, index), ...l.slice(index + 1)]);
-    };
-
-    const insertAt = (index, element) => {
-      setList((l) => [...l.slice(0, index), element, ...l.slice(index)]);
-    };
-
-    const updateAt = (index, element) => {
-      setList((l) => l.map((e, i) => (i === index ? element : e)));
-    };
-
-    const clear = () => setList([]);
-
-    return {
-      set,
-      push,
-      removeAt,
-      insertAt,
-      updateAt,
-      clear,
-    };
+  const set = React.useCallback((l) => {
+    setList(l);
   }, []);
 
-  return [list, methods];
+  const push = React.useCallback((element) => {
+    setList((l) => [...l, element]);
+  }, []);
+
+  const removeAt = React.useCallback((index) => {
+    setList((l) => [...l.slice(0, index), ...l.slice(index + 1)]);
+  }, []);
+
+  const insertAt = React.useCallback((index, element) => {
+    setList((l) => [...l.slice(0, index), element, ...l.slice(index)]);
+  }, []);
+
+  const updateAt = React.useCallback((index, element) => {
+    setList((l) => l.map((e, i) => (i === index ? element : e)));
+  }, []);
+
+  const clear = React.useCallback(() => setList([]), []);
+
+  return [list, { set, push, removeAt, insertAt, updateAt, clear }];
 }
 
 export function useLockBodyScroll() {
