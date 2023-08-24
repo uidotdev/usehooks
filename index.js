@@ -780,17 +780,22 @@ export function useMouse() {
   return [state, ref];
 }
 
-export function useNetworkState() {
-  const connection =
+const getConnection = () => {
+  return (
     navigator?.connection ||
     navigator?.mozConnection ||
-    navigator?.webkitConnection;
+    navigator?.webkitConnection
+  );
+};
 
+export function useNetworkState() {
   const cache = React.useRef({});
 
   const subscribe = React.useCallback((callback) => {
     window.addEventListener("online", callback, { passive: true });
     window.addEventListener("offline", callback, { passive: true });
+
+    const connection = getConnection();
 
     if (connection) {
       connection.addEventListener("change", callback, { passive: true });
@@ -808,6 +813,7 @@ export function useNetworkState() {
 
   const getSnapshot = () => {
     const online = navigator.onLine;
+    const connection = getConnection();
 
     const nextState = {
       online,
