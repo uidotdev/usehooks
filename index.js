@@ -1144,27 +1144,30 @@ export function useToggle(initialValue) {
   return [on, handleToggle];
 }
 
+const useVisibilityChangeSubscribe = (callback) => {
+  document.addEventListener("visibilitychange", callback);
+
+  return () => {
+    document.removeEventListener("visibilitychange", callback);
+  };
+};
+
+const getVisibilityChangeSnapshot = () => {
+  return document.visibilityState;
+};
+
+const getVisibilityChangeServerSnapshot = () => {
+  throw Error("useVisibilityChange is a client-only hook");
+};
+
 export function useVisibilityChange() {
-  const [documentVisible, setDocumentVisibility] = React.useState(true);
+  const visibilityState = React.useSyncExternalStore(
+    useVisibilityChangeSubscribe,
+    getVisibilityChangeSnapshot,
+    getVisibilityChangeServerSnapshot
+  );
 
-  React.useEffect(() => {
-    const handleChange = () => {
-      if (document.visibilityState !== "visible") {
-        setDocumentVisibility(false);
-      } else {
-        setDocumentVisibility(true);
-      }
-    };
-    handleChange();
-
-    document.addEventListener("visibilitychange", handleChange);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleChange);
-    };
-  }, []);
-
-  return documentVisible;
+  return visibilityState === "visible";
 }
 
 export function useWindowScroll() {
