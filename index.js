@@ -758,8 +758,6 @@ export function useMouse() {
 
         newState.elementX = elementX;
         newState.elementY = elementY;
-        newState.elementX = elementX;
-        newState.elementY = elementY;
         newState.elementPositionX = elementPositionX;
         newState.elementPositionY = elementPositionY;
       }
