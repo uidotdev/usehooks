@@ -210,9 +210,7 @@ export function useCountdown(endTime, options) {
   });
 
   React.useEffect(() => {
-    intervalIdRef.current = window.setInterval(() => {
-      onTick();
-    }, options.interval);
+    intervalIdRef.current = window.setInterval(onTick, options.interval);
 
     return () => handleClearInterval();
   }, [options.interval]);
