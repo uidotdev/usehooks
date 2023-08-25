@@ -741,20 +741,23 @@ export function useIsFirstRender() {
 
 export function useKeyPress(key, cb, options = {}) {
   const { event = "keydown", target = window ?? null, eventOptions } = options;
-  const eventOptionsRef = React.useRef(eventOptions);
 
-  const onEvent = React.useEffectEvent((event) => {
-    if (event.key === key) {
-      cb(event);
-    }
+  const onListen = React.useEffectEvent((target, event) => {
+    const handler = (event) => {
+      if (event.key === key) {
+        cb(event);
+      }
+    };
+
+    target.addEventListener(event, handler, eventOptions);
+
+    return () => {
+      target.removeEventListener(event, handler);
+    };
   });
 
   React.useEffect(() => {
-    target.addEventListener(event, onEvent, eventOptionsRef.current);
-
-    return () => {
-      target.removeEventListener(event, onEvent);
-    };
+    return onListen(target, event);
   }, [target, event]);
 }
 
