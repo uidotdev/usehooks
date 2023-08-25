@@ -123,10 +123,7 @@ declare module "@uidotdev/usehooks" {
   ): React.MutableRefObject<T>;
 
   export function useCopyToClipboard(): [
-    {
-      error: Error | null;
-      text: string | null;
-    },
+    string | null,
     (value: string) => Promise<void>
   ];
 

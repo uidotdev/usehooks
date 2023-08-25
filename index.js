@@ -133,35 +133,34 @@ export function useClickAway(cb) {
   return ref;
 }
 
+function oldSchoolCopy(text) {
+  const tempTextArea = document.createElement("textarea");
+  tempTextArea.value = text;
+  document.body.appendChild(tempTextArea);
+  tempTextArea.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempTextArea);
+}
+
 export function useCopyToClipboard() {
-  const [state, setState] = React.useState({
-    error: null,
-    text: null,
-  });
+  const [state, setState] = React.useState(null);
 
-  const copyToClipboard = React.useCallback(async (value) => {
-    if (!navigator?.clipboard) {
-      return setState({
-        error: new Error("Clipboard not supported"),
-        text: null,
-      });
-    }
-
-    const handleSuccess = () => {
-      setState({
-        error: null,
-        text: value,
-      });
+  const copyToClipboard = React.useCallback((value) => {
+    const handleCopy = async () => {
+      try {
+        if (navigator?.clipboard?.writeText) {
+          await navigator.clipboard.writeText(value);
+          setState(value);
+        } else {
+          throw new Error("writeText not supported");
+        }
+      } catch (e) {
+        oldSchoolCopy(value);
+        setState(value);
+      }
     };
 
-    const handleFailure = (e) => {
-      setState({
-        error: e,
-        text: null,
-      });
-    };
-
-    navigator.clipboard.writeText(value).then(handleSuccess, handleFailure);
+    handleCopy();
   }, []);
 
   return [state, copyToClipboard];
@@ -493,38 +492,38 @@ const initialUseHistoryStateState = {
 
 const useHistoryStateReducer = (state, action) => {
   const { past, present, future } = state;
-  switch (action.type) {
-    case "UNDO":
-      return {
-        past: past.slice(0, past.length - 1),
-        present: past[past.length - 1],
-        future: [present, ...future],
-      };
-    case "REDO":
-      return {
-        past: [...past, present],
-        present: future[0],
-        future: future.slice(1),
-      };
-    case "SET":
-      const { newPresent } = action;
 
-      if (action.newPresent === present) {
-        return state;
-      }
+  if (action.type === "UNDO") {
+    return {
+      past: past.slice(0, past.length - 1),
+      present: past[past.length - 1],
+      future: [present, ...future],
+    };
+  } else if (action.type === "REDO") {
+    return {
+      past: [...past, present],
+      present: future[0],
+      future: future.slice(1),
+    };
+  } else if (action.type === "SET") {
+    const { newPresent } = action;
 
-      return {
-        past: [...past, present],
-        present: newPresent,
-        future: [],
-      };
-    case "CLEAR":
-      return {
-        ...initialUseHistoryStateState,
-        present: action.initialPresent,
-      };
-    default:
-      throw new Error("Unsupported action type");
+    if (action.newPresent === present) {
+      return state;
+    }
+
+    return {
+      past: [...past, present],
+      present: newPresent,
+      future: [],
+    };
+  } else if (action.type === "CLEAR") {
+    return {
+      ...initialState,
+      present: action.initialPresent,
+    };
+  } else {
+    throw new Error("Unsupported action type");
   }
 };
 
@@ -764,40 +763,29 @@ export function useKeyPress(key, cb, options = {}) {
 export function useList(defaultList = []) {
   const [list, setList] = React.useState(defaultList);
 
-  const methods = React.useMemo(() => {
-    const set = (l) => {
-      setList(l);
-    };
-
-    const push = (element) => {
-      setList((l) => [...l, element]);
-    };
-
-    const removeAt = (index) => {
-      setList((l) => [...l.slice(0, index), ...l.slice(index + 1)]);
-    };
-
-    const insertAt = (index, element) => {
-      setList((l) => [...l.slice(0, index), element, ...l.slice(index)]);
-    };
-
-    const updateAt = (index, element) => {
-      setList((l) => l.map((e, i) => (i === index ? element : e)));
-    };
-
-    const clear = () => setList([]);
-
-    return {
-      set,
-      push,
-      removeAt,
-      insertAt,
-      updateAt,
-      clear,
-    };
+  const set = React.useCallback((l) => {
+    setList(l);
   }, []);
 
-  return [list, methods];
+  const push = React.useCallback((element) => {
+    setList((l) => [...l, element]);
+  }, []);
+
+  const removeAt = React.useCallback((index) => {
+    setList((l) => [...l.slice(0, index), ...l.slice(index + 1)]);
+  }, []);
+
+  const insertAt = React.useCallback((index, element) => {
+    setList((l) => [...l.slice(0, index), element, ...l.slice(index)]);
+  }, []);
+
+  const updateAt = React.useCallback((index, element) => {
+    setList((l) => l.map((e, i) => (i === index ? element : e)));
+  }, []);
+
+  const clear = React.useCallback(() => setList([]), []);
+
+  return [list, { set, push, removeAt, insertAt, updateAt, clear }];
 }
 
 export function useLocalStorage(key, initialValue) {
@@ -1066,8 +1054,6 @@ export function useMouse() {
 
         newState.elementX = elementX;
         newState.elementY = elementY;
-        newState.elementX = elementX;
-        newState.elementY = elementY;
         newState.elementPositionX = elementPositionX;
         newState.elementPositionY = elementPositionY;
       }
@@ -1090,17 +1076,22 @@ export function useMouse() {
   return [state, ref];
 }
 
-export function useNetworkState() {
-  const connection =
+const getConnection = () => {
+  return (
     navigator?.connection ||
     navigator?.mozConnection ||
-    navigator?.webkitConnection;
+    navigator?.webkitConnection
+  );
+};
 
+export function useNetworkState() {
   const cache = React.useRef({});
 
   const subscribe = React.useCallback((callback) => {
     window.addEventListener("online", callback, { passive: true });
     window.addEventListener("offline", callback, { passive: true });
+
+    const connection = getConnection();
 
     if (connection) {
       connection.addEventListener("change", callback, { passive: true });
@@ -1118,6 +1109,7 @@ export function useNetworkState() {
 
   const getSnapshot = () => {
     const online = navigator.onLine;
+    const connection = getConnection();
 
     const nextState = {
       online,
@@ -1491,57 +1483,6 @@ export function useSet(values) {
   return setRef.current;
 }
 
-export function useSpeech(text, options) {
-  const [state, setState] = React.useState(() => {
-    const { lang = "default", name = "" } = options.voice || {};
-    return {
-      isPlaying: false,
-      status: "init",
-      lang: options.lang || "default",
-      voiceInfo: { lang, name },
-      rate: options.rate || 1,
-      pitch: options.pitch || 1,
-      volume: options.volume || 1,
-    };
-  });
-
-  const optionsRef = React.useRef(options);
-
-  React.useEffect(() => {
-    const handlePlay = () => {
-      setState((s) => {
-        return { ...s, isPlaying: true, status: "play" };
-      });
-    };
-
-    const handlePause = () => {
-      setState((s) => {
-        return { ...s, isPlaying: false, status: "pause" };
-      });
-    };
-
-    const handleEnd = () => {
-      setState((s) => {
-        return { ...s, isPlaying: false, status: "end" };
-      });
-    };
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    optionsRef.current.lang && (utterance.lang = optionsRef.current.lang);
-    optionsRef.current.voice && (utterance.voice = optionsRef.current.voice);
-    utterance.rate = optionsRef.current.rate || 1;
-    utterance.pitch = optionsRef.current.pitch || 1;
-    utterance.volume = optionsRef.current.volume || 1;
-    utterance.onstart = handlePlay;
-    utterance.onpause = handlePause;
-    utterance.onresume = handlePlay;
-    utterance.onend = handleEnd;
-    window.speechSynthesis.speak(utterance);
-  }, [text]);
-
-  return state;
-}
-
 export function useThrottle(value, interval = 500) {
   const [throttledValue, setThrottledValue] = React.useState(value);
   const lastUpdated = React.useRef();
@@ -1596,27 +1537,30 @@ export function useToggle(initialValue) {
   return [on, handleToggle];
 }
 
+const useVisibilityChangeSubscribe = (callback) => {
+  document.addEventListener("visibilitychange", callback);
+
+  return () => {
+    document.removeEventListener("visibilitychange", callback);
+  };
+};
+
+const getVisibilityChangeSnapshot = () => {
+  return document.visibilityState;
+};
+
+const getVisibilityChangeServerSnapshot = () => {
+  throw Error("useVisibilityChange is a client-only hook");
+};
+
 export function useVisibilityChange() {
-  const [documentVisible, setDocumentVisibility] = React.useState(true);
+  const visibilityState = React.useSyncExternalStore(
+    useVisibilityChangeSubscribe,
+    getVisibilityChangeSnapshot,
+    getVisibilityChangeServerSnapshot
+  );
 
-  React.useEffect(() => {
-    const handleChange = () => {
-      if (document.visibilityState !== "visible") {
-        setDocumentVisibility(false);
-      } else {
-        setDocumentVisibility(true);
-      }
-    };
-    handleChange();
-
-    document.addEventListener("visibilitychange", handleChange);
-
-    return () => {
-      document.removeEventListener("visibilitychange", handleChange);
-    };
-  }, []);
-
-  return documentVisible;
+  return visibilityState === "visible";
 }
 
 export function useWindowScroll() {
