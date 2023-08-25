@@ -27,10 +27,11 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   ### Parameters
 
   <div class="table-container">
-  | Name     | Type     | Description                                                                                                            |
-  | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
-  | callback | function | The callback function to be executed repeatedly until it returns a truthy value.                                       |
-  | interval | number   | (Optional) The interval in milliseconds at which the callback function is executed. Default value is 100 milliseconds. |
+  | Name     | Type     | Description                                                                                                                                                  |
+  | -------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | callback | function | The callback function to be executed repeatedly until it returns a truthy value.                                                                             |
+  | interval | number   | (Optional) The interval in milliseconds at which the callback function is executed. Default value is 100 milliseconds.                                       |
+  | options  | object   | (Optional) An object containing a `maxRetries` property which tells `useContinuousRetry` the maximum amount of retry attempts it should make before stopping |
   </div>
 
   ### Return Value
