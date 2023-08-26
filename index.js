@@ -1508,20 +1508,20 @@ export function useThrottle(value, interval = 500) {
 }
 
 export function useTimeout(cb, ms) {
-  const intervalRef = React.useRef(null);
+  const id = React.useRef(null);
   const onTimeout = React.useEffectEvent(cb);
 
-  const handleClearInterval = () => {
-    window.clearInterval(intervalRef.current);
+  const handleClearTimeout = () => {
+    window.clearTimeout(id.current);
   };
 
   React.useEffect(() => {
-    intervalRef.current = window.setTimeout(onTimeout, ms);
+    id.current = window.setTimeout(onTimeout, ms);
 
-    return handleClearInterval;
+    return handleClearTimeout;
   }, [ms]);
 
-  return handleClearInterval;
+  return handleClearTimeout;
 }
 
 export function useToggle(initialValue) {
