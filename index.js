@@ -372,7 +372,6 @@ const useFetchReducer = (state, action) => {
 
 export function useFetch(url, options) {
   const cacheRef = React.useRef({});
-  const ignoreRef = React.useRef(false);
 
   const [state, dispatch] = React.useReducer(
     useFetchReducer,
@@ -386,14 +385,17 @@ export function useFetch(url, options) {
   React.useEffect(() => {
     if (typeof url !== "string") return;
 
+    let ignore = false;
+
     const fetchData = async () => {
-      dispatch({ type: "loading" });
       const cachedResponse = cacheRef.current[url];
 
       if (cachedResponse) {
         dispatch({ type: "fetched", payload: cachedResponse });
         return;
       }
+
+      dispatch({ type: "loading" });
 
       try {
         const res = await onFetch(url);
@@ -405,21 +407,20 @@ export function useFetch(url, options) {
         const json = await res.json();
         cacheRef.current[url] = json;
 
-        if (ignoreRef.current === false) {
+        if (ignore === false) {
           dispatch({ type: "fetched", payload: json });
         }
       } catch (e) {
-        if (ignoreRef.current === false) {
+        if (ignore === false) {
           dispatch({ type: "error", payload: e });
         }
       }
     };
 
-    ignoreRef.current = false;
     fetchData();
 
     return () => {
-      ignoreRef.current = true;
+      ignore = true;
     };
   }, [url]);
 
