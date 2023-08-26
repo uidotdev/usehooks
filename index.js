@@ -352,31 +352,34 @@ export function useFavicon(url) {
   }, [url]);
 }
 
+const useFetchInitialState = {
+  error: undefined,
+  data: undefined,
+};
+
+const useFetchReducer = (state, action) => {
+  switch (action.type) {
+    case "loading":
+      return { ...useFetchInitialState };
+    case "fetched":
+      return { ...useFetchInitialState, data: action.payload };
+    case "error":
+      return { ...useFetchInitialState, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export function useFetch(url, options) {
   const cacheRef = React.useRef({});
   const ignoreRef = React.useRef(false);
 
-  const initialState = {
-    error: undefined,
-    data: undefined,
-  };
+  const [state, dispatch] = React.useReducer(
+    useFetchReducer,
+    useFetchInitialState
+  );
 
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "loading":
-        return { ...initialState };
-      case "fetched":
-        return { ...initialState, data: action.payload };
-      case "error":
-        return { ...initialState, error: action.payload };
-      default:
-        return state;
-    }
-  };
-
-  const [state, dispatch] = React.useReducer(reducer, initialState);
-
-  const onFetch = React.useEffectEvent(() => {
+  const onFetch = React.useEffectEvent((url) => {
     return fetch(url, options);
   });
 
@@ -393,7 +396,7 @@ export function useFetch(url, options) {
       }
 
       try {
-        const res = await onFetch();
+        const res = await onFetch(url);
 
         if (!res.ok) {
           throw new Error(res.statusText);
