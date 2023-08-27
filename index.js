@@ -814,7 +814,6 @@ export function useLocalStorage(key, initialValue) {
           typeof value === "function" ? value(localState) : value;
         window.localStorage.setItem(key, JSON.stringify(nextState));
         setLocalState(nextState);
-        window.dispatchEvent(new Event("local-storage"));
       } catch (e) {
         console.warn(e);
       }
@@ -828,11 +827,9 @@ export function useLocalStorage(key, initialValue) {
 
   React.useEffect(() => {
     window.addEventListener("storage", onStorageChange);
-    window.addEventListener("local-storage", onStorageChange);
 
     return () => {
       window.removeEventListener("storage", onStorageChange);
-      window.removeEventListener("local-storage", onStorageChange);
     };
   }, []);
 
