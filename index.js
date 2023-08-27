@@ -710,14 +710,12 @@ export function useIntervalWhen(cb, { ms, when, startImmediately }) {
       onTick();
       immediatelyCalled.current = true;
     }
-  }, [startImmediately, when]);
 
-  React.useEffect(() => {
     if (when === true) {
       id.current = window.setInterval(onTick, ms);
       return handleClearInterval;
     }
-  }, [ms, when]);
+  }, [ms, when, startImmediately]);
 
   return handleClearInterval;
 }
