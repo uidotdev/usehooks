@@ -40,15 +40,6 @@ function throttle(cb, ms) {
   };
 }
 
-function getEnvironment() {
-  const isDOM =
-    typeof window !== "undefined" &&
-    window.document &&
-    window.document.documentElement;
-
-  return isDOM ? "browser" : "server";
-}
-
 export function useBattery() {
   const [state, setState] = React.useState({
     supported: true,
@@ -1371,40 +1362,6 @@ export function useRenderInfo(name = "Unknown") {
 
     return info;
   }
-}
-
-export function useSessionStorage(key, initialValue) {
-  if (getEnvironment() === "server") {
-    throw Error("useSessionStorage is a client-side only hook.");
-  }
-
-  const readValue = React.useCallback(() => {
-    try {
-      const item = window.sessionStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.warn(error);
-      return initialValue;
-    }
-  }, [key, initialValue]);
-
-  const [localState, setLocalState] = React.useState(readValue);
-
-  const handleSetState = React.useCallback(
-    (value) => {
-      try {
-        const nextState =
-          typeof value === "function" ? value(localState) : value;
-        window.sessionStorage.setItem(key, JSON.stringify(nextState));
-        setLocalState(nextState);
-      } catch (e) {
-        console.warn(e);
-      }
-    },
-    [key, localState]
-  );
-
-  return [localState, handleSetState];
 }
 
 export function useScript(src, options = {}) {
