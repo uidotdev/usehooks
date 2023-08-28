@@ -998,14 +998,16 @@ export function usePreferredLanguage() {
   );
 }
 
-export function usePrevious(newValue) {
-  const previousRef = React.useRef();
+export function usePrevious(value) {
+  const [current, setCurrent] = React.useState(value);
+  const [previous, setPrevious] = React.useState(null);
 
-  React.useEffect(() => {
-    previousRef.current = newValue;
-  });
+  if (value !== current) {
+    setPrevious(current);
+    setCurrent(value);
+  }
 
-  return previousRef.current;
+  return previous;
 }
 
 export function useQueue(initialValue = []) {
