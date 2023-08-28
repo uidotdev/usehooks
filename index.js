@@ -38,6 +38,10 @@ function throttle(cb, ms) {
   };
 }
 
+const dispatchStorageEvent = (key, newValue) => {
+  window.dispatchEvent(new StorageEvent("storage", { key, newValue }));
+};
+
 export function useBattery() {
   const [state, setState] = React.useState({
     supported: true,
@@ -563,10 +567,6 @@ export function useList(defaultList = []) {
 
   return [list, { set, push, removeAt, insertAt, updateAt, clear }];
 }
-
-const dispatchStorageEvent = (key, newValue) => {
-  window.dispatchEvent(new StorageEvent("storage", { key, newValue }));
-};
 
 const setLocalStorageItem = (key, value) => {
   const stringifiedValue = JSON.stringify(value);
@@ -1145,6 +1145,68 @@ export function useScript(src, options = {}) {
   }, [src, options.removeOnUnmount]);
 
   return status;
+}
+
+const setSessionStorageItem = (key, value) => {
+  const stringifiedValue = JSON.stringify(value);
+  window.sessionStorage.setItem(key, stringifiedValue);
+  dispatchStorageEvent(key, stringifiedValue);
+};
+
+const removeSessionStorageItem = (key) => {
+  window.sessionStorage.removeItem(key);
+  dispatchStorageEvent(key, null);
+};
+
+const getSessionStorageItem = (key) => {
+  return window.sessionStorage.getItem(key);
+};
+
+const useSessionStorageSubscribe = (callback) => {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+};
+
+const getSessionStorageServerSnapshot = () => {
+  throw Error("useSessionStorage is a client-only hook");
+};
+
+export function useSessionStorage(key, initialValue) {
+  const getSnapshot = () => getSessionStorageItem(key);
+
+  const store = React.useSyncExternalStore(
+    useSessionStorageSubscribe,
+    getSnapshot,
+    getSessionStorageServerSnapshot
+  );
+
+  const setState = React.useCallback(
+    (v) => {
+      try {
+        const nextState = typeof v === "function" ? v(JSON.parse(store)) : v;
+
+        if (nextState === undefined || nextState === null) {
+          removeSessionStorageItem(key);
+        } else {
+          setSessionStorageItem(key, nextState);
+        }
+      } catch (e) {
+        console.warn(e);
+      }
+    },
+    [key, store]
+  );
+
+  React.useEffect(() => {
+    if (
+      getSessionStorageItem(key) === null &&
+      typeof initialValue !== "undefined"
+    ) {
+      setSessionStorageItem(key, initialValue);
+    }
+  }, [key, initialValue]);
+
+  return [store ? JSON.parse(store) : initialValue, setState];
 }
 
 export function useSet(values) {
