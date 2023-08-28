@@ -806,10 +806,6 @@ export function useLogger(name, ...rest) {
   }, []);
 }
 
-const dispatchStorageEvent = (key, newValue) => {
-  window.dispatchEvent(new StorageEvent("storage", { key, newValue }));
-};
-
 const setLocalStorageItem = (key, value) => {
   const stringifiedValue = JSON.stringify(value);
   window.localStorage.setItem(key, stringifiedValue);
