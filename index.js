@@ -791,59 +791,70 @@ export function useList(defaultList = []) {
   return [list, { set, push, removeAt, insertAt, updateAt, clear }];
 }
 
+const dispatchStorageEvent = (key, newValue) => {
+  window.dispatchEvent(new StorageEvent("storage", { key, newValue }));
+};
+
+const setLocalStorageItem = (key, value) => {
+  const stringifiedValue = JSON.stringify(value);
+  window.localStorage.setItem(key, stringifiedValue);
+  dispatchStorageEvent(key, stringifiedValue);
+};
+
+const removeLocalStorageItem = (key) => {
+  window.localStorage.removeItem(key);
+  dispatchStorageEvent(key, null);
+};
+
+const getLocalStorageItem = (key) => {
+  return window.localStorage.getItem(key);
+};
+
+const useLocalStorageSubscribe = (callback) => {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+};
+
+const getLocalStorageServerSnapshot = () => {
+  throw Error("useLocalStorage is a client-only hook");
+};
+
 export function useLocalStorage(key, initialValue) {
-  if (getEnvironment() === "server") {
-    throw Error("useLocalStorage is a client-side only hook.");
-  }
+  const getSnapshot = () => getLocalStorageItem(key);
 
-  const readValue = React.useCallback(() => {
-    try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.warn(error);
-      return initialValue;
-    }
-  }, [key, initialValue]);
+  const store = React.useSyncExternalStore(
+    useLocalStorageSubscribe,
+    getSnapshot,
+    getLocalStorageServerSnapshot
+  );
 
-  const [localState, setLocalState] = React.useState(readValue);
-  const handleSetState = React.useCallback(
-    (value) => {
+  const setState = React.useCallback(
+    (v) => {
       try {
-        const nextState =
-          typeof value === "function" ? value(localState) : value;
-        window.localStorage.setItem(key, JSON.stringify(nextState));
-        setLocalState(nextState);
+        const nextState = typeof v === "function" ? v(JSON.parse(store)) : v;
+
+        if (nextState === undefined || nextState === null) {
+          removeLocalStorageItem(key);
+        } else {
+          setLocalStorageItem(key, nextState);
+        }
       } catch (e) {
         console.warn(e);
       }
     },
-    [key, localState]
+    [key, store]
   );
 
-  const onStorageChange = React.useEffectEvent(() => {
-    setLocalState(readValue());
-  });
-
   React.useEffect(() => {
-    window.addEventListener("storage", onStorageChange);
+    if (
+      getLocalStorageItem(key) === null &&
+      typeof initialValue !== "undefined"
+    ) {
+      setLocalStorageItem(key, initialValue);
+    }
+  }, [key, initialValue]);
 
-    return () => {
-      window.removeEventListener("storage", onStorageChange);
-    };
-  }, []);
-
-  return [localState, handleSetState];
-}
-
-export function useLockBodyScroll() {
-  React.useEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = originalStyle;
-    };
-  }, []);
+  return [store ? JSON.parse(store) : initialValue, setState];
 }
 
 export function useLogger(name, ...rest) {
