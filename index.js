@@ -640,23 +640,18 @@ export function useLockBodyScroll() {
   }, []);
 }
 
-export function useLongPress(
-  callback,
-  { threshold = 400, onStart, onFinish, onCancel } = {}
-) {
+export function useLongPress(callback, options = {}) {
+  const { threshold = 400, onStart, onFinish, onCancel } = options;
   const isLongPressActive = React.useRef(false);
   const isPressed = React.useRef(false);
   const timerId = React.useRef();
-  const cbRef = React.useRef(callback);
 
-  React.useLayoutEffect(() => {
-    cbRef.current = callback;
-  });
+  return React.useMemo(() => {
+    if (typeof callback !== "function") {
+      return {};
+    }
 
-  const start = React.useCallback(
-    () => (event) => {
-      if (isPressed.current) return;
-
+    const start = (event) => {
       if (!isMouseEvent(event) && !isTouchEvent(event)) return;
 
       if (onStart) {
@@ -665,15 +660,12 @@ export function useLongPress(
 
       isPressed.current = true;
       timerId.current = setTimeout(() => {
-        cbRef.current(event);
+        callback(event);
         isLongPressActive.current = true;
       }, threshold);
-    },
-    [onStart, threshold]
-  );
+    };
 
-  const cancel = React.useCallback(
-    () => (event) => {
+    const cancel = (event) => {
       if (!isMouseEvent(event) && !isTouchEvent(event)) return;
 
       if (isLongPressActive.current) {
@@ -692,31 +684,24 @@ export function useLongPress(
       if (timerId.current) {
         window.clearTimeout(timerId.current);
       }
-    },
-    [onFinish, onCancel]
-  );
-
-  return React.useMemo(() => {
-    if (callback === null) {
-      return {};
-    }
+    };
 
     const mouseHandlers = {
-      onMouseDown: start(),
-      onMouseUp: cancel(),
-      onMouseLeave: cancel(),
+      onMouseDown: start,
+      onMouseUp: cancel,
+      onMouseLeave: cancel,
     };
 
     const touchHandlers = {
-      onTouchStart: start(),
-      onTouchEnd: cancel(),
+      onTouchStart: start,
+      onTouchEnd: cancel,
     };
 
     return {
       ...mouseHandlers,
       ...touchHandlers,
     };
-  }, [callback, cancel, start]);
+  }, [callback, threshold, onCancel, onFinish, onStart]);
 }
 
 export function useMap(initialState) {
