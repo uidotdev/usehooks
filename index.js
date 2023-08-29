@@ -882,23 +882,18 @@ export function useLockBodyScroll() {
   }, []);
 }
 
-export function useLongPress(
-  callback,
-  { threshold = 400, onStart, onFinish, onCancel } = {}
-) {
+export function useLongPress(callback, options = {}) {
+  const { threshold = 400, onStart, onFinish, onCancel } = options;
   const isLongPressActive = React.useRef(false);
   const isPressed = React.useRef(false);
   const timerId = React.useRef();
-  const cbRef = React.useRef(callback);
 
-  React.useLayoutEffect(() => {
-    cbRef.current = callback;
-  });
+  return React.useMemo(() => {
+    if (typeof callback !== "function") {
+      return {};
+    }
 
-  const start = React.useCallback(
-    () => (event) => {
-      if (isPressed.current) return;
-
+    const start = (event) => {
       if (!isMouseEvent(event) && !isTouchEvent(event)) return;
 
       if (onStart) {
@@ -907,15 +902,12 @@ export function useLongPress(
 
       isPressed.current = true;
       timerId.current = setTimeout(() => {
-        cbRef.current(event);
+        callback(event);
         isLongPressActive.current = true;
       }, threshold);
-    },
-    [onStart, threshold]
-  );
+    };
 
-  const cancel = React.useCallback(
-    () => (event) => {
+    const cancel = (event) => {
       if (!isMouseEvent(event) && !isTouchEvent(event)) return;
 
       if (isLongPressActive.current) {
@@ -934,31 +926,24 @@ export function useLongPress(
       if (timerId.current) {
         window.clearTimeout(timerId.current);
       }
-    },
-    [onFinish, onCancel]
-  );
-
-  return React.useMemo(() => {
-    if (callback === null) {
-      return {};
-    }
+    };
 
     const mouseHandlers = {
-      onMouseDown: start(),
-      onMouseUp: cancel(),
-      onMouseLeave: cancel(),
+      onMouseDown: start,
+      onMouseUp: cancel,
+      onMouseLeave: cancel,
     };
 
     const touchHandlers = {
-      onTouchStart: start(),
-      onTouchEnd: cancel(),
+      onTouchStart: start,
+      onTouchEnd: cancel,
     };
 
     return {
       ...mouseHandlers,
       ...touchHandlers,
     };
-  }, [callback, cancel, start]);
+  }, [callback, threshold, onCancel, onFinish, onStart]);
 }
 
 export function useMap(initialState) {
@@ -1257,14 +1242,16 @@ export function usePreferredLanguage() {
   );
 }
 
-export function usePrevious(newValue) {
-  const previousRef = React.useRef();
+export function usePrevious(value) {
+  const [current, setCurrent] = React.useState(value);
+  const [previous, setPrevious] = React.useState(null);
 
-  React.useEffect(() => {
-    previousRef.current = newValue;
-  });
+  if (value !== current) {
+    setPrevious(current);
+    setCurrent(value);
+  }
 
-  return previousRef.current;
+  return previous;
 }
 
 function getRandomNumber(min, max) {
@@ -1376,9 +1363,7 @@ export function useScript(src, options = {}) {
   const cachedScriptStatuses = React.useRef({});
 
   React.useEffect(() => {
-    if (!src) {
-      return;
-    }
+    if (!src) return;
 
     const cachedScriptStatus = cachedScriptStatuses.current[src];
     if (cachedScriptStatus === "ready" || cachedScriptStatus === "error") {
@@ -1389,26 +1374,12 @@ export function useScript(src, options = {}) {
     let script = document.querySelector(`script[src="${src}"]`);
 
     if (script) {
-      setStatus(
-        script.getAttribute("data-status") ?? cachedScriptStatus ?? "loading"
-      );
+      setStatus(cachedScriptStatus ?? "loading");
     } else {
       script = document.createElement("script");
       script.src = src;
       script.async = true;
-      script.setAttribute("data-status", "loading");
       document.body.appendChild(script);
-
-      const setAttributeFromEvent = (event) => {
-        const scriptStatus = event.type === "load" ? "ready" : "error";
-
-        if (script) {
-          script.setAttribute("data-status", scriptStatus);
-        }
-      };
-
-      script.addEventListener("load", setAttributeFromEvent);
-      script.addEventListener("error", setAttributeFromEvent);
     }
 
     const setStateFromEvent = (event) => {
