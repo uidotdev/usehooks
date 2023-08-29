@@ -1075,9 +1075,7 @@ export function useScript(src, options = {}) {
   const cachedScriptStatuses = React.useRef({});
 
   React.useEffect(() => {
-    if (!src) {
-      return;
-    }
+    if (!src) return;
 
     const cachedScriptStatus = cachedScriptStatuses.current[src];
     if (cachedScriptStatus === "ready" || cachedScriptStatus === "error") {
@@ -1088,26 +1086,12 @@ export function useScript(src, options = {}) {
     let script = document.querySelector(`script[src="${src}"]`);
 
     if (script) {
-      setStatus(
-        script.getAttribute("data-status") ?? cachedScriptStatus ?? "loading"
-      );
+      setStatus(cachedScriptStatus ?? "loading");
     } else {
       script = document.createElement("script");
       script.src = src;
       script.async = true;
-      script.setAttribute("data-status", "loading");
       document.body.appendChild(script);
-
-      const setAttributeFromEvent = (event) => {
-        const scriptStatus = event.type === "load" ? "ready" : "error";
-
-        if (script) {
-          script.setAttribute("data-status", scriptStatus);
-        }
-      };
-
-      script.addEventListener("load", setAttributeFromEvent);
-      script.addEventListener("error", setAttributeFromEvent);
     }
 
     const setStateFromEvent = (event) => {
