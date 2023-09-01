@@ -1085,31 +1085,27 @@ export function useScript(src, options = {}) {
 
     let script = document.querySelector(`script[src="${src}"]`);
 
-    if (script) {
-      setStatus(cachedScriptStatus ?? "loading");
-    } else {
+    if (!script) {
       script = document.createElement("script");
       script.src = src;
       script.async = true;
       document.body.appendChild(script);
     }
 
-    const setStateFromEvent = (event) => {
+    const handleScriptStatus = (event) => {
       const newStatus = event.type === "load" ? "ready" : "error";
       setStatus(newStatus);
       cachedScriptStatuses.current[src] = newStatus;
     };
 
-    script.addEventListener("load", setStateFromEvent);
-    script.addEventListener("error", setStateFromEvent);
+    script.addEventListener("load", handleScriptStatus);
+    script.addEventListener("error", handleScriptStatus);
 
     return () => {
-      if (script) {
-        script.removeEventListener("load", setStateFromEvent);
-        script.removeEventListener("error", setStateFromEvent);
-      }
+      script.removeEventListener("load", handleScriptStatus);
+      script.removeEventListener("error", handleScriptStatus);
 
-      if (script && options.removeOnUnmount) {
+      if (options.removeOnUnmount === true) {
         script.remove();
       }
     };
