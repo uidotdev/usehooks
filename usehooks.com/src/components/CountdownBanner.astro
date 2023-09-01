@@ -1,0 +1,267 @@
+---
+import Button from "../components/Button.astro";
+---
+
+<!-- Show this one on Day 2 of launch week --><!-- <section class="banner week">
+  <h3>Launch Week Sale</h3>
+  <div class="countdown">
+    <div class="number day">
+      <span id="days" class="time">5</span>
+      <span class="unit">days</span>
+    </div>
+    <div class="number hour">
+      <span id="hours" class="time">22</span>
+      <span class="unit">hours</span>
+    </div>
+    <div class="number minute">
+      <span id="minutes" class="time">47</span>
+      <span class="unit">minutes</span>
+    </div>
+    <div class="number second">
+      <span id="seconds" class="time">12</span>
+      <span class="unit">seconds</span>
+    </div>
+  </div>
+  <p>
+    Get up to <strong>25% off</strong><sup>1</sup> if you buy before this giant clock
+    goes to zero.
+  </p>
+  <Button
+    type="link"
+    href="https://react.gg/#register"
+    color="yellow"
+    size="large"
+    text="Get the course now"
+  />
+  <ol class="footnotes">
+    <li>Literally the cheapest this course will ever be</li>
+  </ol>
+</section> --><!-- Show this one on Day 1 of launch week -->
+<section class="banner day-one">
+  <h3>Launch Day Sale</h3>
+  <div class="countdown">
+    <div class="number hour">
+      <span id="hours" class="time">22</span>
+      <span class="unit">hours</span>
+    </div>
+    <div class="number minute">
+      <span id="minutes" class="time">47</span>
+      <span class="unit">minutes</span>
+    </div>
+    <div class="number second">
+      <span id="seconds" class="time">12</span>
+      <span class="unit">seconds</span>
+    </div>
+  </div>
+  <p>
+    Get up to <strong>25% off</strong><sup>1</sup> the react.gg course, plus a <strong
+      >FREE</strong
+    > ui.dev t-shirt<sup>2,3,4</sup> if you buy before this giant clock goes to zero.
+  </p>
+  <Button
+    type="link"
+    href="https://react.gg/#register"
+    color="yellow"
+    size="large"
+    text="Get the course + t-shirt now"
+  />
+  <ol class="footnotes">
+    <li>Literally the cheapest this course will ever be</li>
+    <li>Our shirts are very soft</li>
+    <li>We’ll probably send you stickers too</li>
+    <li>We might lose money on this but wdgaf</li>
+  </ol>
+</section>
+
+<style>
+  .banner {
+    margin-bottom: var(--body-padding);
+    padding: var(--body-border);
+    display: grid;
+    gap: 1rem;
+    background-color: var(--brand-blue);
+    border-radius: 0.5rem;
+    color: var(--charcoal);
+    container-type: inline-size;
+  }
+
+  .banner h3 {
+    padding: 0.3em;
+    background-color: var(--brand-pink);
+    border: var(--border-dark);
+    border-radius: 0.3rem;
+    box-shadow: 2px 2px 0 var(--charcoal);
+    text-align: center;
+  }
+
+  .banner p {
+    text-align: center;
+    max-width: 50ch;
+    justify-self: center;
+  }
+
+  .info-main {
+    justify-self: center;
+  }
+
+  p {
+    line-height: 1.3;
+  }
+
+  p strong {
+    margin: 0 0.1em;
+    display: inline-block;
+    font-size: 115%;
+  }
+
+  p sup {
+    margin-left: 0.2em;
+    display: inline-block;
+    font-weight: 400;
+    font-size: 60%;
+    transform: translateY(-0.2em);
+  }
+
+  .button {
+    margin: 1rem 0;
+    justify-self: center;
+  }
+
+  .day-one .button.large {
+    padding-right: 5em !important;
+    position: relative;
+  }
+
+  .day-one .button::after {
+    content: "";
+    width: 5.4em;
+    aspect-ratio: 46 / 40;
+    display: block;
+    position: absolute;
+    right: -1%;
+    top: 50%;
+    background-repeat: no-repeat;
+    background-image: url("/img/bytes-tshirt.png");
+    background-size: contain;
+    transform: translateY(-52%) rotate(15deg);
+  }
+
+  .footnotes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 0.5em;
+  }
+
+  .footnotes li {
+    list-style-type: number;
+    list-style-position: inside;
+    font-size: clamp(0.8rem, 1.4vw, 0.9rem);
+  }
+
+  .countdown {
+    padding: 0.6em;
+    display: flex;
+    gap: 0.6rem;
+    background-color: var(--brand-charcoal);
+    color: var(--brand-beige);
+    border-radius: 0.4rem;
+    text-align: center;
+  }
+
+  .number {
+    padding: 1rem 0.2rem;
+    flex: 1;
+    display: grid;
+    gap: 0.1em 0.3em;
+    line-height: 1;
+    border: var(--border-light);
+    border-color: var(--purple);
+    border-radius: 0.2rem;
+    color: var(--brand-beige);
+  }
+
+  .time {
+    display: flex;
+    place-content: center;
+    font-weight: bold;
+    font-family: Fira Code;
+    font-size: 2.3rem;
+    font-size: clamp(1rem, 4vw, 2.3rem);
+    visibility: hidden;
+  }
+
+  .unit {
+    font-size: 0.6em;
+    line-height: 1;
+  }
+</style>
+
+<script>
+  const targetDate = getPSTDate(2023, 8, 6);
+  let countdownInterval;
+
+  function updateCountdown() {
+    const now = new Date() as any;
+
+    // Calculate the difference in seconds
+    let delta = Math.floor((targetDate - now) / 1000);
+
+    if (delta <= 0) {
+      // Countdown has ended, clear the interval and set all values to 0
+      clearInterval(countdownInterval);
+      // document.getElementById("days").textContent = "00";
+      document.getElementById("hours").textContent = "00";
+      document.getElementById("minutes").textContent = "00";
+      document.getElementById("seconds").textContent = "00";
+      return;
+    }
+
+    // Calculate days, hours, minutes and seconds
+    const days = Math.floor(delta / 86400);
+    delta -= days * 86400;
+    const hours = Math.floor(delta / 3600) % 24;
+    delta -= hours * 3600;
+    const minutes = Math.floor(delta / 60) % 60;
+    delta -= minutes * 60;
+    const seconds = delta % 60;
+
+    // Uncomment when we move to the other banner
+    // document.getElementById("days").textContent = String(days).padStart(2, "0");
+    document.getElementById("hours").textContent = String(hours).padStart(
+      2,
+      "0"
+    );
+    document.getElementById("minutes").textContent = String(minutes).padStart(
+      2,
+      "0"
+    );
+    document.getElementById("seconds").textContent = String(seconds).padStart(
+      2,
+      "0"
+    );
+  }
+
+  function showCountDown() {
+    const elements = document.querySelectorAll<HTMLElement>(".time");
+    elements.forEach((element) => {
+      element.style.visibility = "visible";
+    });
+  }
+
+  function getPSTDate(year, month, day, hour = 0, minute = 0, second = 0): any {
+    const utcDate = new Date(
+      Date.UTC(year, month, day, hour + 8, minute, second)
+    );
+
+    const pstString = utcDate.toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles",
+    });
+
+    return new Date(pstString);
+  }
+
+  updateCountdown();
+  showCountDown();
+  countdownInterval = setInterval(updateCountdown, 1000);
+</script>
