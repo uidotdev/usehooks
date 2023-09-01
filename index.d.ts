@@ -165,9 +165,9 @@ declare module "@uidotdev/usehooks" {
 
   export function useIdle(ms?: number): boolean;
 
-  export function useIntersectionObserver(
+  export function useIntersectionObserver<T extends Element>(
     options?: IntersectionObserverInit
-  ): [React.MutableRefObject<Element>, IntersectionObserverEntry | null];
+  ): [React.MutableRefObject<T>, IntersectionObserverEntry | null];
 
   export function useIsClient(): boolean;
 
