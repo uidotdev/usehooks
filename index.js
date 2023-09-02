@@ -1289,7 +1289,7 @@ export function useWindowScroll() {
 
   React.useLayoutEffect(() => {
     const handleScroll = () => {
-      setState({ x: window.pageXOffset, y: window.pageYOffset });
+      setState({ x: window.scrollX, y: window.scrollY });
     };
 
     handleScroll();
