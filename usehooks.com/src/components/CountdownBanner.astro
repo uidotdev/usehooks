@@ -210,16 +210,19 @@ import Button from "../components/Button.astro";
 </style>
 
 <script>
-  const targetDate = getPSTDate(2023, 8, 6);
-  let countdownInterval;
+  const countdownInterval = setInterval(updateCountdown, 1000);
+
+  // updateCountdown();
+  showCountDown();
 
   function updateCountdown() {
-    const now = new Date() as any;
+    const { days, hours, minutes, seconds, hasExpired } = timeUntilTargetPST(
+      2023,
+      9,
+      12
+    );
 
-    // Calculate the difference in seconds
-    let delta = Math.floor((targetDate - now) / 1000);
-
-    if (delta <= 0) {
+    if (hasExpired) {
       // Countdown has ended, clear the interval and set all values to 0
       clearInterval(countdownInterval);
       // document.getElementById("days").textContent = "00";
@@ -228,15 +231,6 @@ import Button from "../components/Button.astro";
       document.getElementById("seconds").textContent = "00";
       return;
     }
-
-    // Calculate days, hours, minutes and seconds
-    const days = Math.floor(delta / 86400);
-    delta -= days * 86400;
-    const hours = Math.floor(delta / 3600) % 24;
-    delta -= hours * 3600;
-    const minutes = Math.floor(delta / 60) % 60;
-    delta -= minutes * 60;
-    const seconds = delta % 60;
 
     // Uncomment when we move to the other banner
     // document.getElementById("days").textContent = String(days).padStart(2, "0");
@@ -261,19 +255,50 @@ import Button from "../components/Button.astro";
     });
   }
 
-  function getPSTDate(year, month, day, hour = 0, minute = 0, second = 0): any {
-    const utcDate = new Date(
-      Date.UTC(year, month, day, hour + 8, minute, second)
-    );
+  function timeUntilTargetPST(
+    targetYear: number,
+    targetMonth: number,
+    targetDay: number
+  ) {
+    const now = new Date();
 
-    const pstString = utcDate.toLocaleString("en-US", {
-      timeZone: "America/Los_Angeles",
-    });
+    // Extract the UTC year, month, day, hour, minute, and second
+    const year = now.getUTCFullYear();
+    const month = now.getUTCMonth();
+    const date = now.getUTCDate();
+    const hour = now.getUTCHours();
+    const minute = now.getUTCMinutes();
+    const second = now.getUTCSeconds();
 
-    return new Date(pstString);
+    // Create a current UTC date object
+    const currentUTC = new Date(
+      Date.UTC(year, month, date, hour, minute, second)
+    ) as any;
+
+    // Construct the target UTC date at 8 AM UTC (midnight PST)
+    const targetUTC = new Date(
+      Date.UTC(targetYear, targetMonth - 1, targetDay, 8, 0, 0)
+    ) as any;
+
+    let delta = (targetUTC - currentUTC) / 1000;
+
+    const days = Math.floor(delta / 86400);
+    delta -= days * 86400;
+
+    const hours = Math.floor(delta / 3600) % 24;
+    delta -= hours * 3600;
+
+    const minutes = Math.floor(delta / 60) % 60;
+    delta -= minutes * 60;
+
+    const seconds = delta % 60;
+
+    return {
+      days: String(days).padStart(2, "0"),
+      hours: String(hours).padStart(2, "0"),
+      minutes: String(minutes).padStart(2, "0"),
+      seconds: String(seconds).padStart(2, "0"),
+      hasExpired: delta <= 0,
+    };
   }
-
-  updateCountdown();
-  showCountDown();
-  countdownInterval = setInterval(updateCountdown, 1000);
 </script>
