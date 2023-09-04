@@ -2,8 +2,9 @@
 import Button from "../components/Button.astro";
 ---
 
-<!-- Show this one on Day 2 of launch week --><!-- <section class="banner week">
-  <h3>Launch Week Sale</h3>
+<!-- Show this one on Day 2 of launch week -->
+<!-- <section class="banner week">
+  <h3><img src="/img/react-gg-logo-sticker.svg" width="358" height="86" alt="react.gg" /> Launch Week Sale</h3>
   <div class="countdown">
     <div class="number day">
       <span id="days" class="time">5</span>
@@ -36,9 +37,10 @@ import Button from "../components/Button.astro";
   <ol class="footnotes">
     <li>Literally the cheapest this course will ever be</li>
   </ol>
-</section> --><!-- Show this one on Day 1 of launch week -->
+</section> -->
+<!-- Show this one on Day 1 of launch week -->
 <section class="banner day-one">
-  <h3>Launch Day Sale</h3>
+  <h3><img src="/img/react-gg-logo-sticker.svg" width="358" height="86" alt="react.gg" /> Launch Day Sale</h3>
   <div class="countdown">
     <div class="number hour">
       <span id="hours" class="time">22</span>
@@ -87,11 +89,21 @@ import Button from "../components/Button.astro";
 
   .banner h3 {
     padding: 0.3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
     background-color: var(--brand-pink);
     border: var(--border-dark);
     border-radius: 0.3rem;
     box-shadow: 2px 2px 0 var(--charcoal);
     text-align: center;
+    font-size: clamp(1rem, 2.2vw, 1.5rem);
+  }
+
+  .banner h3 img {
+    width: auto;
+    max-height: 30px;
   }
 
   .banner p {
