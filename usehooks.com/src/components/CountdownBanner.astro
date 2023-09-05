@@ -1,0 +1,304 @@
+---
+import Button from "../components/Button.astro";
+---
+
+<!-- Show this one on Day 2 of launch week --><!-- <section class="banner week">
+  <h3><img src="/img/react-gg-logo-sticker.svg" width="358" height="86" alt="react.gg" /> Launch Week Sale</h3>
+  <div class="countdown">
+    <div class="number day">
+      <span id="days" class="time">5</span>
+      <span class="unit">days</span>
+    </div>
+    <div class="number hour">
+      <span id="hours" class="time">22</span>
+      <span class="unit">hours</span>
+    </div>
+    <div class="number minute">
+      <span id="minutes" class="time">47</span>
+      <span class="unit">minutes</span>
+    </div>
+    <div class="number second">
+      <span id="seconds" class="time">12</span>
+      <span class="unit">seconds</span>
+    </div>
+  </div>
+  <p>
+    Get up to <strong>25% off</strong><sup>1</sup> if you buy before this giant clock
+    goes to zero.
+  </p>
+  <Button
+    type="link"
+    href="https://react.gg/#register"
+    color="yellow"
+    size="large"
+    text="Get the course now"
+  />
+  <ol class="footnotes">
+    <li>Literally the cheapest this course will ever be</li>
+  </ol>
+</section> --><!-- Show this one on Day 1 of launch week -->
+<section class="banner day-one">
+  <h3>
+    <img
+      src="/img/react-gg-logo-sticker.svg"
+      width="358"
+      height="86"
+      alt="react.gg"
+    /> Launch Day Sale
+  </h3>
+  <div class="countdown">
+    <div class="number day">
+      <span id="days" class="time">--</span>
+      <span id="days-label" class="unit">day(s)</span>
+    </div>
+    <div class="number hour">
+      <span id="hours" class="time">--</span>
+      <span id="hours-label" class="unit">hour(s)</span>
+    </div>
+    <div class="number minute">
+      <span id="minutes" class="time">--</span>
+      <span id="minutes-label" class="unit">minute(s)</span>
+    </div>
+    <div class="number second">
+      <span id="seconds" class="time">--</span>
+      <span id="seconds-label" class="unit">second(s)</span>
+    </div>
+  </div>
+  <p>
+    Want to learn how to build useHooks yourself? Get 25% off our brand new
+    React course during our launch sale.
+  </p>
+  <Button
+    type="link"
+    href="https://react.gg/"
+    color="yellow"
+    size="large"
+    text="Check it out"
+  />
+</section>
+
+<style>
+  .banner {
+    margin-bottom: var(--body-padding);
+    padding: var(--body-border);
+    display: grid;
+    gap: 1rem;
+    background-color: var(--brand-blue);
+    border-radius: 0.5rem;
+    color: var(--charcoal);
+    container-type: inline-size;
+  }
+
+  .banner h3 {
+    padding: 0.3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--brand-pink);
+    border: var(--border-dark);
+    border-radius: 0.3rem;
+    box-shadow: 2px 2px 0 var(--charcoal);
+    text-align: center;
+    font-size: clamp(1rem, 2.2vw, 1.5rem);
+  }
+
+  .banner h3 img {
+    width: auto;
+    max-height: 30px;
+  }
+
+  .banner p {
+    text-align: center;
+    max-width: 45ch;
+    justify-self: center;
+    margin-top: 8px;
+  }
+
+  .info-main {
+    justify-self: center;
+  }
+
+  p {
+    line-height: 1.3;
+    font-size: 20px;
+  }
+
+  p strong {
+    margin: 0 0.1em;
+    display: inline-block;
+    font-size: 115%;
+  }
+
+  p sup {
+    margin-left: 0.2em;
+    display: inline-block;
+    font-weight: 400;
+    font-size: 60%;
+    transform: translateY(-0.2em);
+  }
+
+  p a {
+    color: var(--white);
+  }
+
+  .button {
+    margin: 1rem 0;
+    justify-self: center;
+  }
+
+  .day-one .button.large {
+    position: relative;
+  }
+
+  .footnotes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 0.5em;
+  }
+
+  .footnotes li {
+    list-style-type: number;
+    list-style-position: inside;
+    font-size: clamp(0.8rem, 1.4vw, 0.9rem);
+  }
+
+  .countdown {
+    padding: 0.6em;
+    display: flex;
+    gap: 0.6rem;
+    background-color: var(--brand-charcoal);
+    color: var(--brand-beige);
+    border-radius: 0.4rem;
+    text-align: center;
+  }
+
+  .number {
+    padding: 1rem 0.2rem;
+    flex: 1;
+    display: grid;
+    gap: 0.1em 0.3em;
+    line-height: 1;
+    border: var(--border-light);
+    border-color: var(--purple);
+    border-radius: 0.2rem;
+    color: var(--brand-beige);
+  }
+
+  .time {
+    display: flex;
+    place-content: center;
+    font-weight: bold;
+    font-family: Fira Code;
+    font-size: 2.3rem;
+    font-size: clamp(1rem, 4vw, 2.3rem);
+    visibility: hidden;
+  }
+
+  .unit {
+    font-size: 0.6em;
+    line-height: 1;
+  }
+</style>
+
+<script>
+  const countdownInterval = setInterval(updateCountdown, 1000);
+
+  // updateCountdown();
+  showCountDown();
+
+  function updateCountdown() {
+    const { days, hours, minutes, seconds, hasExpired } = timeUntilTargetPST(
+      2023,
+      9,
+      7
+    );
+
+    if (hasExpired) {
+      // Countdown has ended, clear the interval and set all values to 0
+      clearInterval(countdownInterval);
+      // document.getElementById("days").textContent = "00";
+      document.getElementById("hours").textContent = "00";
+      document.getElementById("minutes").textContent = "00";
+      document.getElementById("seconds").textContent = "00";
+      return;
+    }
+
+    // Uncomment when we move to the other banner
+    document.getElementById("days").textContent = days.value;
+    document.getElementById("days-label").textContent = days.label;
+    document.getElementById("hours").textContent = hours.value;
+    document.getElementById("hours-label").textContent = hours.label;
+    document.getElementById("minutes").textContent = minutes.value;
+    document.getElementById("minutes-label").textContent = minutes.label;
+    document.getElementById("seconds").textContent = seconds.value;
+    document.getElementById("seconds-label").textContent = seconds.label;
+  }
+
+  function showCountDown() {
+    const elements = document.querySelectorAll<HTMLElement>(".time");
+    elements.forEach((element) => {
+      element.style.visibility = "visible";
+    });
+  }
+
+  function timeUntilTargetPST(
+    targetYear: number,
+    targetMonth: number,
+    targetDay: number
+  ) {
+    const now = new Date();
+
+    // Extract the UTC year, month, day, hour, minute, and second
+    const year = now.getUTCFullYear();
+    const month = now.getUTCMonth();
+    const date = now.getUTCDate();
+    const hour = now.getUTCHours();
+    const minute = now.getUTCMinutes();
+    const second = now.getUTCSeconds();
+
+    // Create a current UTC date object
+    const currentUTC = new Date(
+      Date.UTC(year, month, date, hour, minute, second)
+    ) as any;
+
+    // Construct the target UTC date at 8 AM UTC (midnight PST)
+    const targetUTC = new Date(
+      Date.UTC(targetYear, targetMonth - 1, targetDay, 8, 0, 0)
+    ) as any;
+
+    let delta = (targetUTC - currentUTC) / 1000;
+
+    const days = Math.floor(delta / 86400);
+    delta -= days * 86400;
+
+    const hours = Math.floor(delta / 3600) % 24;
+    delta -= hours * 3600;
+
+    const minutes = Math.floor(delta / 60) % 60;
+    delta -= minutes * 60;
+
+    const seconds = delta % 60;
+
+    return {
+      days: {
+        value: String(days).padStart(2, "0"),
+        label: days === 1 ? "day" : "days",
+      },
+      hours: {
+        value: String(hours).padStart(2, "0"),
+        label: hours === 1 ? "hour" : "hours",
+      },
+      minutes: {
+        value: String(minutes).padStart(2, "0"),
+        label: minutes === 1 ? "minute" : "minutes",
+      },
+      seconds: {
+        value: String(seconds).padStart(2, "0"),
+        label: seconds === 1 ? "second" : "seconds",
+      },
+      hasExpired: targetUTC < currentUTC,
+    };
+  }
+</script>

@@ -152,7 +152,7 @@ video {
   --brand-pink: #f38ba3;
   --brand-green: #0ba95b;
   --brand-purple: #7b5ea7;
-  --brand-biege: #f9f4da;
+  --brand-beige: #f9f4da;
   --brand-blue: #12b5e5;
   --brand-orange: #fc7428;
   --brand-red: #ed203d;
@@ -161,7 +161,7 @@ video {
   --magesticPurple: #9d7dce;
 
   --red: var(--brand-red);
-  --white: var(--brand-biege);
+  --white: var(--brand-beige);
   --purple: var(--brand-purple);
   --black: var(--brand-coal);
   --blue: var(--brand-blue);
@@ -247,7 +247,6 @@ h1 {
 h2 {
   font-size: var(--font-md);
 }
-
 
 small {
   font-size: var(--font-sm);
