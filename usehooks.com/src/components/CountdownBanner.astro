@@ -65,21 +65,16 @@ import Button from "../components/Button.astro";
     </div>
   </div>
   <p>
-    Get up to <strong>25% off</strong> the react.gg course, plus a <strong>FREE</strong> ui.dev t-shirt if you buy before this giant clock goes to zero.
+    Want to learn how to build useHooks yourself? Get 25% off our brand new
+    React course during our launch sale.
   </p>
   <Button
     type="link"
-    href="https://react.gg/#register"
+    href="https://react.gg/"
     color="yellow"
     size="large"
-    text="Get the course + t-shirt now"
+    text="Check it out"
   />
-  <!-- <ol class="footnotes">
-    <li>Literally the cheapest this course will ever be</li>
-    <li>Our shirts are very soft</li>
-    <li>We’ll probably send you stickers too</li>
-    <li>We might lose money on this but wdgaf</li>
-  </ol> -->
 </section>
 
 <style>
@@ -115,8 +110,9 @@ import Button from "../components/Button.astro";
 
   .banner p {
     text-align: center;
-    max-width: 50ch;
+    max-width: 45ch;
     justify-self: center;
+    margin-top: 8px;
   }
 
   .info-main {
@@ -125,6 +121,7 @@ import Button from "../components/Button.astro";
 
   p {
     line-height: 1.3;
+    font-size: 20px;
   }
 
   p strong {
@@ -141,28 +138,17 @@ import Button from "../components/Button.astro";
     transform: translateY(-0.2em);
   }
 
+  p a {
+    color: var(--white);
+  }
+
   .button {
     margin: 1rem 0;
     justify-self: center;
   }
 
   .day-one .button.large {
-    padding-right: 5em !important;
     position: relative;
-  }
-
-  .day-one .button::after {
-    content: "";
-    width: 5.4em;
-    aspect-ratio: 46 / 40;
-    display: block;
-    position: absolute;
-    right: -1%;
-    top: 50%;
-    background-repeat: no-repeat;
-    background-image: url("/img/bytes-tshirt.png");
-    background-size: contain;
-    transform: translateY(-52%) rotate(15deg);
   }
 
   .footnotes {
