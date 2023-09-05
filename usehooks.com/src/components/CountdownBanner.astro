@@ -2,8 +2,7 @@
 import Button from "../components/Button.astro";
 ---
 
-<!-- Show this one on Day 2 of launch week -->
-<!-- <section class="banner week">
+<!-- Show this one on Day 2 of launch week --><!-- <section class="banner week">
   <h3><img src="/img/react-gg-logo-sticker.svg" width="358" height="86" alt="react.gg" /> Launch Week Sale</h3>
   <div class="countdown">
     <div class="number day">
@@ -37,28 +36,36 @@ import Button from "../components/Button.astro";
   <ol class="footnotes">
     <li>Literally the cheapest this course will ever be</li>
   </ol>
-</section> -->
-<!-- Show this one on Day 1 of launch week -->
+</section> --><!-- Show this one on Day 1 of launch week -->
 <section class="banner day-one">
-  <h3><img src="/img/react-gg-logo-sticker.svg" width="358" height="86" alt="react.gg" /> Launch Day Sale</h3>
+  <h3>
+    <img
+      src="/img/react-gg-logo-sticker.svg"
+      width="358"
+      height="86"
+      alt="react.gg"
+    /> Launch Day Sale
+  </h3>
   <div class="countdown">
+    <div class="number day">
+      <span id="days" class="time">--</span>
+      <span id="days-label" class="unit">day(s)</span>
+    </div>
     <div class="number hour">
-      <span id="hours" class="time">22</span>
-      <span class="unit">hours</span>
+      <span id="hours" class="time">--</span>
+      <span id="hours-label" class="unit">hour(s)</span>
     </div>
     <div class="number minute">
-      <span id="minutes" class="time">47</span>
-      <span class="unit">minutes</span>
+      <span id="minutes" class="time">--</span>
+      <span id="minutes-label" class="unit">minute(s)</span>
     </div>
     <div class="number second">
-      <span id="seconds" class="time">12</span>
-      <span class="unit">seconds</span>
+      <span id="seconds" class="time">--</span>
+      <span id="seconds-label" class="unit">second(s)</span>
     </div>
   </div>
   <p>
-    Get up to <strong>25% off</strong><sup>1</sup> the react.gg course, plus a <strong
-      >FREE</strong
-    > ui.dev t-shirt<sup>2,3,4</sup> if you buy before this giant clock goes to zero.
+    Get up to <strong>25% off</strong> the react.gg course, plus a <strong>FREE</strong> ui.dev t-shirt if you buy before this giant clock goes to zero.
   </p>
   <Button
     type="link"
@@ -67,12 +74,12 @@ import Button from "../components/Button.astro";
     size="large"
     text="Get the course + t-shirt now"
   />
-  <ol class="footnotes">
+  <!-- <ol class="footnotes">
     <li>Literally the cheapest this course will ever be</li>
     <li>Our shirts are very soft</li>
     <li>We’ll probably send you stickers too</li>
     <li>We might lose money on this but wdgaf</li>
-  </ol>
+  </ol> -->
 </section>
 
 <style>
@@ -92,7 +99,7 @@ import Button from "../components/Button.astro";
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: .5rem;
+    gap: 0.5rem;
     background-color: var(--brand-pink);
     border: var(--border-dark);
     border-radius: 0.3rem;
@@ -219,7 +226,7 @@ import Button from "../components/Button.astro";
     const { days, hours, minutes, seconds, hasExpired } = timeUntilTargetPST(
       2023,
       9,
-      12
+      7
     );
 
     if (hasExpired) {
@@ -233,19 +240,14 @@ import Button from "../components/Button.astro";
     }
 
     // Uncomment when we move to the other banner
-    // document.getElementById("days").textContent = String(days).padStart(2, "0");
-    document.getElementById("hours").textContent = String(hours).padStart(
-      2,
-      "0"
-    );
-    document.getElementById("minutes").textContent = String(minutes).padStart(
-      2,
-      "0"
-    );
-    document.getElementById("seconds").textContent = String(seconds).padStart(
-      2,
-      "0"
-    );
+    document.getElementById("days").textContent = days.value;
+    document.getElementById("days-label").textContent = days.label;
+    document.getElementById("hours").textContent = hours.value;
+    document.getElementById("hours-label").textContent = hours.label;
+    document.getElementById("minutes").textContent = minutes.value;
+    document.getElementById("minutes-label").textContent = minutes.label;
+    document.getElementById("seconds").textContent = seconds.value;
+    document.getElementById("seconds-label").textContent = seconds.label;
   }
 
   function showCountDown() {
@@ -294,10 +296,22 @@ import Button from "../components/Button.astro";
     const seconds = delta % 60;
 
     return {
-      days: String(days).padStart(2, "0"),
-      hours: String(hours).padStart(2, "0"),
-      minutes: String(minutes).padStart(2, "0"),
-      seconds: String(seconds).padStart(2, "0"),
+      days: {
+        value: String(days).padStart(2, "0"),
+        label: days === 1 ? "day" : "days",
+      },
+      hours: {
+        value: String(hours).padStart(2, "0"),
+        label: hours === 1 ? "hour" : "hours",
+      },
+      minutes: {
+        value: String(minutes).padStart(2, "0"),
+        label: minutes === 1 ? "minute" : "minutes",
+      },
+      seconds: {
+        value: String(seconds).padStart(2, "0"),
+        label: seconds === 1 ? "second" : "seconds",
+      },
       hasExpired: targetUTC < currentUTC,
     };
   }
