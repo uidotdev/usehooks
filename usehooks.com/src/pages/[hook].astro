@@ -5,7 +5,6 @@ import NavInternal from "../sections/NavInternal.astro";
 import Footer from "../sections/Footer.astro";
 import Install from "../components/Install.astro";
 import HooksList from "../components/search/HooksList";
-import CountdownBanner from "../components/CountdownBanner.astro";
 
 export async function getStaticPaths() {
   const hooks = await getCollection("hooks");
@@ -46,7 +45,6 @@ const hooks = await getCollection("hooks").then((hooks) => {
   description={tagline}
   ogImage={ogImage}
 >
-  <CountdownBanner />
   <NavInternal />
   <main>
     <section>

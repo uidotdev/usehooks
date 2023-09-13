@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import CountdownBanner from "../components/CountdownBanner.astro";
 import NavMain from "../sections/NavMain.astro";
 import HomeHero from "../sections/HomeHero.astro";
 import HooksList from "../components/search/HooksList";
@@ -14,7 +13,6 @@ const hooks = await getCollection("hooks");
   title="useHooks – The React Hooks Library"
   description="A collection of modern, server-safe React hooks – from the ui.dev team"
 >
-  <CountdownBanner />
   <NavMain />
   <HomeHero />
   <HooksList client:load hooks={hooks} />
