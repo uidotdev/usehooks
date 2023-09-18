@@ -1,6 +1,6 @@
 {
   "name": "@uidotdev/usehooks",
-  "version": "2.2.1-experimental.0",
+  "version": "2.2.1-experimental.1",
   "description": "A collection of modern, server-safe React hooks – from the ui.dev team",
   "type": "module",
   "repository": "uidotdev/usehooks",
