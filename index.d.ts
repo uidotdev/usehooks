@@ -176,6 +176,11 @@ declare module "@uidotdev/usehooks" {
 
   export function useList<T>(defaultList?: T[]): [T[], CustomList<T>];
 
+  export function useLocalStorage<T>(
+    key: string,
+    initialValue?: T
+  ): [T, React.Dispatch<React.SetStateAction<T>>];
+
   export function useLockBodyScroll(): void;
 
   export function useLongPress(
