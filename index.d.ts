@@ -82,6 +82,7 @@ export type CustomQueue<T> = {
   first: T | undefined;
   last: T | undefined;
   size: number;
+  queue: T[];
 };
 
 export type RenderInfo = {
