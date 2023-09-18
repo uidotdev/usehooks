@@ -13,11 +13,7 @@ import HookDescription from "../../components/HookDescription.astro";
 import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
 
 <HookDescription name={frontmatter.name}>
-  The useIsClient hook is useful for determining whether the code is running on
-  the client-side or server-side. The hook initializes a state variable called
-  "isClient" and sets its initial value to false. This information can be
-  utilized in conditional rendering, handling browser-specific behavior, or
-  making API calls that should only be executed on the client-side.
+  useIsClient is useful for determining if it's safe to run certain client-only hooks like useMediaQuery or useLocalStorage. It returns a boolean determining if React's useEffect hook has finished running (which means the app is being rendered on the client and it's safe to use browser specific APIs).
 </HookDescription>
 
 <div class="reference">
