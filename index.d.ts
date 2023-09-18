@@ -231,6 +231,11 @@ declare module "@uidotdev/usehooks" {
     }
   ): "idle" | "loading" | "ready" | "error";
 
+  export function useSessionStorage<T>(
+    key: string,
+    initialValue: T
+  ): [T, React.Dispatch<React.SetStateAction<T>>];
+
   export function useSet<T>(values?: T[]): Set<T>;
 
   export function useSpeech(text: string, options?: SpeechOptions): SpeechState;
