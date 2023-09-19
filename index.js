@@ -516,7 +516,7 @@ const useHistoryStateReducer = (state, action) => {
     };
   } else if (action.type === "CLEAR") {
     return {
-      ...initialState,
+      ...initialUseHistoryStateState,
       present: action.initialPresent,
     };
   } else {
