@@ -414,29 +414,19 @@ export function useHistoryState(initialPresent = {}) {
 
 export function useHover() {
   const [hovering, setHovering] = React.useState(false);
-  const ref = React.useRef(null);
-
-  React.useEffect(() => {
-    const node = ref.current;
-
-    if (!node) return;
-
+  
+  const ref = React.useCallback((node) => {
     const handleMouseEnter = () => {
       setHovering(true);
     };
-
     const handleMouseLeave = () => {
       setHovering(false);
     };
-
-    node.addEventListener("mouseenter", handleMouseEnter);
-    node.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      node.removeEventListener("mouseenter", handleMouseEnter);
-      node.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
+    if (node) {
+      node.addEventListener("mouseenter", handleMouseEnter);
+      node.addEventListener("mouseleave", handleMouseLeave);
+    }
+  })
 
   return [ref, hovering];
 }
