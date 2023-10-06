@@ -634,7 +634,7 @@ export function useLocalStorage(key, initialValue) {
 }
 
 export function useLockBodyScroll() {
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = "hidden";
     return () => {
