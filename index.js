@@ -1081,52 +1081,36 @@ export function useRenderInfo(name = "Unknown") {
 }
 
 export function useScript(src, options = {}) {
-  const [status, setStatus] = React.useState(() => {
-    if (!src) {
-      return "idle";
-    }
-
-    return "loading";
-  });
-
-  const cachedScriptStatuses = React.useRef({});
+  const [status, setStatus] = React.useState("loading");
+  const optionsRef = React.useRef(options);
 
   React.useEffect(() => {
-    if (!src) return;
-
-    const cachedScriptStatus = cachedScriptStatuses.current[src];
-    if (cachedScriptStatus === "ready" || cachedScriptStatus === "error") {
-      setStatus(cachedScriptStatus);
-      return;
-    }
-
     let script = document.querySelector(`script[src="${src}"]`);
 
-    if (!script) {
+    if (script === null) {
       script = document.createElement("script");
       script.src = src;
       script.async = true;
       document.body.appendChild(script);
     }
 
-    const handleScriptStatus = (event) => {
-      const newStatus = event.type === "load" ? "ready" : "error";
-      setStatus(newStatus);
-      cachedScriptStatuses.current[src] = newStatus;
-    };
+    const handleScriptLoad = () => setStatus("ready");
+    const handleScriptError = () => setStatus("error");
 
-    script.addEventListener("load", handleScriptStatus);
-    script.addEventListener("error", handleScriptStatus);
+    script.addEventListener("load", handleScriptLoad);
+    script.addEventListener("error", handleScriptError);
+
+    const removeOnUnmount = optionsRef.current.removeOnUnmount;
 
     return () => {
-      script.removeEventListener("load", handleScriptStatus);
-      script.removeEventListener("error", handleScriptStatus);
+      script.removeEventListener("load", handleScriptLoad);
+      script.removeEventListener("error", handleScriptError);
 
-      if (options.removeOnUnmount === true) {
+      if (removeOnUnmount === true) {
         script.remove();
       }
     };
-  }, [src, options.removeOnUnmount]);
+  }, [src]);
 
   return status;
 }
