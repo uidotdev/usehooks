@@ -162,13 +162,13 @@ export function useCopyToClipboard() {
 export function useCounter(startingValue = 0, options = {}) {
   const { min, max } = options;
 
-  if (min && startingValue < min) {
+  if (typeof min === "number" && startingValue < min) {
     throw new Error(
       `Your starting value of ${startingValue} is less than your min of ${min}.`
     );
   }
 
-  if (max && startingValue > max) {
+  if (typeof max === "number" && startingValue > max) {
     throw new Error(
       `Your starting value of ${startingValue} is greater than your max of ${max}.`
     );
@@ -176,47 +176,50 @@ export function useCounter(startingValue = 0, options = {}) {
 
   const [count, setCount] = React.useState(startingValue);
 
-  const increment = () => {
-    const nextCount = count + 1;
-    if (max && nextCount > max) {
-      return;
-    }
+  const increment = React.useCallback(() => {
+    setCount((c) => {
+      const nextCount = c + 1;
 
-    setCount(nextCount);
-  };
+      if (typeof max === "number" && nextCount > max) {
+        return c;
+      }
 
-  const decrement = () => {
-    const nextCount = count - 1;
-    if (min && nextCount < min) {
-      return;
-    }
+      return nextCount;
+    });
+  }, [max]);
 
-    setCount(nextCount);
-  };
+  const decrement = React.useCallback(() => {
+    setCount((c) => {
+      const nextCount = c - 1;
 
-  const set = (nextCount) => {
-    if (max && nextCount > max) {
-      return;
-    }
+      if (typeof min === "number" && nextCount < min) {
+        return c;
+      }
 
-    if (min && nextCount < min) {
-      return;
-    }
+      return nextCount;
+    });
+  }, [min]);
 
-    if (nextCount === count) {
-      return;
-    }
+  const set = React.useCallback(
+    (nextCount) => {
+      setCount((c) => {
+        if (typeof max === "number" && nextCount > max) {
+          return c;
+        }
 
-    setCount(nextCount);
-  };
+        if (typeof min === "number" && nextCount < min) {
+          return c;
+        }
 
-  const reset = () => {
-    if (count === startingValue) {
-      return;
-    }
+        return nextCount;
+      });
+    },
+    [max, min]
+  );
 
+  const reset = React.useCallback(() => {
     setCount(startingValue);
-  };
+  }, [startingValue]);
 
   return [
     count,
