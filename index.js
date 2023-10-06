@@ -38,9 +38,13 @@ function throttle(cb, ms) {
   };
 }
 
-const dispatchStorageEvent = (key, newValue) => {
+function isPlainObject(value) {
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
+
+function dispatchStorageEvent(key, newValue) {
   window.dispatchEvent(new StorageEvent("storage", { key, newValue }));
-};
+}
 
 export function useBattery() {
   const [state, setState] = React.useState({
@@ -910,14 +914,16 @@ export function useObjectState(initialValue) {
       setState((s) => {
         const newState = arg(s);
 
-        return {
-          ...s,
-          ...newState,
-        };
+        if (isPlainObject(newState)) {
+          return {
+            ...s,
+            ...newState,
+          };
+        }
       });
     }
 
-    if (typeof arg === "object") {
+    if (isPlainObject(arg)) {
       setState((s) => ({
         ...s,
         ...arg,
