@@ -266,13 +266,17 @@ export function useDocumentTitle(title) {
 
 export function useFavicon(url) {
   React.useEffect(() => {
-    const link =
-      document.querySelector("link[rel*='icon']") ||
-      document.createElement("link");
-    link.type = "image/x-icon";
-    link.rel = "shortcut icon";
-    link.href = url;
-    document.getElementsByTagName("head")[0].appendChild(link);
+    let link = document.querySelector(`link[rel~="icon"]`);
+
+    if (!link) {
+      link = document.createElement("link");
+      link.type = "image/x-icon";
+      link.rel = "icon";
+      link.href = url;
+      document.head.appendChild(link);
+    } else {
+      link.href = url;
+    }
   }, [url]);
 }
 
