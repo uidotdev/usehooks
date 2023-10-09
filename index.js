@@ -827,8 +827,8 @@ export function useMouse() {
 
       if (ref.current instanceof HTMLElement) {
         const { left, top } = ref.current.getBoundingClientRect();
-        const elementPositionX = left + window.pageXOffset;
-        const elementPositionY = top + window.pageYOffset;
+        const elementPositionX = left + window.scrollX;
+        const elementPositionY = top + window.scrollY;
         const elementX = event.pageX - elementPositionX;
         const elementY = event.pageY - elementPositionY;
 
