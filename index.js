@@ -425,31 +425,40 @@ export function useHistoryState(initialPresent = {}) {
 
 export function useHover() {
   const [hovering, setHovering] = React.useState(false);
-  const ref = React.useRef(null);
+  const previousNode = React.useRef(null);
 
-  React.useEffect(() => {
-    const node = ref.current;
-
-    if (!node) return;
-
-    const handleMouseEnter = () => {
-      setHovering(true);
-    };
-
-    const handleMouseLeave = () => {
-      setHovering(false);
-    };
-
-    node.addEventListener("mouseenter", handleMouseEnter);
-    node.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      node.removeEventListener("mouseenter", handleMouseEnter);
-      node.removeEventListener("mouseleave", handleMouseLeave);
-    };
+  const handleMouseEnter = React.useCallback(() => {
+    setHovering(true);
   }, []);
 
-  return [ref, hovering];
+  const handleMouseLeave = React.useCallback(() => {
+    setHovering(false);
+  }, []);
+
+  const customRef = React.useCallback(
+    (node) => {
+      if (previousNode.current instanceof HTMLElement) {
+        previousNode.current.removeEventListener(
+          "mouseenter",
+          handleMouseEnter
+        );
+        previousNode.current.removeEventListener(
+          "mouseleave",
+          handleMouseLeave
+        );
+      }
+
+      if (node instanceof HTMLElement) {
+        node.addEventListener("mouseenter", handleMouseEnter);
+        node.addEventListener("mouseleave", handleMouseLeave);
+      }
+
+      previousNode.current = node;
+    },
+    [handleMouseEnter, handleMouseLeave]
+  );
+
+  return [customRef, hovering];
 }
 
 export function useIdle(ms = 1000 * 60) {
