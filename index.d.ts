@@ -128,6 +128,19 @@ declare module "@uidotdev/usehooks" {
     (value: string) => Promise<void>
   ];
 
+  export function useContinuousRetry(
+    callback: () => any,
+    interval?: number,
+    options?: {
+      maxRetries?: number
+    }): boolean;
+
+  export function useCountdown(endTime: number, options: {
+    interval: number,
+    onComplete: () => any,
+    onTick: () => any
+  }): number;
+
   export function useCounter(
     startingValue?: number,
     options?: {
@@ -135,14 +148,14 @@ declare module "@uidotdev/usehooks" {
       max?: number;
     }
   ): [
-    number,
-    {
-      increment: () => void;
-      decrement: () => void;
-      set: (nextCount: number) => void;
-      reset: () => void;
-    }
-  ];
+      number,
+      {
+        increment: () => void;
+        decrement: () => void;
+        set: (nextCount: number) => void;
+        reset: () => void;
+      }
+    ];
 
   export function useDebounce<T>(value: T, delay: number): T;
 
@@ -153,7 +166,24 @@ declare module "@uidotdev/usehooks" {
 
   export function useDocumentTitle(title: string): void;
 
+  export function useEventListener(
+    target: React.MutableRefObject<Element> | Element,
+    eventName: string,
+    handler: (Event) => any,
+    options?: {
+      capture?: boolean,
+      passive?: boolean,
+      once?: boolean
+    }): void;
+
   export function useFavicon(url: string): void;
+
+  export function useFetch(
+    url: string,
+    options?: {}): {
+      error: Error | undefined,
+      data: any | undefined
+    }
 
   export function useGeolocation(options?: PositionOptions): GeolocationState;
 
@@ -170,9 +200,28 @@ declare module "@uidotdev/usehooks" {
     options?: IntersectionObserverInit
   ): [React.MutableRefObject<T>, IntersectionObserverEntry | null];
 
+  export function useInterval(cb: () => any, ms: number): () => void;
+
+  export function useIntervalWhen(
+    cb: () => any,
+    options: {
+      ms: number,
+      when: boolean,
+      startImmediately?: boolean
+    }): () => void;
+
   export function useIsClient(): boolean;
 
   export function useIsFirstRender(): boolean;
+
+  export function useKeyPress(
+    key: string,
+    cb: (Event) => any,
+    options?: {
+      event?: string,
+      target?: Element | Window,
+      eventOptions?: {}
+    }): void;
 
   export function useList<T>(defaultList?: T[]): [T[], CustomList<T>];
 
@@ -182,6 +231,8 @@ declare module "@uidotdev/usehooks" {
   ): [T, React.Dispatch<React.SetStateAction<T>>];
 
   export function useLockBodyScroll(): void;
+
+  export function useLogger(name: string, ...rest: any[]): void;
 
   export function useLongPress(
     callback: (e: Event) => void,
@@ -214,11 +265,18 @@ declare module "@uidotdev/usehooks" {
     type: string;
   };
 
+  export function usePageLeave(cb: () => any): void;
+
   export function usePreferredLanguage(): string;
 
   export function usePrevious<T>(newValue: T): T;
 
   export function useQueue<T>(initialValue?: T[]): CustomQueue<T>;
+
+  export function useRandomInterval(cb: () => any, options: {
+    minDelay: number,
+    maxDelay: number
+  }): () => void;
 
   export function useRenderCount(): number;
 
@@ -241,6 +299,8 @@ declare module "@uidotdev/usehooks" {
   export function useSpeech(text: string, options?: SpeechOptions): SpeechState;
 
   export function useThrottle<T>(value: T, delay: number): T;
+
+  export function useTimeout(cb: () => any, ms: number): () => void;
 
   export function useToggle(
     initialValue?: boolean
