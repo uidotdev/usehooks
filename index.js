@@ -510,33 +510,34 @@ export function useIdle(ms = 1000 * 60) {
 }
 
 export function useIntersectionObserver(options = {}) {
-  const { threshold = 1, root = null, rootMargin = "0%" } = options;
-  const ref = React.useRef(null);
+  const { threshold = 1, root = null, rootMargin = "0px" } = options;
   const [entry, setEntry] = React.useState(null);
 
-  React.useEffect(() => {
-    const node = ref?.current;
+  const previousObserver = React.useRef(null);
 
-    if (!node || typeof IntersectionObserver !== "function") {
-      return;
-    }
+  const customRef = React.useCallback(
+    (node) => {
+      if (previousObserver.current) {
+        previousObserver.current.disconnect();
+        previousObserver.current = null;
+      }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setEntry(entry);
-      },
-      { threshold, root, rootMargin }
-    );
+      if (node instanceof HTMLElement) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            setEntry(entry);
+          },
+          { threshold, root, rootMargin }
+        );
 
-    observer.observe(node);
+        observer.observe(node);
+        previousObserver.current = observer;
+      }
+    },
+    [threshold, root, rootMargin]
+  );
 
-    return () => {
-      setEntry(null);
-      observer.disconnect();
-    };
-  }, [threshold, root, rootMargin]);
-
-  return [ref, entry];
+  return [customRef, entry];
 }
 
 export function useIsClient() {
