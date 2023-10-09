@@ -750,31 +750,35 @@ export function useMap(initialState) {
 }
 
 export function useMeasure() {
-  const ref = React.useRef(null);
-  const [rect, setRect] = React.useState({
+  const [dimensions, setDimensions] = React.useState({
     width: null,
     height: null,
   });
 
-  React.useLayoutEffect(() => {
-    if (!ref.current) return;
+  const previousObserver = React.useRef(null);
 
-    const observer = new ResizeObserver(([entry]) => {
-      if (entry && entry.contentRect) {
-        setRect({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        });
-      }
-    });
+  const customRef = React.useCallback((node) => {
+    if (previousObserver.current) {
+      previousObserver.current.disconnect();
+      previousObserver.current = null;
+    }
 
-    observer.observe(ref.current);
-    return () => {
-      observer.disconnect();
-    };
+    if (node instanceof HTMLElement) {
+      const observer = new ResizeObserver(([entry]) => {
+        if (entry && entry.borderBoxSize) {
+          const { inlineSize: width, blockSize: height } =
+            entry.borderBoxSize[0];
+
+          setDimensions({ width, height });
+        }
+      });
+
+      observer.observe(node);
+      previousObserver.current = observer;
+    }
   }, []);
 
-  return [ref, rect];
+  return [customRef, dimensions];
 }
 
 export function useMediaQuery(query) {
