@@ -40,9 +40,13 @@ function throttle(cb, ms) {
   };
 }
 
-const dispatchStorageEvent = (key, newValue) => {
+function isPlainObject(value) {
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
+
+function dispatchStorageEvent(key, newValue) {
   window.dispatchEvent(new StorageEvent("storage", { key, newValue }));
-};
+}
 
 export function useBattery() {
   const [state, setState] = React.useState({
@@ -220,13 +224,13 @@ export function useCountdown(endTime, options) {
 export function useCounter(startingValue = 0, options = {}) {
   const { min, max } = options;
 
-  if (min && startingValue < min) {
+  if (typeof min === "number" && startingValue < min) {
     throw new Error(
       `Your starting value of ${startingValue} is less than your min of ${min}.`
     );
   }
 
-  if (max && startingValue > max) {
+  if (typeof max === "number" && startingValue > max) {
     throw new Error(
       `Your starting value of ${startingValue} is greater than your max of ${max}.`
     );
@@ -234,47 +238,50 @@ export function useCounter(startingValue = 0, options = {}) {
 
   const [count, setCount] = React.useState(startingValue);
 
-  const increment = () => {
-    const nextCount = count + 1;
-    if (max && nextCount > max) {
-      return;
-    }
+  const increment = React.useCallback(() => {
+    setCount((c) => {
+      const nextCount = c + 1;
 
-    setCount(nextCount);
-  };
+      if (typeof max === "number" && nextCount > max) {
+        return c;
+      }
 
-  const decrement = () => {
-    const nextCount = count - 1;
-    if (min && nextCount < min) {
-      return;
-    }
+      return nextCount;
+    });
+  }, [max]);
 
-    setCount(nextCount);
-  };
+  const decrement = React.useCallback(() => {
+    setCount((c) => {
+      const nextCount = c - 1;
 
-  const set = (nextCount) => {
-    if (max && nextCount > max) {
-      return;
-    }
+      if (typeof min === "number" && nextCount < min) {
+        return c;
+      }
 
-    if (min && nextCount < min) {
-      return;
-    }
+      return nextCount;
+    });
+  }, [min]);
 
-    if (nextCount === count) {
-      return;
-    }
+  const set = React.useCallback(
+    (nextCount) => {
+      setCount((c) => {
+        if (typeof max === "number" && nextCount > max) {
+          return c;
+        }
 
-    setCount(nextCount);
-  };
+        if (typeof min === "number" && nextCount < min) {
+          return c;
+        }
 
-  const reset = () => {
-    if (count === startingValue) {
-      return;
-    }
+        return nextCount;
+      });
+    },
+    [max, min]
+  );
 
+  const reset = React.useCallback(() => {
     setCount(startingValue);
-  };
+  }, [startingValue]);
 
   return [
     count,
@@ -330,20 +337,24 @@ export function useEventListener(target, eventName, handler, options) {
     targetElement.addEventListener(eventName, onEvent, options);
 
     return () => {
-      targetElement.removeEventListener(eventName, onEvent);
+      targetElement.removeEventListener(eventName, onEvent, options);
     };
   }, [target, eventName, options]);
 }
 
 export function useFavicon(url) {
   React.useEffect(() => {
-    const link =
-      document.querySelector("link[rel*='icon']") ||
-      document.createElement("link");
-    link.type = "image/x-icon";
-    link.rel = "shortcut icon";
-    link.href = url;
-    document.getElementsByTagName("head")[0].appendChild(link);
+    let link = document.querySelector(`link[rel~="icon"]`);
+
+    if (!link) {
+      link = document.createElement("link");
+      link.type = "image/x-icon";
+      link.rel = "icon";
+      link.href = url;
+      document.head.appendChild(link);
+    } else {
+      link.href = url;
+    }
   }, [url]);
 }
 
@@ -516,7 +527,7 @@ const useHistoryStateReducer = (state, action) => {
     };
   } else if (action.type === "CLEAR") {
     return {
-      ...initialState,
+      ...initialUseHistoryStateState,
       present: action.initialPresent,
     };
   } else {
@@ -563,31 +574,40 @@ export function useHistoryState(initialPresent = {}) {
 
 export function useHover() {
   const [hovering, setHovering] = React.useState(false);
-  const ref = React.useRef(null);
+  const previousNode = React.useRef(null);
 
-  React.useEffect(() => {
-    const node = ref.current;
-
-    if (!node) return;
-
-    const handleMouseEnter = () => {
-      setHovering(true);
-    };
-
-    const handleMouseLeave = () => {
-      setHovering(false);
-    };
-
-    node.addEventListener("mouseenter", handleMouseEnter);
-    node.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      node.removeEventListener("mouseenter", handleMouseEnter);
-      node.removeEventListener("mouseleave", handleMouseLeave);
-    };
+  const handleMouseEnter = React.useCallback(() => {
+    setHovering(true);
   }, []);
 
-  return [ref, hovering];
+  const handleMouseLeave = React.useCallback(() => {
+    setHovering(false);
+  }, []);
+
+  const customRef = React.useCallback(
+    (node) => {
+      if (previousNode.current instanceof HTMLElement) {
+        previousNode.current.removeEventListener(
+          "mouseenter",
+          handleMouseEnter
+        );
+        previousNode.current.removeEventListener(
+          "mouseleave",
+          handleMouseLeave
+        );
+      }
+
+      if (node instanceof HTMLElement) {
+        node.addEventListener("mouseenter", handleMouseEnter);
+        node.addEventListener("mouseleave", handleMouseLeave);
+      }
+
+      previousNode.current = node;
+    },
+    [handleMouseEnter, handleMouseLeave]
+  );
+
+  return [customRef, hovering];
 }
 
 export function useIdle(ms = 1000 * 60) {
@@ -639,47 +659,48 @@ export function useIdle(ms = 1000 * 60) {
 }
 
 export function useIntersectionObserver(options = {}) {
-  const { threshold = 1, root = null, rootMargin = "0%" } = options;
-  const ref = React.useRef(null);
+  const { threshold = 1, root = null, rootMargin = "0px" } = options;
   const [entry, setEntry] = React.useState(null);
 
-  React.useEffect(() => {
-    const node = ref?.current;
+  const previousObserver = React.useRef(null);
 
-    if (!node || typeof IntersectionObserver !== "function") {
-      return;
-    }
+  const customRef = React.useCallback(
+    (node) => {
+      if (previousObserver.current) {
+        previousObserver.current.disconnect();
+        previousObserver.current = null;
+      }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setEntry(entry);
-      },
-      { threshold, root, rootMargin }
-    );
+      if (node instanceof HTMLElement) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            setEntry(entry);
+          },
+          { threshold, root, rootMargin }
+        );
 
-    observer.observe(node);
+        observer.observe(node);
+        previousObserver.current = observer;
+      }
+    },
+    [threshold, root, rootMargin]
+  );
 
-    return () => {
-      setEntry(null);
-      observer.disconnect();
-    };
-  }, [threshold, root, rootMargin]);
-
-  return [ref, entry];
+  return [customRef, entry];
 }
 
 export function useInterval(cb, ms) {
   const id = React.useRef(null);
   const onInterval = React.useEffectEvent(cb);
 
-  const handleClearInterval = () => {
+  const handleClearInterval = React.useCallback(() => {
     window.clearInterval(id.current);
-  };
+  }, []);
 
   React.useEffect(() => {
     id.current = window.setInterval(onInterval, ms);
     return handleClearInterval;
-  }, [ms]);
+  }, [ms, handleClearInterval]);
 
   return handleClearInterval;
 }
@@ -691,26 +712,23 @@ export function useIntervalWhen(cb, { ms, when, startImmediately }) {
     startImmediately === true ? false : null
   );
 
-  const handleClearInterval = () => {
+  const handleClearInterval = React.useCallback(() => {
     window.clearInterval(id.current);
     immediatelyCalled.current = false;
-  };
+  }, []);
 
   React.useEffect(() => {
-    if (
-      when === true &&
-      startImmediately === true &&
-      immediatelyCalled.current === false
-    ) {
-      onTick();
-      immediatelyCalled.current = true;
-    }
-
     if (when === true) {
       id.current = window.setInterval(onTick, ms);
+
+      if (startImmediately === true && immediatelyCalled.current === false) {
+        onTick();
+        immediatelyCalled.current = true;
+      }
+
       return handleClearInterval;
     }
-  }, [ms, when, startImmediately]);
+  }, [ms, when, startImmediately, handleClearInterval]);
 
   return handleClearInterval;
 }
@@ -749,7 +767,7 @@ export function useKeyPress(key, cb, options = {}) {
     target.addEventListener(event, handler, eventOptions);
 
     return () => {
-      target.removeEventListener(event, handler);
+      target.removeEventListener(event, handler, eventOptions);
     };
   });
 
@@ -873,7 +891,7 @@ export function useLocalStorage(key, initialValue) {
 }
 
 export function useLockBodyScroll() {
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = "hidden";
     return () => {
@@ -972,31 +990,35 @@ export function useMap(initialState) {
 }
 
 export function useMeasure() {
-  const ref = React.useRef(null);
-  const [rect, setRect] = React.useState({
+  const [dimensions, setDimensions] = React.useState({
     width: null,
     height: null,
   });
 
-  React.useLayoutEffect(() => {
-    if (!ref.current) return;
+  const previousObserver = React.useRef(null);
 
-    const observer = new ResizeObserver(([entry]) => {
-      if (entry && entry.contentRect) {
-        setRect({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        });
-      }
-    });
+  const customRef = React.useCallback((node) => {
+    if (previousObserver.current) {
+      previousObserver.current.disconnect();
+      previousObserver.current = null;
+    }
 
-    observer.observe(ref.current);
-    return () => {
-      observer.disconnect();
-    };
+    if (node instanceof HTMLElement) {
+      const observer = new ResizeObserver(([entry]) => {
+        if (entry && entry.borderBoxSize) {
+          const { inlineSize: width, blockSize: height } =
+            entry.borderBoxSize[0];
+
+          setDimensions({ width, height });
+        }
+      });
+
+      observer.observe(node);
+      previousObserver.current = observer;
+    }
   }, []);
 
-  return [ref, rect];
+  return [customRef, dimensions];
 }
 
 export function useMediaQuery(query) {
@@ -1044,8 +1066,8 @@ export function useMouse() {
 
       if (ref.current instanceof HTMLElement) {
         const { left, top } = ref.current.getBoundingClientRect();
-        const elementPositionX = left + window.pageXOffset;
-        const elementPositionY = top + window.pageYOffset;
+        const elementPositionX = left + window.scrollX;
+        const elementPositionY = top + window.scrollY;
         const elementX = event.pageX - elementPositionX;
         const elementY = event.pageY - elementPositionY;
 
@@ -1081,28 +1103,32 @@ const getConnection = () => {
   );
 };
 
-export function useNetworkState() {
-  const cache = React.useRef({});
+const useNetworkStateSubscribe = (callback) => {
+  window.addEventListener("online", callback, { passive: true });
+  window.addEventListener("offline", callback, { passive: true });
 
-  const subscribe = React.useCallback((callback) => {
-    window.addEventListener("online", callback, { passive: true });
-    window.addEventListener("offline", callback, { passive: true });
+  const connection = getConnection();
 
-    const connection = getConnection();
+  if (connection) {
+    connection.addEventListener("change", callback, { passive: true });
+  }
+
+  return () => {
+    window.removeEventListener("online", callback);
+    window.removeEventListener("offline", callback);
 
     if (connection) {
-      connection.addEventListener("change", callback, { passive: true });
+      connection.removeEventListener("change", callback);
     }
+  };
+};
 
-    return () => {
-      window.removeEventListener("online", callback);
-      window.removeEventListener("offline", callback);
+const getNetworkStateServerSnapshot = () => {
+  throw Error("useNetworkState is a client-only hook");
+};
 
-      if (connection) {
-        connection.removeEventListener("change", callback);
-      }
-    };
-  }, []);
+export function useNetworkState() {
+  const cache = React.useRef({});
 
   const getSnapshot = () => {
     const online = navigator.onLine;
@@ -1126,11 +1152,11 @@ export function useNetworkState() {
     }
   };
 
-  const getServerSnapshot = () => {
-    throw Error("useNetworkState is a client-only hook");
-  };
-
-  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return React.useSyncExternalStore(
+    useNetworkStateSubscribe,
+    getSnapshot,
+    getNetworkStateServerSnapshot
+  );
 }
 
 export function useObjectState(initialValue) {
@@ -1141,14 +1167,16 @@ export function useObjectState(initialValue) {
       setState((s) => {
         const newState = arg(s);
 
-        return {
-          ...s,
-          ...newState,
-        };
+        if (isPlainObject(newState)) {
+          return {
+            ...s,
+            ...newState,
+          };
+        }
       });
     }
 
-    if (typeof arg === "object") {
+    if (isPlainObject(arg)) {
       setState((s) => ({
         ...s,
         ...arg,
@@ -1262,9 +1290,9 @@ export function useRandomInterval(cb, { minDelay, maxDelay }) {
   const timeoutId = React.useRef(null);
   const onInterval = React.useEffectEvent(cb);
 
-  const handleClearTimeout = () => {
+  const handleClearTimeout = React.useCallback(() => {
     window.clearTimeout(timeoutId.current);
-  };
+  }, []);
 
   React.useEffect(() => {
     const tick = () => {
@@ -1352,56 +1380,36 @@ export function useRenderInfo(name = "Unknown") {
 }
 
 export function useScript(src, options = {}) {
-  const [status, setStatus] = React.useState(() => {
-    if (!src) {
-      return "idle";
-    }
-
-    return "loading";
-  });
-
-  const cachedScriptStatuses = React.useRef({});
+  const [status, setStatus] = React.useState("loading");
+  const optionsRef = React.useRef(options);
 
   React.useEffect(() => {
-    if (!src) return;
-
-    const cachedScriptStatus = cachedScriptStatuses.current[src];
-    if (cachedScriptStatus === "ready" || cachedScriptStatus === "error") {
-      setStatus(cachedScriptStatus);
-      return;
-    }
-
     let script = document.querySelector(`script[src="${src}"]`);
 
-    if (script) {
-      setStatus(cachedScriptStatus ?? "loading");
-    } else {
+    if (script === null) {
       script = document.createElement("script");
       script.src = src;
       script.async = true;
       document.body.appendChild(script);
     }
 
-    const setStateFromEvent = (event) => {
-      const newStatus = event.type === "load" ? "ready" : "error";
-      setStatus(newStatus);
-      cachedScriptStatuses.current[src] = newStatus;
-    };
+    const handleScriptLoad = () => setStatus("ready");
+    const handleScriptError = () => setStatus("error");
 
-    script.addEventListener("load", setStateFromEvent);
-    script.addEventListener("error", setStateFromEvent);
+    script.addEventListener("load", handleScriptLoad);
+    script.addEventListener("error", handleScriptError);
+
+    const removeOnUnmount = optionsRef.current.removeOnUnmount;
 
     return () => {
-      if (script) {
-        script.removeEventListener("load", setStateFromEvent);
-        script.removeEventListener("error", setStateFromEvent);
-      }
+      script.removeEventListener("load", handleScriptLoad);
+      script.removeEventListener("error", handleScriptError);
 
-      if (script && options.removeOnUnmount) {
+      if (removeOnUnmount === true) {
         script.remove();
       }
     };
-  }, [src, options.removeOnUnmount]);
+  }, [src]);
 
   return status;
 }
@@ -1496,12 +1504,12 @@ export function useSet(values) {
 
 export function useThrottle(value, interval = 500) {
   const [throttledValue, setThrottledValue] = React.useState(value);
-  const lastUpdated = React.useRef();
+  const lastUpdated = React.useRef(null);
 
   React.useEffect(() => {
     const now = Date.now();
 
-    if (now >= lastUpdated.current + interval) {
+    if (lastUpdated.current && now >= lastUpdated.current + interval) {
       lastUpdated.current = now;
       setThrottledValue(value);
     } else {
@@ -1521,21 +1529,27 @@ export function useTimeout(cb, ms) {
   const id = React.useRef(null);
   const onTimeout = React.useEffectEvent(cb);
 
-  const handleClearTimeout = () => {
+  const handleClearTimeout = React.useCallback(() => {
     window.clearTimeout(id.current);
-  };
+  }, []);
 
   React.useEffect(() => {
     id.current = window.setTimeout(onTimeout, ms);
 
     return handleClearTimeout;
-  }, [ms]);
+  }, [ms, handleClearTimeout]);
 
   return handleClearTimeout;
 }
 
 export function useToggle(initialValue) {
-  const [on, setOn] = React.useState(initialValue);
+  const [on, setOn] = React.useState(() => {
+    if (typeof initialValue === "boolean") {
+      return initialValue;
+    }
+
+    return Boolean(initialValue);
+  });
 
   const handleToggle = React.useCallback((value) => {
     if (typeof value === "boolean") {
@@ -1594,7 +1608,7 @@ export function useWindowScroll() {
 
   React.useLayoutEffect(() => {
     const handleScroll = () => {
-      setState({ x: window.pageXOffset, y: window.pageYOffset });
+      setState({ x: window.scrollX, y: window.scrollY });
     };
 
     handleScroll();

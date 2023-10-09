@@ -82,6 +82,7 @@ export type CustomQueue<T> = {
   first: T | undefined;
   last: T | undefined;
   size: number;
+  queue: T[];
 };
 
 export type RenderInfo = {
@@ -165,15 +166,20 @@ declare module "@uidotdev/usehooks" {
 
   export function useIdle(ms?: number): boolean;
 
-  export function useIntersectionObserver(
+  export function useIntersectionObserver<T extends Element>(
     options?: IntersectionObserverInit
-  ): [React.MutableRefObject<Element>, IntersectionObserverEntry | null];
+  ): [React.MutableRefObject<T>, IntersectionObserverEntry | null];
 
   export function useIsClient(): boolean;
 
   export function useIsFirstRender(): boolean;
 
   export function useList<T>(defaultList?: T[]): [T[], CustomList<T>];
+
+  export function useLocalStorage<T>(
+    key: string,
+    initialValue?: T
+  ): [T, React.Dispatch<React.SetStateAction<T>>];
 
   export function useLockBodyScroll(): void;
 
@@ -224,6 +230,11 @@ declare module "@uidotdev/usehooks" {
       removeOnUnmount?: boolean;
     }
   ): "idle" | "loading" | "ready" | "error";
+
+  export function useSessionStorage<T>(
+    key: string,
+    initialValue: T
+  ): [T, React.Dispatch<React.SetStateAction<T>>];
 
   export function useSet<T>(values?: T[]): Set<T>;
 
