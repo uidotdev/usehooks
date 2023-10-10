@@ -437,7 +437,7 @@ export function useHover() {
 
   const customRef = React.useCallback(
     (node) => {
-      if (previousNode.current instanceof HTMLElement) {
+      if (previousNode.current?.nodeType === Node.ELEMENT_NODE) {
         previousNode.current.removeEventListener(
           "mouseenter",
           handleMouseEnter
@@ -448,7 +448,7 @@ export function useHover() {
         );
       }
 
-      if (node instanceof HTMLElement) {
+      if (node?.nodeType === Node.ELEMENT_NODE) {
         node.addEventListener("mouseenter", handleMouseEnter);
         node.addEventListener("mouseleave", handleMouseLeave);
       }
@@ -522,7 +522,7 @@ export function useIntersectionObserver(options = {}) {
         previousObserver.current = null;
       }
 
-      if (node instanceof HTMLElement) {
+      if (node?.nodeType === Node.ELEMENT_NODE) {
         const observer = new IntersectionObserver(
           ([entry]) => {
             setEntry(entry);
@@ -764,7 +764,7 @@ export function useMeasure() {
       previousObserver.current = null;
     }
 
-    if (node instanceof HTMLElement) {
+    if (node?.nodeType === Node.ELEMENT_NODE) {
       const observer = new ResizeObserver(([entry]) => {
         if (entry && entry.borderBoxSize) {
           const { inlineSize: width, blockSize: height } =
@@ -825,7 +825,7 @@ export function useMouse() {
         y: event.pageY,
       };
 
-      if (ref.current instanceof HTMLElement) {
+      if (ref.current?.nodeType === Node.ELEMENT_NODE) {
         const { left, top } = ref.current.getBoundingClientRect();
         const elementPositionX = left + window.scrollX;
         const elementPositionY = top + window.scrollY;
