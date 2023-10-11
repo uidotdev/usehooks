@@ -160,7 +160,7 @@ declare module "@uidotdev/usehooks" {
   export function useHistoryState<T>(initialPresent?: T): HistoryState<T>;
 
   export function useHover<T extends Element>(): [
-    React.MutableRefObject<T>,
+    React.RefCallback<T>,
     boolean
   ];
 
@@ -168,7 +168,7 @@ declare module "@uidotdev/usehooks" {
 
   export function useIntersectionObserver<T extends Element>(
     options?: IntersectionObserverInit
-  ): [React.MutableRefObject<T>, IntersectionObserverEntry | null];
+  ): [React.RefCallback<T>, IntersectionObserverEntry | null];
 
   export function useIsClient(): boolean;
 
@@ -191,7 +191,7 @@ declare module "@uidotdev/usehooks" {
   export function useMap<T>(initialState?: T): Map<T, any>;
 
   export function useMeasure<T extends Element>(): [
-    React.MutableRefObject<T>,
+    React.RefCallback<T>,
     {
       width: number | null;
       height: number | null;
