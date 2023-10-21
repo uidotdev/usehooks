@@ -1094,38 +1094,46 @@ export function useRenderInfo(name = "Unknown") {
   }
 }
 
+let useScriptStatus = {};
 export function useScript(src, options = {}) {
-    const scriptRef = React.useRef(document.querySelector(`script[src="${src}"]`));
-    const [status, setStatus] = React.useState(scriptRef.current ? 'ready' : 'loading');
-
+    const [status, setStatus] = React.useState(useScriptStatus[src] || 'loading');
     const optionsRef = React.useRef(options);
 
     React.useEffect(() => {
-        if(status === 'ready') return;
-        const handleScriptLoad = () => setStatus('ready');
-        const handleScriptError = () => setStatus('error');
+        if (status !== 'loading') return;
 
-        if (scriptRef.current === null) {
-            scriptRef.current = document.createElement('script');
-            scriptRef.current.src = src;
-            scriptRef.current.async = true;
-            document.body.appendChild(scriptRef.current);
+        let script = document.querySelector(`script[src="${src}"]`);
+
+        if (script === null) {
+            script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            document.body.appendChild(script);
         }
 
-        scriptRef.current.addEventListener('load', handleScriptLoad);
-        scriptRef.current.addEventListener('error', handleScriptError);
+        const handleScriptLoad = () => {
+            useScriptStatus[src] = 'ready';
+            setStatus('ready');
+        };
+        const handleScriptError = () => {
+            useScriptStatus[src] = 'error';
+            setStatus('error');
+        };
+
+        script.addEventListener('load', handleScriptLoad);
+        script.addEventListener('error', handleScriptError);
 
         const removeOnUnmount = optionsRef.current.removeOnUnmount;
 
         return () => {
-            scriptRef.current.removeEventListener('load', handleScriptLoad);
-            scriptRef.current.removeEventListener('error', handleScriptError);
+            script.removeEventListener('load', handleScriptLoad);
+            script.removeEventListener('error', handleScriptError);
 
             if (removeOnUnmount === true) {
-                scriptRef.current.remove();
+                script.remove();
             }
         };
-    }, [src, status, optionsRef]);
+    }, [src, status]);
 
     return status;
 };
