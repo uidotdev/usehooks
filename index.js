@@ -1094,7 +1094,7 @@ export function useRenderInfo(name = "Unknown") {
   }
 }
 
-const useScript = (src, options = {}) => {
+export function useScript(src, options = {}) {
     const scriptRef = React.useRef(document.querySelector(`script[src="${src}"]`));
     const [status, setStatus] = React.useState(scriptRef.current ? 'ready' : 'loading');
 
