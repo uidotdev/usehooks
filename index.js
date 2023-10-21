@@ -1094,13 +1094,14 @@ export function useRenderInfo(name = "Unknown") {
   }
 }
 
-const useScript = (src, options = {}) => {
+export function useScript(src, options = {}) {
     const scriptRef = React.useRef(document.querySelector(`script[src="${src}"]`));
     const [status, setStatus] = React.useState(scriptRef.current ? 'ready' : 'loading');
 
     const optionsRef = React.useRef(options);
 
     React.useEffect(() => {
+        if(status === 'ready') return;
         const handleScriptLoad = () => setStatus('ready');
         const handleScriptError = () => setStatus('error');
 
@@ -1124,7 +1125,7 @@ const useScript = (src, options = {}) => {
                 scriptRef.current.remove();
             }
         };
-    }, [src, optionsRef]);
+    }, [src, status, optionsRef]);
 
     return status;
 };
