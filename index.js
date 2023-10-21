@@ -1094,40 +1094,40 @@ export function useRenderInfo(name = "Unknown") {
   }
 }
 
-export function useScript(src, options = {}) {
-  const [status, setStatus] = React.useState("loading");
-  const optionsRef = React.useRef(options);
+const useScript = (src, options = {}) => {
+    const scriptRef = React.useRef(document.querySelector(`script[src="${src}"]`));
+    const [status, setStatus] = React.useState(scriptRef.current ? 'ready' : 'loading');
 
-  React.useEffect(() => {
-    let script = document.querySelector(`script[src="${src}"]`);
+    const optionsRef = React.useRef(options);
 
-    if (script === null) {
-      script = document.createElement("script");
-      script.src = src;
-      script.async = true;
-      document.body.appendChild(script);
-    }
+    React.useEffect(() => {
+        const handleScriptLoad = () => setStatus('ready');
+        const handleScriptError = () => setStatus('error');
 
-    const handleScriptLoad = () => setStatus("ready");
-    const handleScriptError = () => setStatus("error");
+        if (scriptRef.current === null) {
+            scriptRef.current = document.createElement('script');
+            scriptRef.current.src = src;
+            scriptRef.current.async = true;
+            document.body.appendChild(scriptRef.current);
+        }
 
-    script.addEventListener("load", handleScriptLoad);
-    script.addEventListener("error", handleScriptError);
+        scriptRef.current.addEventListener('load', handleScriptLoad);
+        scriptRef.current.addEventListener('error', handleScriptError);
 
-    const removeOnUnmount = optionsRef.current.removeOnUnmount;
+        const removeOnUnmount = optionsRef.current.removeOnUnmount;
 
-    return () => {
-      script.removeEventListener("load", handleScriptLoad);
-      script.removeEventListener("error", handleScriptError);
+        return () => {
+            scriptRef.current.removeEventListener('load', handleScriptLoad);
+            scriptRef.current.removeEventListener('error', handleScriptError);
 
-      if (removeOnUnmount === true) {
-        script.remove();
-      }
-    };
-  }, [src]);
+            if (removeOnUnmount === true) {
+                scriptRef.current.remove();
+            }
+        };
+    }, [src, optionsRef]);
 
-  return status;
-}
+    return status;
+};
 
 const setSessionStorageItem = (key, value) => {
   const stringifiedValue = JSON.stringify(value);
