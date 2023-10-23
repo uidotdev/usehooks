@@ -229,7 +229,7 @@ declare module "@uidotdev/usehooks" {
     options?: {
       removeOnUnmount?: boolean;
     }
-  ): "idle" | "loading" | "ready" | "error";
+  ): "unknown" | "loading" | "ready" | "error";
 
   export function useSessionStorage<T>(
     key: string,
