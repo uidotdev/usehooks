@@ -190,7 +190,7 @@ declare module "@uidotdev/usehooks" {
   export function useHistoryState<T>(initialPresent?: T): HistoryState<T>;
 
   export function useHover<T extends Element>(): [
-    React.MutableRefObject<T>,
+    React.RefCallback<T>,
     boolean
   ];
 
@@ -198,7 +198,7 @@ declare module "@uidotdev/usehooks" {
 
   export function useIntersectionObserver<T extends Element>(
     options?: IntersectionObserverInit
-  ): [React.MutableRefObject<T>, IntersectionObserverEntry | null];
+  ): [React.RefCallback<T>, IntersectionObserverEntry | null];
 
   export function useInterval(cb: () => any, ms: number): () => void;
 
@@ -242,7 +242,7 @@ declare module "@uidotdev/usehooks" {
   export function useMap<T>(initialState?: T): Map<T, any>;
 
   export function useMeasure<T extends Element>(): [
-    React.MutableRefObject<T>,
+    React.RefCallback<T>,
     {
       width: number | null;
       height: number | null;
@@ -287,7 +287,7 @@ declare module "@uidotdev/usehooks" {
     options?: {
       removeOnUnmount?: boolean;
     }
-  ): "idle" | "loading" | "ready" | "error";
+  ): "unknown" | "loading" | "ready" | "error";
 
   export function useSessionStorage<T>(
     key: string,
