@@ -1306,7 +1306,7 @@ export function useRandomInterval(cb, { minDelay, maxDelay }) {
     tick();
 
     return handleClearTimeout;
-  }, [minDelay, maxDelay]);
+  }, [minDelay, maxDelay, handleClearTimeout]);
 
   return handleClearTimeout;
 }
