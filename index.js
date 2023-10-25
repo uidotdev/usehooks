@@ -756,11 +756,12 @@ export function useIsFirstRender() {
 
 export function useKeyPress(key, cb, options = {}) {
   const { event = "keydown", target = window ?? null, eventOptions } = options;
+  const onListen = React.useEffectEvent(cb);
 
-  const onListen = React.useEffectEvent((target, event) => {
+  React.useEffect(() => {
     const handler = (event) => {
       if (event.key === key) {
-        cb(event);
+        onListen(event);
       }
     };
 
@@ -769,11 +770,7 @@ export function useKeyPress(key, cb, options = {}) {
     return () => {
       target.removeEventListener(event, handler, eventOptions);
     };
-  });
-
-  React.useEffect(() => {
-    return onListen(target, event);
-  }, [target, event]);
+  }, [key, target, event, eventOptions]);
 }
 
 export function useList(defaultList = []) {
