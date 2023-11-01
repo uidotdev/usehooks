@@ -135,14 +135,14 @@ declare module "@uidotdev/usehooks" {
       max?: number;
     }
   ): [
-    number,
-    {
-      increment: () => void;
-      decrement: () => void;
-      set: (nextCount: number) => void;
-      reset: () => void;
-    }
-  ];
+      number,
+      {
+        increment: () => void;
+        decrement: () => void;
+        set: (nextCount: number) => void;
+        reset: () => void;
+      }
+    ];
 
   export function useDebounce<T>(value: T, delay: number): T;
 
@@ -260,4 +260,6 @@ declare module "@uidotdev/usehooks" {
     width: number | null;
     height: number | null;
   };
+
+  export function useHandler(handler: any): any;
 }

@@ -1365,3 +1365,11 @@ export function useWindowSize() {
 
   return size;
 }
+
+export function useHandler(handler) {
+  const handlerRef = useRef(handler);
+
+  handlerRef.current = handler;
+
+  return useRef((...args) => handlerRef.current(...args)).current;
+}
