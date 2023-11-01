@@ -1,19 +1,25 @@
-import styles from './Callout.module.css';
+import styles from "./Callout.module.css";
 
 type Props = {
-  image: string
-  imageWidth: string
-  imageHeight: string
-  imageAlt: string
-  pitch: string
-}
+  image: string;
+  imageWidth: string;
+  imageHeight: string;
+  imageAlt: string;
+  pitch: string;
+};
 
-export default function Callout({ image, imageWidth, imageHeight, imageAlt, pitch }) {
+export default function Callout({
+  image,
+  imageWidth,
+  imageHeight,
+  imageAlt,
+  pitch,
+}) {
   return (
     <li className={styles.callout}>
-      <a href="https://react.gg" className="logo image">
+      <a href="https://react.gg?s=usehooks" className="logo image">
         <img
-          src={ `/img/${image}.svg` }
+          src={`/img/${image}.svg`}
           width={imageWidth}
           height={imageHeight}
           className={image}
@@ -29,5 +35,5 @@ export default function Callout({ image, imageWidth, imageHeight, imageAlt, pitc
         <p>{pitch}</p>
       </a>
     </li>
-  )
+  );
 }
