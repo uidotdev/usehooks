@@ -10,8 +10,7 @@ const { class: className } = Astro.props;
 
 <script>
   const copyButton = document.querySelector(`.copy-btn`);
-
-  const copyText = `npm i @uidotdev/usehooks`;
+  const copyText = document.querySelector(`.install code`).textContent;
 
   copyButton.addEventListener("click", async () => {
     try {
@@ -45,7 +44,7 @@ const { class: className } = Astro.props;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: clamp(.7rem, 3vw, 2rem);
+    gap: clamp(0.7rem, 3vw, 2rem);
     background-color: var(--charcoal);
     padding: clamp(1rem, 4vw, 1.3rem) clamp(1rem, 4vw, 1.5rem);
     border-radius: 0.5rem;
@@ -67,7 +66,7 @@ const { class: className } = Astro.props;
   .copy-btn {
     padding: 0.2rem 0.4rem;
     padding-left: 1.7rem;
-    background: no-repeat url('/img/icon-copy.svg') 0.4rem 50% / .9rem auto;
+    background: no-repeat url("/img/icon-copy.svg") 0.4rem 50% / 0.9rem auto;
     border: var(--border-light);
     border-radius: 0.3rem;
     font-size: clamp(0.7rem, 2vw, 0.9rem);
