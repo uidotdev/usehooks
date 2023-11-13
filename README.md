@@ -23,7 +23,7 @@ Compatible with React v18.0.0+.
 - [useDocumentTitle](https://usehooks.com/usedocumenttitle)
 - [useFavicon](https://usehooks.com/usefavicon)
 - [useGeolocation](https://usehooks.com/usegeolocation)
-- [useHistoryState](https://usehooks.com/usehistoryState)
+- [useHistoryState](https://usehooks.com/usehistorystate)
 - [useHover](https://usehooks.com/usehover)
 - [useIdle](https://usehooks.com/useidle)
 - [useIntersectionObserver](https://usehooks.com/useintersectionobserver)
