@@ -1112,6 +1112,10 @@ export function useScript(src, options = {}) {
       script.src = src;
       script.async = true;
       script.setAttribute("data-status", "loading");
+      const customAttributes = optionsRef.current?.customAttributes ?? {};
+      for(const [key, value] in Object.entries(customAttributes)) {
+        script.setAttribute(key, value);
+      }
       document.body.appendChild(script);
 
       const handleScriptLoad = () => {
