@@ -1244,8 +1244,8 @@ export function useThrottle(value, interval = 500) {
 
   React.useEffect(() => {
     const now = Date.now();
-
-    if (lastUpdated.current && now >= lastUpdated.current + interval) {
+    
+    if (!lastupdated.current || now >= lastUpdated.current + interval) {
       lastUpdated.current = now;
       setThrottledValue(value);
     } else {
