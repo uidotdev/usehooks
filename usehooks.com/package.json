@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "node ./generate-og-images.mjs && astro build","preview": "astro preview",
+    "build": "node ./generate-og-images.mjs && astro build",
+    "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
