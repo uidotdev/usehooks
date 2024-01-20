@@ -98,49 +98,6 @@ video {
   color: var(--coal);
 }
 
-@font-face {
-  font-family: "Outfit";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""), url("/fonts/outfit-v4-latin-regular.woff2") format("woff2");
-}
-/* outfit-500 - latin */
-@font-face {
-  font-family: "Outfit";
-  font-style: normal;
-  font-weight: 500;
-  src: local(""), url("/fonts/outfit-v4-latin-500.woff2") format("woff2");
-}
-/* outfit-700 - latin */
-@font-face {
-  font-family: "Outfit";
-  font-style: normal;
-  font-weight: 700;
-  src: local(""), url("/fonts/outfit-v4-latin-700.woff2") format("woff2");
-}
-/* outfit-900 - latin */
-@font-face {
-  font-family: "Outfit";
-  font-style: normal;
-  font-weight: 900;
-  src: local(""), url("/fonts/outfit-v4-latin-900.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Paytone One";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""),
-    url("/fonts/paytone-one-v16-latin-regular.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Fira Code";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""), url("/fonts/firacode-regular.woff2") format("woff2");
-}
-
 :root {
   --gray-light: #1b1d23;
   --gray-dark: #131519;
@@ -182,11 +139,6 @@ video {
   --body-padding: 2rem;
   --body-border: 1.3rem;
 
-  --font-outfit: Outfit, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
-  --font-paytone: "Paytone One", Outfit, -apple-system, BlinkMacSystemFont,
-    Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
-
   --font-lg: clamp(2rem, 8vw, 4rem);
   --font-md: clamp(1.6rem, 4vw, 2.1rem);
   --font-base: clamp(1.2rem, 2.5vw, 1.5rem);
@@ -227,7 +179,7 @@ body {
   background-color: var(--brand-charcoal);
   border-radius: 3px;
   font-size: var(--font-sm);
-  font-family: Fira Code;
+  font-family: var(--font-fira-code);
   letter-spacing: -0.2px;
 }
 

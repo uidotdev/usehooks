@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "node ./generate-og-images.mjs && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -20,6 +20,7 @@
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
     "astro": "^2.5.2",
+    "astro-font": "^0.0.77",
     "classnames": "^2.3.2",
     "framer-motion": "^10.9.1",
     "react": "^18.2.0",

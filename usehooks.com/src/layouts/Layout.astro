@@ -1,4 +1,10 @@
 ---
+import { join } from 'node:path';
+import { AstroFont } from 'astro-font';
+
+const appDir = process.cwd();
+const getFontPath = (name: string) => join(appDir, "public", "fonts", name);
+
 import "../styles/globals.css";
 export interface Props {
   title: string;
@@ -46,44 +52,6 @@ const url =
     <meta content={ogImage} property="og:image" />
     <meta content={ogImage} name="twitter:image" />
     <link rel="canonical" href={url} />
-    <link
-      rel="preload"
-      href="/fonts/outfit-v4-latin-regular.woff2"
-      as="font"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/outfit-v4-latin-500.woff2"
-      as="font"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/outfit-v4-latin-700.woff2"
-      as="font"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/outfit-v4-latin-900.woff2"
-      as="font"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/paytone-one-v16-latin-regular.woff2"
-      as="font"
-      crossorigin="anonymous"
-    />
-
-    <link
-      rel="preload"
-      href="/fonts/firacode-regular.woff2"
-      as="font"
-      crossorigin="anonymous"
-    />
-
     <script
       defer
       src="/stats/js/script.js"
@@ -118,6 +86,67 @@ const url =
       fbq("init", "186849069509023");
       fbq("track", "PageView");
     </script>
+    <AstroFont
+    config={[
+      {
+        preload: true,
+        name: "Outfit",
+        display: "swap",
+        fallback: "sans-serif",
+        cssVariable: "font-outfit",
+        src: [
+          {
+            style: "normal",
+            weight: "400",
+            path: getFontPath("outfit-v4-latin-regular.woff2"),
+          },
+          {
+            style: "normal",
+            weight: "500",
+            path: getFontPath("outfit-v4-latin-500.woff2"),
+          },
+          {
+            style: "normal",
+            weight: "700",
+            path: getFontPath("outfit-v4-latin-700.woff2"),
+          },
+          {
+            style: "normal",
+            weight: "900",
+            path: getFontPath("outfit-v4-latin-900.woff2"),
+          },
+        ],
+      },
+      {
+        preload: true,
+        display: "swap",
+        name: "Paytone One",
+        fallback: "sans-serif",
+        cssVariable: "font-paytone",
+        src: [
+          {
+            weight: "400",
+            style: "normal",
+            path: getFontPath("paytone-one-v16-latin-regular.woff2"),
+          },
+        ],
+      },
+      {
+        preload: true,
+        display: "swap",
+        name: "Fira Code",
+        fallback: "sans-serif",
+        cssVariable: "font-fira-code",
+        src: [
+          {
+            weight: "400",
+            style: "normal",
+            path: getFontPath("firacode-regular.woff2"),
+          },
+        ],
+      },
+    ]}
+  />
   </head>
   <body>
     <slot />
