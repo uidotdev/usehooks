@@ -46,6 +46,8 @@ function dispatchStorageEvent(key, newValue) {
   window.dispatchEvent(new StorageEvent("storage", { key, newValue }));
 }
 
+const useSafeLayoutEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+
 export function useBattery() {
   const [state, setState] = React.useState({
     supported: true,
@@ -106,7 +108,7 @@ export function useClickAway(cb) {
   const ref = React.useRef(null);
   const refCb = React.useRef(cb);
 
-  React.useLayoutEffect(() => {
+  useSafeLayoutEffect(() => {
     refCb.current = cb;
   });
 
@@ -652,7 +654,7 @@ export function useLocalStorage(key, initialValue) {
 }
 
 export function useLockBodyScroll() {
-  React.useLayoutEffect(() => {
+  useSafeLayoutEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
     document.body.style.overflow = "hidden";
     return () => {
@@ -818,7 +820,7 @@ export function useMouse() {
 
   const ref = React.useRef(null);
 
-  React.useLayoutEffect(() => {
+  useSafeLayoutEffect(() => {
     const handleMouseMove = (event) => {
       let newState = {
         x: event.pageX,
@@ -954,7 +956,7 @@ export function useOrientation() {
     type: "landscape-primary",
   });
 
-  React.useLayoutEffect(() => {
+  useSafeLayoutEffect(() => {
     const handleChange = () => {
       const { angle, type } = window.screen.orientation;
       setOrientation({
@@ -1325,7 +1327,7 @@ export function useWindowScroll() {
     }
   }, []);
 
-  React.useLayoutEffect(() => {
+  useSafeLayoutEffect(() => {
     const handleScroll = () => {
       setState({ x: window.scrollX, y: window.scrollY });
     };
@@ -1347,7 +1349,7 @@ export function useWindowSize() {
     height: null,
   });
 
-  React.useLayoutEffect(() => {
+  useSafeLayoutEffect(() => {
     const handleResize = () => {
       setSize({
         width: window.innerWidth,
