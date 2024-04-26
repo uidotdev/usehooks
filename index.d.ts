@@ -92,30 +92,6 @@ export type RenderInfo = {
   timestamp: number;
 };
 
-export type SpeechOptions = {
-  lang?: string;
-  voice?: {
-    lang?: string;
-    name?: string;
-  };
-  rate?: number;
-  pitch?: number;
-  volume?: number;
-};
-
-export type SpeechState = {
-  isPlaying: boolean;
-  status: "init" | "play" | "pause" | "stop";
-  lang: string;
-  voiceInfo: {
-    lang: string;
-    name: string;
-  };
-  rate: number;
-  pitch: number;
-  volume: number;
-};
-
 declare module "@uidotdev/usehooks" {
   export function useBattery(): BatteryManager;
 
@@ -237,8 +213,6 @@ declare module "@uidotdev/usehooks" {
   ): [T, React.Dispatch<React.SetStateAction<T>>];
 
   export function useSet<T>(values?: T[]): Set<T>;
-
-  export function useSpeech(text: string, options?: SpeechOptions): SpeechState;
 
   export function useThrottle<T>(value: T, delay: number): T;
 
