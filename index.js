@@ -351,38 +351,38 @@ const initialUseHistoryStateState = {
 
 const useHistoryStateReducer = (state, action) => {
   const { past, present, future } = state;
-
-  if (action.type === "UNDO") {
-    return {
-      past: past.slice(0, past.length - 1),
-      present: past[past.length - 1],
-      future: [present, ...future],
-    };
-  } else if (action.type === "REDO") {
-    return {
-      past: [...past, present],
-      present: future[0],
-      future: future.slice(1),
-    };
-  } else if (action.type === "SET") {
-    const { newPresent } = action;
-
-    if (action.newPresent === present) {
-      return state;
+  
+  switch (action.type) {
+    case "UNDO":
+      return {
+        past: past.slice(0, past.length - 1),
+        present: past[past.length - 1],
+        future: [present, ...future],
+      };
+    case "REDO":
+      return {
+        past: [...past, present],
+        present: future[0],
+        future: future.slice(1),
+      };
+    case "SET": {
+      const { newPresent } = action;
+      if (action.newPresent === present) {
+        return state;
+      }
+      return {
+        past: [...past, present],
+        present: newPresent,
+        future: [],
+      };
     }
-
-    return {
-      past: [...past, present],
-      present: newPresent,
-      future: [],
-    };
-  } else if (action.type === "CLEAR") {
-    return {
-      ...initialUseHistoryStateState,
-      present: action.initialPresent,
-    };
-  } else {
-    throw new Error("Unsupported action type");
+    case "CLEAR":
+      return {
+        ...initialUseHistoryStateState,
+        present: action.initialPresent,
+      };
+    default:
+      throw new Error("Unsupported action type");
   }
 };
 
