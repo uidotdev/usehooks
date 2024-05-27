@@ -1,5 +1,6 @@
 ---
 import Button from "./Button.astro";
+import CountdownTimer from "./CountdownTimer";
 ---
 
 <aside class="mx-auto max-w-[1300px] pb-8 flex items-center">
@@ -31,43 +32,7 @@ import Button from "./Button.astro";
     >
       <div class="my-2 uppercase text-center place-self-center text-[1.1rem]">
         <h2 class="mb-3 font-semibold">Launch sale happening now</h2>
-        <div class="countdown flex gap-2 justify-center">
-          <div class="days grid grid-cols-2 gap-x-1 gap-y-1.5">
-            <span
-              class="h-[2.3rem] aspect-square grid place-content-center rounded-sm bg-brand-beige bg-opacity-10 font-semibold"
-              >0</span
-            >
-            <span
-              class="h-[2.3rem] aspect-square grid place-content-center rounded-sm bg-brand-beige bg-opacity-10 font-semibold"
-              >3</span
-            >
-            <p class="col-span-full text-xs">days</p>
-          </div>
-          <span class="h-[2rem] grid place-content-center">:</span>
-          <div class="hours grid grid-cols-2 gap-x-1 gap-y-1.5">
-            <span
-              class="h-[2.3rem] aspect-square grid place-content-center rounded-sm bg-brand-beige bg-opacity-10 font-semibold"
-              >2</span
-            >
-            <span
-              class="h-[2.3rem] aspect-square grid place-content-center rounded-sm bg-brand-beige bg-opacity-10 font-semibold"
-              >1</span
-            >
-            <p class="col-span-full text-xs">hours</p>
-          </div>
-          <span class="h-[2rem] grid place-content-center">:</span>
-          <div class="minutes grid grid-cols-2 gap-x-1 gap-y-1.5">
-            <span
-              class="h-[2.3rem] aspect-square grid place-content-center rounded-sm bg-brand-beige bg-opacity-10 font-semibold"
-              >1</span
-            >
-            <span
-              class="h-[2.3rem] aspect-square grid place-content-center rounded-sm bg-brand-beige bg-opacity-10 font-semibold"
-              >4</span
-            >
-            <p class="col-span-full text-xs">minutes</p>
-          </div>
-        </div>
+        <CountdownTimer client:only targetDate="2024-06-05" />
         <Button
           text="Join Now"
           size="small"
