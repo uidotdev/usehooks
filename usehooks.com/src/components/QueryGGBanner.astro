@@ -1,0 +1,58 @@
+---
+import Button from "./Button.astro";
+import CountdownTimer from "./CountdownTimer";
+---
+
+<aside class="mx-auto max-w-[1300px] pb-8 flex items-center">
+  <div
+    class="w-full lg:flex lg:gap-6 bg-brand-beige border-4 border-brand-charcoal"
+  >
+    <a
+      href="https://query.gg?s=usehooks"
+      class="lg:w-[55%] pb-4 grid grid-cols-[70px_1fr_70px] sm:grid-cols-[100px_1fr_100px] lg:grid-cols-[110px_1fr] xl:grid-cols-[150px_1fr]"
+    >
+      <img src={"/img/querygg/corner-top-left.svg"} alt="" class="sun" />
+      <img
+        src={"/img/querygg/header-course.svg"}
+        alt="Query.gg - The Official React Query Course"
+        class="-mt-[1px] w-10/12 max-w-[350px] justify-self-center"
+      />
+      <img
+        src={"/img/querygg/corner-top-right.svg"}
+        alt="moon"
+        class="w-[100px] lg:hidden"
+      />
+    </a>
+    <div
+      class="hidden lg:block w-[80px] mr-[-55px] bg-brand-charcoal border-4 border-r-0 border-solid border-brand-beige border-s-brand-beige shadow-[-4px_0_0_var(--brand-charcoal)] -skew-x-[15deg] z-0"
+    >
+    </div>
+    <div
+      class="lg:w-[45%] py-2 lg:pb-0 grid lg:grid-cols-[1fr_90px] xl:grid-cols-[1fr_120px] justify-center bg-brand-charcoal border-2 lg:border-4 lg:border-l-0 border-solid border-brand-beige text-brand-beige z-10"
+    >
+      <div class="my-2 uppercase text-center place-self-center text-[1.1rem]">
+        <h2 class="mb-3 font-semibold">Launch sale happening now</h2>
+        <CountdownTimer client:only targetDate="2024-06-05" />
+        <Button
+          text="Join Now"
+          size="small"
+          href="https://query.gg?s=usehooks"
+          type="link"
+          color="yellow"
+          class="join-now mt-4 mb-1 lg:mb-2 inline-block"
+        />
+      </div>
+      <img
+        src={"/img/querygg/corner-fish-bottom-right.svg"}
+        alt="mutated fish"
+        class="hidden lg:block self-end"
+      />
+    </div>
+  </div>
+</aside>
+
+<style>
+  h2 {
+    font-family: var(--font-outfit);
+  }
+</style>
