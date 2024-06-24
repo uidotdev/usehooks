@@ -23,8 +23,11 @@
   "types": "index.d.ts",
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
     "superjson": "^2.2.1"
+
   },
   "author": "Tyler McGinnis, Ben Adam",
   "license": "MIT"
