@@ -1,4 +1,6 @@
 import * as React from "react";
+import superjson from 'superjson';
+
 
 function isShallowEqual(object1, object2) {
   const keys1 = Object.keys(object1);
@@ -590,7 +592,7 @@ export function useList(defaultList = []) {
 }
 
 const setLocalStorageItem = (key, value) => {
-  const stringifiedValue = JSON.stringify(value);
+  const stringifiedValue = superjson.stringify(value);
   window.localStorage.setItem(key, stringifiedValue);
   dispatchStorageEvent(key, stringifiedValue);
 };
@@ -625,7 +627,7 @@ export function useLocalStorage(key, initialValue) {
   const setState = React.useCallback(
     (v) => {
       try {
-        const nextState = typeof v === "function" ? v(JSON.parse(store)) : v;
+        const nextState = typeof v === "function" ? v(superjson.parse(store)) : v;
 
         if (nextState === undefined || nextState === null) {
           removeLocalStorageItem(key);
@@ -648,7 +650,7 @@ export function useLocalStorage(key, initialValue) {
     }
   }, [key, initialValue]);
 
-  return [store ? JSON.parse(store) : initialValue, setState];
+  return [store ? superjson.parse(store) : initialValue, setState];
 }
 
 export function useLockBodyScroll() {
@@ -1151,7 +1153,7 @@ export function useScript(src, options = {}) {
 }
 
 const setSessionStorageItem = (key, value) => {
-  const stringifiedValue = JSON.stringify(value);
+  const stringifiedValue = superjson.stringify(value);
   window.sessionStorage.setItem(key, stringifiedValue);
   dispatchStorageEvent(key, stringifiedValue);
 };
@@ -1186,7 +1188,7 @@ export function useSessionStorage(key, initialValue) {
   const setState = React.useCallback(
     (v) => {
       try {
-        const nextState = typeof v === "function" ? v(JSON.parse(store)) : v;
+        const nextState = typeof v === "function" ? v(superjson.parse(store)) : v;
 
         if (nextState === undefined || nextState === null) {
           removeSessionStorageItem(key);
@@ -1209,7 +1211,7 @@ export function useSessionStorage(key, initialValue) {
     }
   }, [key, initialValue]);
 
-  return [store ? JSON.parse(store) : initialValue, setState];
+  return [store ? superjson.parse(store) : initialValue, setState];
 }
 
 export function useSet(values) {
