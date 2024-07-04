@@ -1014,7 +1014,7 @@ export function usePreferredLanguage() {
   );
 }
 
-export function usePrevious(value) {
+export function usePrevious(value, initialPreviousValue) {
   const [current, setCurrent] = React.useState(value);
   const [previous, setPrevious] = React.useState(null);
 
@@ -1023,7 +1023,7 @@ export function usePrevious(value) {
     setCurrent(value);
   }
 
-  return previous;
+  return previous || initialPreviousValue;
 }
 
 export function useQueue(initialValue = []) {
