@@ -4,32 +4,32 @@ import CountdownTimer from "./CountdownTimer";
 ---
 
 <aside class="reactgg-container container">
-    <div class="reactgg-banner">
-      <a href="https://react.gg?s=usehooks" class="reactgg-header">
-        <img
-          src={"/img/banner-sale-reactgg.svg"}
-          alt="react.gg - The interactive way to master modern React"
-          class="reactgg-headline"
+  <div class="reactgg-banner">
+    <a href="https://react.gg?s=usehooks" class="reactgg-header">
+      <img
+        src={"/img/banner-sale-reactgg.svg"}
+        alt="react.gg - The interactive way to master modern React"
+        class="reactgg-headline"
+      />
+    </a>
+    <div class="reactgg-spacer"></div>
+    <div class="reactgg-cta">
+      <div class="reactgg-cta-container">
+        <h2>react.gg Launch Sale</h2>
+        <p>Up to 25% off through May 16th</p>
+        <CountdownTimer client:only targetDate="2025-05-16" />
+        <Button
+          text="Join Now"
+          size="small"
+          href="https://react.gg?s=usehooks"
+          type="link"
+          color="yellow"
+          class="join-now mt-4 mb-1 lg:mb-2 inline-block"
         />
-      </a>
-      <div class="reactgg-spacer"></div>
-      <div class="reactgg-cta">
-        <div class="reactgg-cta-container">
-          <h2>react.gg Launch Sale</h2>
-          <p>Up to 25% off through May 10th</p>
-          <CountdownTimer targetDate="2025-05-10" />
-          <Button
-            text="Join Now"
-            size="small"
-            href="https://react.gg?s=usehooks"
-            type="link"
-            color="yellow"
-            class="join-now mt-4 mb-1 lg:mb-2 inline-block"
-          />
-        </div>
       </div>
     </div>
-  </aside>
+  </div>
+</aside>
 
 <style>
   .reactgg-container {
@@ -43,7 +43,7 @@ import CountdownTimer from "./CountdownTimer";
     background-color: var(--brand-charcoal);
     border: 2px solid var(--brand-charcoal);
     border-radius: 8px;
-    box-shadow: .2rem .2rem 0 var(--brand-charcoal);
+    box-shadow: 0.2rem 0.2rem 0 var(--brand-charcoal);
     overflow: hidden;
     @media (min-width: 1024px) {
       display: grid;
@@ -58,7 +58,7 @@ import CountdownTimer from "./CountdownTimer";
     align-content: center;
     height: 190px;
     overflow: hidden;
-    @media (min-width: 1024px) { 
+    @media (min-width: 1024px) {
       height: 280px;
       grid-column: 1 / 3;
       grid-row: 1;
@@ -77,7 +77,7 @@ import CountdownTimer from "./CountdownTimer";
     background-color: var(--brand-green);
     z-index: 0;
     transform: skew(-7deg);
-    @media (min-width: 1024px) { 
+    @media (min-width: 1024px) {
       display: block;
       grid-column: 2;
       grid-row: 1;
@@ -92,7 +92,7 @@ import CountdownTimer from "./CountdownTimer";
     background-color: var(--brand-green);
     color: var(--brand-charcoal);
     z-index: 10;
-    @media (min-width: 1024px) { 
+    @media (min-width: 1024px) {
       padding-bottom: 0;
       grid-row: 1;
       grid-column: 3;
@@ -108,25 +108,25 @@ import CountdownTimer from "./CountdownTimer";
 
     h2 {
       margin-top: 0;
-      margin-bottom: 0.5rem; 
+      margin-bottom: 0.5rem;
       font-size: 1.25rem;
-      line-height: 1.75rem; 
-      font-weight: 600; 
+      line-height: 1.75rem;
+      font-weight: 600;
       color: var(--brand-coal);
-      @media (min-width: 1024px) { 
+      @media (min-width: 1024px) {
         font-size: 1.5rem;
         line-height: 2rem;
       }
-      @media (min-width: 1280px) { 
+      @media (min-width: 1280px) {
         font-size: 1.875rem;
-        line-height: 2.25rem; 
+        line-height: 2.25rem;
       }
     }
 
     h2 + p {
       margin-top: 0;
-      margin-bottom: 1.2rem; 
-      text-transform: none; 
+      margin-bottom: 1.2rem;
+      text-transform: none;
       font-size: 90%;
     }
   }
@@ -135,5 +135,4 @@ import CountdownTimer from "./CountdownTimer";
   :global(.countdown-number) {
     font-size: clamp(1rem, 4vw, 1.5rem);
   }
-
 </style>
