@@ -5,6 +5,7 @@ import NavMain from "../sections/NavMain.astro";
 import HomeHero from "../sections/HomeHero.astro";
 import HooksList from "../components/search/HooksList";
 import Footer from "../sections/Footer.astro";
+import QueryGGBanner from "../components/QueryGGBanner.astro";
 
 const hooks = await getCollection("hooks");
 ---
@@ -13,6 +14,7 @@ const hooks = await getCollection("hooks");
   title="useHooks – The React Hooks Library"
   description="A collection of modern, server-safe React hooks – from the ui.dev team"
 >
+  <QueryGGBanner />
   <NavMain />
   <HomeHero />
   <HooksList client:load hooks={hooks} />
