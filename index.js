@@ -1240,19 +1240,20 @@ export function useSet(values) {
 
 export function useThrottle(value, interval = 500) {
   const [throttledValue, setThrottledValue] = React.useState(value);
-  const lastUpdated = React.useRef(null);
+  const lastUpdated = React.useRef(0);
 
   React.useEffect(() => {
     const now = Date.now();
+    const sinceLastUpdate = now - lastUpdated.current;
 
     if (lastUpdated.current && now >= lastUpdated.current + interval) {
       lastUpdated.current = now;
       setThrottledValue(value);
     } else {
       const id = window.setTimeout(() => {
-        lastUpdated.current = now;
+        lastUpdated.current = Date.now();
         setThrottledValue(value);
-      }, interval);
+      }, interval - sinceLastUpdate);
 
       return () => window.clearTimeout(id);
     }
