@@ -228,6 +228,7 @@ declare module "@uidotdev/usehooks" {
     src: string,
     options?: {
       removeOnUnmount?: boolean;
+      customAttributes?: Record<string, string>;
     }
   ): "unknown" | "loading" | "ready" | "error";
 
