@@ -1,0 +1,78 @@
+---
+name: useInputCharacterLimit
+rank: 51
+tagline: Track number of input characters typed with useInputCharacterLimit and set your constraint character count.
+sandboxId: useinputcharacterlimit-3ckwg2
+previewHeight: 500px
+relatedHooks:
+  - usekeypress
+  - useeventlistener
+---
+
+import CodePreview from "../../components/CodePreview.astro";
+import HookDescription from "../../components/HookDescription.astro";
+import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
+
+<HookDescription name={frontmatter.name}>
+  The useInputCharacterLimit hook allows you to track and control the current number of input
+  characters typed inside the form input box. We can set a threshold value for the number of input characters as we desire to set a constraint.
+</HookDescription>
+
+<div class="reference">
+  ### Parameters
+
+  <div class="table-container">
+  | Name         | Type    | Description                                       |
+  | ------------ | ------- | ------------------------------------------------- |
+  | currentValue | string | The current state value of the input field. |
+  | maxValue | number | The maximum number of the input field value . |
+  | inputRef | object | The ref object of the input field. |
+  </div>
+
+  ### Return Value
+
+  The `useInputCharacterLimit` hook returns an object containing the following elements:
+
+  <div class="table-container">
+  | Name          | Type | Description |
+  | ------------- | ---- | ----------- |
+  | inputValue | string  | The current state value of the input field. |
+  | isExceedingCount | boolean  | The current state of the exceeded count. |
+  | currentValueLength | number  | The length of the current input state value. |
+  </div>
+</div>
+
+<CodePreview
+  sandboxId={frontmatter.sandboxId}
+  previewHeight={frontmatter.previewHeight}
+/>
+
+<StaticCodeContainer>
+
+```jsx
+import React, { useRef } from "react";
+import { useInputCharacterLimit } from "@uidotdev/usehooks";
+
+export default function App() {
+  const inputRef = useRef(null);
+  const currentValue = "";
+  const maxValue = 20;
+
+  const { inputValue, isExceedingCount, currentValueLength } =
+    useInputCharacterLimit(currentValue, maxValue, inputRef);
+
+  return (
+    <div className="App">
+      <label>
+        Comments
+      </label>
+      <textarea ref={inputRef} value={inputValue} />
+      <div className={isExceedingCount ? "red-text" : ""}>
+        <span>{currentValueLength}</span>/{maxValue}
+      </div>
+    </div>
+  );
+}
+```
+
+</StaticCodeContainer>
