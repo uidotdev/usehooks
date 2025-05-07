@@ -622,10 +622,14 @@ export function useLocalStorage(key, initialValue) {
     getLocalStorageServerSnapshot
   );
 
+  const currentValue = React.useMemo(() => {
+    return store ? JSON.parse(store) : initialValue;
+  }, [store, initialValue]);
+
   const setState = React.useCallback(
     (v) => {
       try {
-        const nextState = typeof v === "function" ? v(JSON.parse(store)) : v;
+        const nextState = typeof v === "function" ? v(currentValue) : v;
 
         if (nextState === undefined || nextState === null) {
           removeLocalStorageItem(key);
@@ -636,7 +640,7 @@ export function useLocalStorage(key, initialValue) {
         console.warn(e);
       }
     },
-    [key, store]
+    [key, currentValue]
   );
 
   React.useEffect(() => {
@@ -648,7 +652,7 @@ export function useLocalStorage(key, initialValue) {
     }
   }, [key, initialValue]);
 
-  return [store ? JSON.parse(store) : initialValue, setState];
+  return [currentValue, setState];
 }
 
 export function useLockBodyScroll() {
