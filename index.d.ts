@@ -253,7 +253,7 @@ declare module "@uidotdev/usehooks" {
       x: number | null;
       y: number | null;
     },
-    (args: unknown) => void
+    (x?: number | null, y?: number | null) => void
   ];
 
   export function useWindowSize(): {
