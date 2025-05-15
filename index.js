@@ -263,8 +263,13 @@ export function useDefault(initialValue, defaultValue) {
 }
 
 export function useDocumentTitle(title) {
+  const initial = React.useRef(document.title);
+
   React.useEffect(() => {
     document.title = title;
+    return () => {
+        document.title = initial.current;
+    }
   }, [title]);
 }
 
