@@ -116,148 +116,146 @@ export type SpeechState = {
   volume: number;
 };
 
-declare module "@uidotdev/usehooks" {
-  export function useBattery(): BatteryManager;
+export function useBattery(): BatteryManager;
 
-  export function useClickAway<T extends Element>(
-    cb: (e: Event) => void
-  ): React.MutableRefObject<T>;
+export function useClickAway<T extends Element>(
+  cb: (e: Event) => void
+): React.MutableRefObject<T>;
 
-  export function useCopyToClipboard(): [
-    string | null,
-    (value: string) => Promise<void>
-  ];
+export function useCopyToClipboard(): [
+  string | null,
+  (value: string) => Promise<void>
+];
 
-  export function useCounter(
-    startingValue?: number,
-    options?: {
-      min?: number;
-      max?: number;
-    }
-  ): [
-    number,
-    {
-      increment: () => void;
-      decrement: () => void;
-      set: (nextCount: number) => void;
-      reset: () => void;
-    }
-  ];
+export function useCounter(
+  startingValue?: number,
+  options?: {
+    min?: number;
+    max?: number;
+  }
+): [
+  number,
+  {
+    increment: () => void;
+    decrement: () => void;
+    set: (nextCount: number) => void;
+    reset: () => void;
+  }
+];
 
-  export function useDebounce<T>(value: T, delay: number): T;
+export function useDebounce<T>(value: T, delay: number): T;
 
-  export function useDefault<T>(
-    initialValue: T,
-    defaultValue: T
-  ): [T, React.Dispatch<React.SetStateAction<T>>];
+export function useDefault<T>(
+  initialValue: T,
+  defaultValue: T
+): [T, React.Dispatch<React.SetStateAction<T>>];
 
-  export function useDocumentTitle(title: string): void;
+export function useDocumentTitle(title: string): void;
 
-  export function useFavicon(url: string): void;
+export function useFavicon(url: string): void;
 
-  export function useGeolocation(options?: PositionOptions): GeolocationState;
+export function useGeolocation(options?: PositionOptions): GeolocationState;
 
-  export function useHistoryState<T>(initialPresent?: T): HistoryState<T>;
+export function useHistoryState<T>(initialPresent?: T): HistoryState<T>;
 
-  export function useHover<T extends Element>(): [
-    React.RefCallback<T>,
-    boolean
-  ];
+export function useHover<T extends Element>(): [
+  React.RefCallback<T>,
+  boolean
+];
 
-  export function useIdle(ms?: number): boolean;
+export function useIdle(ms?: number): boolean;
 
-  export function useIntersectionObserver<T extends Element>(
-    options?: IntersectionObserverInit
-  ): [React.RefCallback<T>, IntersectionObserverEntry | null];
+export function useIntersectionObserver<T extends Element>(
+  options?: IntersectionObserverInit
+): [React.RefCallback<T>, IntersectionObserverEntry | null];
 
-  export function useIsClient(): boolean;
+export function useIsClient(): boolean;
 
-  export function useIsFirstRender(): boolean;
+export function useIsFirstRender(): boolean;
 
-  export function useList<T>(defaultList?: T[]): [T[], CustomList<T>];
+export function useList<T>(defaultList?: T[]): [T[], CustomList<T>];
 
-  export function useLocalStorage<T>(
-    key: string,
-    initialValue?: T
-  ): [T, React.Dispatch<React.SetStateAction<T>>];
+export function useLocalStorage<T>(
+  key: string,
+  initialValue?: T
+): [T, React.Dispatch<React.SetStateAction<T>>];
 
-  export function useLockBodyScroll(): void;
+export function useLockBodyScroll(): void;
 
-  export function useLongPress(
-    callback: (e: Event) => void,
-    options?: LongPressOptions
-  ): LongPressFns;
+export function useLongPress(
+  callback: (e: Event) => void,
+  options?: LongPressOptions
+): LongPressFns;
 
-  export function useMap<T>(initialState?: T): Map<T, any>;
+export function useMap<T>(initialState?: T): Map<T, any>;
 
-  export function useMeasure<T extends Element>(): [
-    React.RefCallback<T>,
-    {
-      width: number | null;
-      height: number | null;
-    }
-  ];
-
-  export function useMediaQuery(query: string): boolean;
-
-  export function useMouse<T extends Element>(): [
-    MousePosition,
-    React.MutableRefObject<T>
-  ];
-
-  export function useNetworkState(): NetworkState;
-
-  export function useObjectState<T>(initialValue: T): [T, (arg: T) => void];
-
-  export function useOrientation(): {
-    angle: number;
-    type: string;
-  };
-
-  export function usePreferredLanguage(): string;
-
-  export function usePrevious<T>(newValue: T): T;
-
-  export function useQueue<T>(initialValue?: T[]): CustomQueue<T>;
-
-  export function useRenderCount(): number;
-
-  export function useRenderInfo(name?: string): RenderInfo | undefined;
-
-  export function useScript(
-    src: string,
-    options?: {
-      removeOnUnmount?: boolean;
-    }
-  ): "unknown" | "loading" | "ready" | "error";
-
-  export function useSessionStorage<T>(
-    key: string,
-    initialValue: T
-  ): [T, React.Dispatch<React.SetStateAction<T>>];
-
-  export function useSet<T>(values?: T[]): Set<T>;
-
-  export function useSpeech(text: string, options?: SpeechOptions): SpeechState;
-
-  export function useThrottle<T>(value: T, delay: number): T;
-
-  export function useToggle(
-    initialValue?: boolean
-  ): [boolean, (newValue?: boolean) => void];
-
-  export function useVisibilityChange(): boolean;
-
-  export function useWindowScroll(): [
-    {
-      x: number | null;
-      y: number | null;
-    },
-    (args: unknown) => void
-  ];
-
-  export function useWindowSize(): {
+export function useMeasure<T extends Element>(): [
+  React.RefCallback<T>,
+  {
     width: number | null;
     height: number | null;
-  };
-}
+  }
+];
+
+export function useMediaQuery(query: string): boolean;
+
+export function useMouse<T extends Element>(): [
+  MousePosition,
+  React.MutableRefObject<T>
+];
+
+export function useNetworkState(): NetworkState;
+
+export function useObjectState<T>(initialValue: T): [T, (arg: T) => void];
+
+export function useOrientation(): {
+  angle: number;
+  type: string;
+};
+
+export function usePreferredLanguage(): string;
+
+export function usePrevious<T>(newValue: T): T;
+
+export function useQueue<T>(initialValue?: T[]): CustomQueue<T>;
+
+export function useRenderCount(): number;
+
+export function useRenderInfo(name?: string): RenderInfo | undefined;
+
+export function useScript(
+  src: string,
+  options?: {
+    removeOnUnmount?: boolean;
+  }
+): "unknown" | "loading" | "ready" | "error";
+
+export function useSessionStorage<T>(
+  key: string,
+  initialValue: T
+): [T, React.Dispatch<React.SetStateAction<T>>];
+
+export function useSet<T>(values?: T[]): Set<T>;
+
+export function useSpeech(text: string, options?: SpeechOptions): SpeechState;
+
+export function useThrottle<T>(value: T, delay: number): T;
+
+export function useToggle(
+  initialValue?: boolean
+): [boolean, (newValue?: boolean) => void];
+
+export function useVisibilityChange(): boolean;
+
+export function useWindowScroll(): [
+  {
+    x: number | null;
+    y: number | null;
+  },
+  (args: unknown) => void
+];
+
+export function useWindowSize(): {
+  width: number | null;
+  height: number | null;
+};
