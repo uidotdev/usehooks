@@ -216,7 +216,7 @@ declare module "@uidotdev/usehooks" {
 
   export function usePreferredLanguage(): string;
 
-  export function usePrevious<T>(newValue: T): T;
+  export function usePrevious<T>(newValue: T): T | null;
 
   export function useQueue<T>(initialValue?: T[]): CustomQueue<T>;
 
