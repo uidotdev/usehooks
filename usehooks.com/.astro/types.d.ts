@@ -311,6 +311,13 @@ declare module 'astro:content' {
   collection: "hooks";
   data: InferEntrySchema<"hooks">
 } & { render(): Render[".mdx"] };
+"useInputCharacterLimit.mdx": {
+	id: "useInputCharacterLimit.mdx";
+  slug: "useinputcharacterlimit";
+  body: string;
+  collection: "hooks";
+  data: InferEntrySchema<"hooks">
+} & { render(): Render[".mdx"] };
 "useIntersectionObserver.mdx": {
 	id: "useIntersectionObserver.mdx";
   slug: "useintersectionobserver";
