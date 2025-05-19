@@ -240,7 +240,7 @@ declare module "@uidotdev/usehooks" {
 
   export function useSpeech(text: string, options?: SpeechOptions): SpeechState;
 
-  export function useThrottle<T>(value: T, delay: number): T;
+  export function useThrottle<T>(value: T, delay?: number): T;
 
   export function useToggle(
     initialValue?: boolean
