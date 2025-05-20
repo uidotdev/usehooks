@@ -188,7 +188,7 @@ declare module "@uidotdev/usehooks" {
     options?: LongPressOptions
   ): LongPressFns;
 
-  export function useMap<T>(initialState?: T): Map<T, any>;
+  export function useMap<K,V>(initialState?: Iterable<readonly [K, V]> | null): Map<K, V>;
 
   export function useMeasure<T extends Element>(): [
     React.RefCallback<T>,
