@@ -662,17 +662,19 @@ export function useLockBodyScroll() {
 }
 
 export function useLongPress(callback, options = {}) {
-  const { threshold = 400, onStart, onFinish, onCancel } = options;
+  const { threshold = 400, onStart, onFinish, onCancel, allowScroll = true, scrollThreshold = 20 } = options;
   const isLongPressActive = React.useRef(false);
   const isPressed = React.useRef(false);
   const timerId = React.useRef();
+  let startY;
 
   return React.useMemo(() => {
     if (typeof callback !== "function") {
       return {};
-    }
+    } 
 
     const start = (event) => {
+      startY = event.touches[0].clientY;
       if (!isMouseEvent(event) && !isTouchEvent(event)) return;
 
       if (onStart) {
@@ -707,15 +709,23 @@ export function useLongPress(callback, options = {}) {
       }
     };
 
+    const move = (event) => {
+      if (!allowScroll && Math.abs(event.touches[0].clientY - startY) > scrollThreshold) {
+        cancel(event)
+      }
+    }
+
     const mouseHandlers = {
       onMouseDown: start,
       onMouseUp: cancel,
       onMouseLeave: cancel,
+      onMouseMove: move,
     };
 
     const touchHandlers = {
       onTouchStart: start,
       onTouchEnd: cancel,
+      onTouchMove: move,
     };
 
     return {
