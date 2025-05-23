@@ -29,7 +29,7 @@ import StaticCodeContainer from "../../components/StaticCodeContainer.astro";
   | Name             | Type   | Description |
   | ---------------- | ------ | ----------- |
   | src              | string | This is the URL source of the script to be loaded. |
-  | options          | object | This is an optional configuration object provided when calling `useScript`. It currently accepts one property `removeOnUnmount` which when set to `true`, will remove the script tag from the document body on component unmount. |
+  | options          | object | This is an optional configuration object provided when calling `useScript`. It currently accepts two optional properties: `removeOnUnmount` which when set to `true`, will remove the script tag from the document body on component unmount, and `customAttributes` which is an object of custom string attributes that will be added to the script tag, this can be useful for specifying things like license keys in `data-x` attributes. |
   </div>
 
   ### Return Values
@@ -58,6 +58,9 @@ export default function App() {
     `https://cdnjs.cloudflare.com/ajax/libs/mootools/1.6.0/mootools-core.js`,
     {
       removeOnUnmount: false,
+      customAttributes: {
+        "data-uid": "useScript",
+      },
     }
   );
 
